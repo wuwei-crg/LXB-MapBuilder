@@ -1,0 +1,233 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览推荐帖子内容",
+      "features": [
+        "下拉刷新",
+        "帖子列表",
+        "顶部导航切换"
+      ]
+    },
+    "home__n_fd84b8e6": {
+      "name": "首页",
+      "description": "浏览推荐帖子内容",
+      "features": [
+        "下拉刷新",
+        "帖子列表",
+        "分类切换"
+      ]
+    },
+    "profile__n_dc0e1e1d": {
+      "name": "我的",
+      "description": "查看个人足迹、关注的吧及动态",
+      "features": [
+        "我的足迹",
+        "我关注的吧",
+        "吧单推荐"
+      ]
+    },
+    "mall__n_6960f9b9": {
+      "name": "小卖部步行街",
+      "description": "浏览贴吧周边及推荐商品",
+      "features": [
+        "下拉刷新",
+        "商品列表",
+        "店铺入口"
+      ]
+    },
+    "message__n_1a8b8a0d": {
+      "name": "消息",
+      "description": "查看系统通知和私信",
+      "features": [
+        "消息列表",
+        "分类切换"
+      ]
+    },
+    "profile__n_a73ddc45": {
+      "name": "个人中心",
+      "description": "管理关注的贴吧、查看足迹、签到",
+      "features": [
+        "我的足迹",
+        "我关注的吧",
+        "吧单推荐"
+      ]
+    },
+    "notification__n_2984d854": {
+      "name": "通知",
+      "description": "查看点赞、回复、粉丝及系统广播",
+      "features": [
+        "通知分类列表",
+        "侧边栏快捷入口"
+      ]
+    },
+    "chat_list__n_954c5d88": {
+      "name": "贴吧聊天频道列表",
+      "description": "查看和加入该贴吧下的各类交流群组",
+      "features": [
+        "公共频道列表",
+        "签到专区",
+        "聊天广场"
+      ]
+    },
+    "profile__n_bfa76a60": {
+      "name": "个人中心",
+      "description": "查看个人信息、等级、常用功能及钱包服务",
+      "features": [
+        "发帖统计",
+        "常用功能",
+        "等级任务",
+        "钱包服务"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home__n_fd84b8e6",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "首页",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            2555,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "profile__n_dc0e1e1d",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "进吧",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            256,
+            2555,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "mall__n_6960f9b9",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "小卖部",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            512,
+            2555,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "message__n_1a8b8a0d",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            768,
+            2555,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "profile__n_dc0e1e1d",
+      "to": "profile__n_a73ddc45",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "class": "RelativeLayout",
+          "bounds_hint": [
+            0,
+            0,
+            1280,
+            295
+          ]
+        }
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "message__n_1a8b8a0d",
+      "to": "notification__n_2984d854",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "通知",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            152,
+            197,
+            344
+          ]
+        }
+      },
+      "description": "点击通知"
+    },
+    {
+      "from": "message__n_1a8b8a0d",
+      "to": "chat_list__n_954c5d88",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "974",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            774,
+            197,
+            966
+          ]
+        }
+      },
+      "description": "点击管理"
+    },
+    {
+      "from": "notification__n_2984d854",
+      "to": "profile__n_bfa76a60",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            1024,
+            2555,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

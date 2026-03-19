@@ -1,0 +1,284 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "百度贴吧首页，展示推荐贴子、关注的吧以及底部分栏导航",
+      "features": [
+        "推荐流",
+        "顶部导航",
+        "吧快捷入口",
+        "搜索",
+        "发布"
+      ]
+    },
+    "answer_detail": {
+      "name": "回答详情页",
+      "description": "展示特定问题的详细回答内容，支持阅读、点赞、评论及关注作者",
+      "features": [
+        "查看正文",
+        "关注作者",
+        "点赞回答",
+        "查看评论",
+        "跳转知乎APP"
+      ]
+    },
+    "jinba": {
+      "name": "进吧",
+      "description": "展示用户关注和最近访问过的贴吧内容",
+      "features": [
+        "搜索框",
+        "一键签到",
+        "足迹列表",
+        "关注列表",
+        "吧单推荐",
+        "底部导航"
+      ]
+    },
+    "mall_home": {
+      "name": "贴吧小卖部",
+      "description": "浏览社区周边、礼品及贴吧推荐商品",
+      "features": [
+        "商品搜索",
+        "轮播图",
+        "社区吧铺推荐",
+        "商品浏览",
+        "底部导航"
+      ]
+    },
+    "message": {
+      "name": "消息",
+      "description": "展示收到的点赞、回复、@、粉丝及其他系统通知",
+      "features": [
+        "点赞列表",
+        "回复列表",
+        "@我的列表",
+        "粉丝列表",
+        "吧友互助",
+        "吧广播"
+      ]
+    },
+    "profile": {
+      "name": "我的",
+      "description": "用户个人中心，展示账号统计、常用功能、任务等级及钱包会员福利。",
+      "features": [
+        "发贴/回贴/关注统计",
+        "收藏/历史/点赞",
+        "任务中心",
+        "等级系统",
+        "钱包",
+        "会员开通入口"
+      ]
+    },
+    "post_detail": {
+      "name": "帖子详情页",
+      "description": "查看帖子内容，当前页面展示了一段聊天记录截图，并提供回复、点赞等社交功能。",
+      "features": [
+        "返回",
+        "搜索",
+        "内容筛选",
+        "回复输入",
+        "点赞",
+        "分享"
+      ]
+    },
+    "trending": {
+      "name": "有料",
+      "description": "展示每日PK投票内容及社区热门话题",
+      "features": [
+        "参与投票",
+        "查看评论",
+        "浏览热榜话题"
+      ]
+    },
+    "live": {
+      "name": "直播首页",
+      "description": "展示各类直播内容，支持按类别筛选和全站搜索",
+      "features": [
+        "直播分类选择",
+        "直播间列表",
+        "底部导航",
+        "搜索",
+        "发布"
+      ]
+    },
+    "search": {
+      "name": "搜索页",
+      "description": "提供关键词搜索功能，展示搜索历史、快捷访问入口以及实时热点榜单。",
+      "features": [
+        "搜索输入",
+        "搜索历史管理",
+        "快捷入口跳转",
+        "热榜分类切换",
+        "实时热点浏览"
+      ]
+    },
+    "notifications_likes": {
+      "name": "点赞页面",
+      "description": "展示用户收到的回复点赞历史记录",
+      "features": [
+        "查看点赞用户",
+        "查看回复内容",
+        "查看所属贴吧",
+        "返回"
+      ]
+    },
+    "notifications": {
+      "name": "通知",
+      "description": "查看各类消息通知，包括互动消息、粉丝信息及社区广播",
+      "features": [
+        "消息分类列表",
+        "左侧导航切换",
+        "底部导航"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "answer_detail",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "jinba",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "mall_home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "home",
+      "to": "post_detail",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "home",
+      "to": "trending",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击有料"
+    },
+    {
+      "from": "home",
+      "to": "live",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "answer_detail",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击大家都在搜"
+    },
+    {
+      "from": "message",
+      "to": "notifications_likes",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击粉丝"
+    },
+    {
+      "from": "message",
+      "to": "notifications",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击聊天"
+    },
+    {
+      "from": "profile",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击设置形象"
+    },
+    {
+      "from": "trending",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索输入框"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

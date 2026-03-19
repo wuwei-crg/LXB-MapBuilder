@@ -1,0 +1,281 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览贴吧推荐内容",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "关注列表"
+      ]
+    },
+    "home__n_76c2222d": {
+      "name": "首页",
+      "description": "浏览贴吧推荐内容和帖子列表",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "关注入口"
+      ]
+    },
+    "profile__n_90a19dc6": {
+      "name": "我的关注",
+      "description": "查看用户足迹和关注的贴吧列表",
+      "features": [
+        "我的足迹",
+        "我关注的吧",
+        "创建吧",
+        "展开更多"
+      ]
+    },
+    "mall__n_c9534f27": {
+      "name": "小卖部步行街",
+      "description": "浏览和购买贴吧相关商品及推荐好物",
+      "features": [
+        "顶部活动Banner",
+        "店铺入口",
+        "商品列表",
+        "底部导航"
+      ]
+    },
+    "chat_list__n_468a5dc7": {
+      "name": "消息列表",
+      "description": "查看和管理聊天会话及通知",
+      "features": [
+        "下拉刷新",
+        "删除会话",
+        "发私信"
+      ]
+    },
+    "profile__n_4a597b8f": {
+      "name": "个人中心",
+      "description": "查看用户信息、等级、常用功能及钱包服务",
+      "features": [
+        "我的发贴",
+        "我的回贴",
+        "关注的吧",
+        "我的收藏",
+        "我的点赞",
+        "浏览历史",
+        "装扮中心",
+        "创建智能体",
+        "成长任务",
+        "商品上新",
+        "印记中心",
+        "度小满钱包",
+        "游戏专区"
+      ]
+    },
+    "home__n_3dc200b6": {
+      "name": "首页",
+      "description": "浏览推荐内容和热点资讯",
+      "features": [
+        "投票互动",
+        "评论查看",
+        "热点列表"
+      ]
+    },
+    "home__n_225c5f22": {
+      "name": "首页",
+      "description": "春节主题活动页面，包含新春打分、年味聚焦等板块",
+      "features": [
+        "评分互动",
+        "内容浏览"
+      ]
+    },
+    "home__n_411cdf1a": {
+      "name": "首页",
+      "description": "浏览贴吧推荐内容和关注动态",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "帖子详情"
+      ]
+    },
+    "home__n_a70de59b": {
+      "name": "首页",
+      "description": "浏览贴吧推荐内容、关注动态及热门话题",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "帖子详情"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home__n_76c2222d",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "首页",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            0,
+            2555,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "profile__n_90a19dc6",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "进吧",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            256,
+            2555,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "mall__n_c9534f27",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "小卖部",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            512,
+            2555,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "chat_list__n_468a5dc7",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            768,
+            2555,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "profile__n_4a597b8f",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            1024,
+            2555,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "home",
+      "to": "home__n_3dc200b6",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "有料",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            344,
+            177,
+            492,
+            239
+          ]
+        }
+      },
+      "description": "点击菜单"
+    },
+    {
+      "from": "home",
+      "to": "home__n_225c5f22",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "春节",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            640,
+            177,
+            788,
+            239
+          ]
+        }
+      },
+      "description": "点击春节"
+    },
+    {
+      "from": "home",
+      "to": "home__n_411cdf1a",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "推荐",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            492,
+            177,
+            640,
+            239
+          ]
+        }
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "home",
+      "to": "home__n_a70de59b",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "全部关注",
+          "class": "ViewGroup",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            36,
+            407,
+            177,
+            660
+          ]
+        }
+      },
+      "description": "点击全部关注"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

@@ -1,0 +1,233 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览推荐的贴吧贴子和内容动态",
+      "features": [
+        "分类标签切换",
+        "搜索内容",
+        "浏览贴子列表",
+        "进入具体贴吧"
+      ]
+    },
+    "enter_bar": {
+      "name": "进吧",
+      "description": "管理关注的贴吧及查看最近访问足迹",
+      "features": [
+        "查看全部关注",
+        "吧单推荐",
+        "一键签到",
+        "搜索贴吧"
+      ]
+    },
+    "mall": {
+      "name": "小卖部步行街",
+      "description": "浏览社区推荐商品及进入具体贴吧的小卖部",
+      "features": [
+        "搜索框",
+        "广告位",
+        "吧小卖部列表",
+        "底部导航"
+      ]
+    },
+    "message": {
+      "name": "消息",
+      "description": "展示私信、系统通知、AI智能体、会员权益及侧边频道导航",
+      "features": [
+        "私信列表",
+        "AI智能体广场",
+        "贴吧官方消息",
+        "会员消息",
+        "侧边频道列表",
+        "底部导航"
+      ]
+    },
+    "profile": {
+      "name": "我的",
+      "description": "百度贴吧个人中心页面，展示用户信息、帖子统计、常用功能入口以及第三方广告服务。",
+      "features": [
+        "发帖/回帖/关注统计",
+        "常用功能(收藏、点赞、历史、装扮、AI)",
+        "等级成长",
+        "钱包",
+        "活动推广"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "首页",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            2555,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "enter_bar",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "进吧",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            256,
+            2555,
+            512,
+            2720
+          ],
+          "parent_chain": [
+            {
+              "rid": "obfuscated",
+              "class": "relativelayout",
+              "dx_parent": -0.2075,
+              "dy_parent": 0.168,
+              "w_ratio": 0.2075,
+              "h_ratio": 0.66
+            },
+            {
+              "rid": "",
+              "class": "framelayout",
+              "dx_parent": 0.0,
+              "dy_parent": 0.1827,
+              "w_ratio": 1.0,
+              "h_ratio": 0.6345
+            },
+            {
+              "rid": "",
+              "class": "framelayout",
+              "dx_parent": 0.0,
+              "dy_parent": 0.0148,
+              "w_ratio": 1.0,
+              "h_ratio": 0.9728
+            }
+          ]
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "mall",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "小卖部",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            512,
+            2555,
+            768,
+            2720
+          ],
+          "parent_chain": [
+            {
+              "rid": "obfuscated",
+              "class": "relativelayout",
+              "dx_parent": 0.0,
+              "dy_parent": 0.168,
+              "w_ratio": 0.2075,
+              "h_ratio": 0.66
+            },
+            {
+              "rid": "",
+              "class": "framelayout",
+              "dx_parent": 0.0,
+              "dy_parent": 0.1827,
+              "w_ratio": 1.0,
+              "h_ratio": 0.6345
+            },
+            {
+              "rid": "",
+              "class": "framelayout",
+              "dx_parent": 0.0,
+              "dy_parent": 0.0148,
+              "w_ratio": 1.0,
+              "h_ratio": 0.9728
+            }
+          ]
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            768,
+            2555,
+            1024,
+            2720
+          ],
+          "parent_chain": [
+            {
+              "rid": "obfuscated",
+              "class": "relativelayout",
+              "dx_parent": 0.2075,
+              "dy_parent": 0.168,
+              "w_ratio": 0.2075,
+              "h_ratio": 0.66
+            },
+            {
+              "rid": "",
+              "class": "framelayout",
+              "dx_parent": 0.0,
+              "dy_parent": 0.1827,
+              "w_ratio": 1.0,
+              "h_ratio": 0.6345
+            },
+            {
+              "rid": "",
+              "class": "framelayout",
+              "dx_parent": 0.0,
+              "dy_parent": 0.0148,
+              "w_ratio": 1.0,
+              "h_ratio": 0.9728
+            }
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            1024,
+            2555,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

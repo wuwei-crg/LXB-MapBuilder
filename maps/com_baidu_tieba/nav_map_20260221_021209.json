@@ -1,0 +1,406 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览贴吧推荐内容、关注动态及求助帖",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "顶部导航切换"
+      ]
+    },
+    "post_create": {
+      "name": "发帖页面",
+      "description": "创建并发布新帖子",
+      "features": [
+        "标题输入",
+        "正文输入",
+        "图片上传",
+        "吧选择",
+        "话题添加",
+        "范围设置"
+      ]
+    },
+    "search": {
+      "name": "搜索页",
+      "description": "贴吧搜索入口及热点推荐",
+      "features": [
+        "搜索历史",
+        "快捷访问",
+        "实时热点榜单"
+      ]
+    },
+    "feed": {
+      "name": "贴吧推荐页",
+      "description": "浏览贴吧帖子和推荐内容",
+      "features": [
+        "下拉刷新",
+        "帖子列表",
+        "视频播放"
+      ]
+    },
+    "profile": {
+      "name": "我的",
+      "description": "查看用户足迹、关注列表及吧单推荐",
+      "features": [
+        "我的足迹",
+        "我关注的吧",
+        "吧单推荐"
+      ]
+    },
+    "mall": {
+      "name": "小卖部步行街",
+      "description": "浏览和购买精选商品",
+      "features": [
+        "活动横幅",
+        "店铺入口",
+        "商品列表",
+        "底部导航"
+      ]
+    },
+    "chat": {
+      "name": "消息列表",
+      "description": "查看和管理聊天会话",
+      "features": [
+        "AI智能体广场",
+        "贴吧官方",
+        "贴吧会员"
+      ]
+    },
+    "shop": {
+      "name": "小卖部步行街",
+      "description": "浏览和购买特色商品",
+      "features": [
+        "商品列表",
+        "分类推荐",
+        "店铺信息"
+      ]
+    },
+    "forum_list": {
+      "name": "贴吧列表页",
+      "description": "展示推荐和关注的贴吧列表，支持搜索和跳转",
+      "features": [
+        "为你推荐列表",
+        "最近在逛列表",
+        "我的关注列表"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": [
+            {
+              "resource_id": null,
+              "class_name": "android.widget.TextView",
+              "text": "有料",
+              "content_desc": null,
+              "clickable": false
+            }
+          ]
+        }
+      },
+      "description": "点击有料"
+    },
+    {
+      "from": "home",
+      "to": "post_create",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": "ImageView",
+          "parent_resource_id": "obfuscated",
+          "clickable_index": 1,
+          "ancestor_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.view.ViewGroup",
+              "text": "",
+              "content_desc": "",
+              "clickable": false,
+              "bounds": [
+                1042,
+                152,
+                1280,
+                265
+              ]
+            }
+          ],
+          "child_chain": null
+        }
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.ImageView",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": null,
+              "class_name": "android.widget.TextSwitcher",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home",
+      "to": "feed",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "首页",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "进吧",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "mall",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "小卖部",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "chat",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "消息",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "shop",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "小卖部",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "post_create",
+      "to": "forum_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": [
+            {
+              "resource_id": "android:id/content",
+              "class_name": "android.widget.FrameLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ]
+        }
+      },
+      "description": "点击关闭"
+    },
+    {
+      "from": "feed",
+      "to": "shop",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "小卖部",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "mall",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "进吧",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "profile",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": "ImageView",
+          "parent_resource_id": "obfuscated",
+          "clickable_index": 2,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击扫一扫"
+    },
+    {
+      "from": "shop",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "进吧",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击进吧"
+    }
+  ],
+  "popups": [
+    {
+      "id": "popup_775_1132",
+      "type": "dialog",
+      "description": "评论区弹窗-关闭按钮",
+      "close_locator": {
+        "resource_id": null,
+        "text": "孙笑川吧 关注 747W 贴子 22KW 你们先搜，搜到叫我  分享 1 赞",
+        "content_desc": null,
+        "class_name": "RelativeLayout",
+        "parent_resource_id": null,
+        "clickable_index": null,
+        "ancestor_chain": null,
+        "child_chain": null
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_1175_766",
+      "type": "dialog",
+      "description": "不感兴趣反馈弹窗-关闭按钮",
+      "close_locator": {
+        "resource_id": null,
+        "text": null,
+        "content_desc": null,
+        "class_name": null,
+        "parent_resource_id": null,
+        "clickable_index": null,
+        "ancestor_chain": null,
+        "child_chain": null
+      },
+      "first_seen_page": "home"
+    }
+  ],
+  "blocks": []
+}

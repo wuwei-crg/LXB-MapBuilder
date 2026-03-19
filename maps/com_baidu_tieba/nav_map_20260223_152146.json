@@ -1,0 +1,404 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "tieba_home": {
+      "name": "首页",
+      "description": "社区内容推荐与导航页",
+      "features": [
+        "搜索",
+        "发帖",
+        "频道切换",
+        "底部导航"
+      ]
+    },
+    "home_featured__n_ab553388": {
+      "name": "首页-有料",
+      "description": "浏览社区热点及互动功能",
+      "features": [
+        "频道切换",
+        "搜索",
+        "发布",
+        "热点列表",
+        "底部导航"
+      ]
+    },
+    "home_recommended__n_e824ab06": {
+      "name": "百度贴吧首页",
+      "description": "推荐内容流浏览",
+      "features": [
+        "搜索",
+        "频道切换",
+        "底部导航"
+      ]
+    },
+    "tieba_main__n_33dd2c17": {
+      "name": "贴吧首页",
+      "description": "展示推荐内容、关注贴吧及全局功能入口",
+      "features": [
+        "搜索",
+        "侧边栏",
+        "频道切换",
+        "底部导航"
+      ]
+    },
+    "tieba_discovery__n_ddad0ac6": {
+      "name": "进吧页",
+      "description": "展示关注的贴吧及社区发现入口",
+      "features": [
+        "搜索",
+        "一键签到",
+        "贴吧管理",
+        "底部导航"
+      ]
+    },
+    "canteen_market__n_6c2dead9": {
+      "name": "小卖部步行街",
+      "description": "电商聚合页，浏览店铺和推荐商品",
+      "features": [
+        "搜索",
+        "更多商品",
+        "底部导航"
+      ]
+    },
+    "notification_center__n_2a525344": {
+      "name": "消息中心",
+      "description": "查看点赞、回复、提及等互动通知",
+      "features": [
+        "互动消息分类",
+        "功能频道入口",
+        "底部导航"
+      ]
+    },
+    "profile__n_1c78c2eb": {
+      "name": "我的",
+      "description": "用户个人中心页面",
+      "features": [
+        "个人统计、常用功能入口、会员及钱包管理"
+      ]
+    },
+    "home_featured__n_aa1bcee7": {
+      "name": "首页-有料",
+      "description": "展示精选互动话题及热点排行",
+      "features": [
+        "搜索",
+        "发布",
+        "页签切换",
+        "功能跳转",
+        "底部导航"
+      ]
+    },
+    "user_center__n_33e4935a": {
+      "name": "我的",
+      "description": "个人中心页面",
+      "features": [
+        "帖子管理、收藏历史查看、等级任务中心、钱包服务、全局导航"
+      ]
+    },
+    "select_chat_channel__n_1a3af12e": {
+      "name": "选择聊天频道",
+      "description": "管理并快速进入已关注贴吧的聊天频道列表",
+      "features": [
+        "返回"
+      ]
+    },
+    "avatar_editor__n_f2356650": {
+      "name": "捏脸编辑器",
+      "description": "虚拟形象自定义页面",
+      "features": [
+        "保存形象",
+        "分类编辑",
+        "切换背景与心情"
+      ]
+    },
+    "vip_subscription__n_b0ed383b": {
+      "name": "会员开通页",
+      "description": "用户选择并支付开通VIP/SVIP会员等级",
+      "features": [
+        "返回",
+        "切换会员等级",
+        "选择套餐",
+        "选择支付方式",
+        "确认支付"
+      ]
+    },
+    "vip_center__n_f3cb2c3c": {
+      "name": "会员中心",
+      "description": "查看会员权益列表并提供开通入口",
+      "features": [
+        "权益切换",
+        "权益详情跳转",
+        "立即开通"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "tieba_home",
+      "to": "home_featured__n_ab553388",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "有料",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            344,
+            177,
+            492,
+            239
+          ]
+        }
+      },
+      "description": "点击有料"
+    },
+    {
+      "from": "tieba_home",
+      "to": "home_recommended__n_e824ab06",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "推荐",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            492,
+            177,
+            640,
+            239
+          ]
+        }
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "tieba_home",
+      "to": "event_tab__n_a2116bb2",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "春节",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            640,
+            177,
+            788,
+            239
+          ]
+        }
+      },
+      "description": "点击春节"
+    },
+    {
+      "from": "tieba_home",
+      "to": "tieba_main__n_33dd2c17",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "首页",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            2555,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "tieba_home",
+      "to": "tieba_discovery__n_ddad0ac6",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "进吧",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            256,
+            2555,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "tieba_home",
+      "to": "canteen_market__n_6c2dead9",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "小卖部",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            512,
+            2555,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "tieba_home",
+      "to": "notification_center__n_2a525344",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            768,
+            2555,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "tieba_home",
+      "to": "profile__n_1c78c2eb",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            1024,
+            2555,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "home_featured__n_ab553388",
+      "to": "home_featured__n_aa1bcee7",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "首页",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            0,
+            2555,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home_featured__n_ab553388",
+      "to": "user_center__n_33e4935a",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            1024,
+            2555,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "notification_center__n_2a525344",
+      "to": "select_chat_channel__n_1a3af12e",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "管理",
+          "class": "LinearLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            0,
+            2352,
+            197,
+            2544
+          ]
+        }
+      },
+      "description": "点击管理"
+    },
+    {
+      "from": "profile__n_1c78c2eb",
+      "to": "avatar_editor__n_f2356650",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "设置形象",
+          "class": "LinearLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            1054,
+            393,
+            1243,
+            442
+          ]
+        }
+      },
+      "description": "点击设置形象"
+    },
+    {
+      "from": "profile__n_1c78c2eb",
+      "to": "vip_subscription__n_b0ed383b",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            459,
+            358,
+            501,
+            400
+          ]
+        }
+      },
+      "description": "点击浏览历史"
+    },
+    {
+      "from": "vip_subscription__n_b0ed383b",
+      "to": "vip_center__n_f3cb2c3c",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "全部权益",
+          "content_desc": "全部权益",
+          "class": "View",
+          "bounds_hint": [
+            1020,
+            2249,
+            1222,
+            2392
+          ]
+        }
+      },
+      "description": "点击全部权益"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

@@ -1,0 +1,621 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览贴吧推荐内容",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "关注列表"
+      ]
+    },
+    "detail": {
+      "name": "帖子详情页",
+      "description": "查看贴吧帖子详情及评论互动",
+      "features": [
+        "楼层列表",
+        "楼主回复",
+        "点赞功能"
+      ]
+    },
+    "post_create": {
+      "name": "发帖页面",
+      "description": "发布新帖子内容",
+      "features": [
+        "标题输入",
+        "正文编辑",
+        "图片上传",
+        "吧选择",
+        "话题添加",
+        "范围设置"
+      ]
+    },
+    "forum_detail": {
+      "name": "贴吧详情页",
+      "description": "浏览贴吧帖子、参与讨论",
+      "features": [
+        "下拉刷新",
+        "帖子列表",
+        "签到入口"
+      ]
+    },
+    "mall": {
+      "name": "小卖部步行街",
+      "description": "浏览和购买文具类商品",
+      "features": [
+        "活动横幅",
+        "店铺入口",
+        "商品列表",
+        "价格展示"
+      ]
+    },
+    "profile": {
+      "name": "个人主页",
+      "description": "查看用户信息、等级、发帖记录及常用功能入口",
+      "features": [
+        "我的发帖",
+        "我的回帖",
+        "关注的吧",
+        "我的收藏",
+        "我的点赞",
+        "浏览历史",
+        "装扮中心",
+        "创建智能体",
+        "成长任务",
+        "商品上新",
+        "印记中心",
+        "度小满钱包",
+        "活动卡片"
+      ]
+    },
+    "post_detail": {
+      "name": "帖子详情页",
+      "description": "查看用户发布的帖子详情、图片及评论互动",
+      "features": [
+        "浏览帖子内容",
+        "查看图片",
+        "发表评论",
+        "点赞"
+      ]
+    },
+    "loan_promo": {
+      "name": "度小满借钱活动页",
+      "description": "现金红包领取及借款申请",
+      "features": [
+        "手机号输入",
+        "验证码获取",
+        "活动进度展示"
+      ]
+    },
+    "expression_maker": {
+      "name": "表情制作",
+      "description": "AI图片编辑与风格转换工具",
+      "features": [
+        "图片预览",
+        "功能按钮(修改文字/面部融合)",
+        "文本输入框"
+      ]
+    },
+    "notification": {
+      "name": "通知中心",
+      "description": "查看点赞、回复、@我的等互动消息",
+      "features": [
+        "消息列表",
+        "分类筛选"
+      ]
+    },
+    "comment_list": {
+      "name": "评论区",
+      "description": "查看帖子评论及回复",
+      "features": [
+        "下拉刷新",
+        "评论列表",
+        "点赞",
+        "排序切换"
+      ]
+    },
+    "scan": {
+      "name": "扫一扫",
+      "description": "扫描二维码/条形码",
+      "features": [
+        "自动扫描识别"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "detail",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": null,
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.ImageView",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.TextView",
+              "text": "度小满",
+              "content_desc": null,
+              "clickable": false
+            }
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": [
+            {
+              "resource_id": null,
+              "class_name": "android.widget.TextView",
+              "text": "春节",
+              "content_desc": null,
+              "clickable": false
+            }
+          ]
+        }
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "home",
+      "to": "post_create",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": "ImageView",
+          "parent_resource_id": "obfuscated",
+          "clickable_index": 1,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "detail",
+      "to": "post_create",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": "ImageView",
+          "parent_resource_id": "obfuscated",
+          "clickable_index": 1,
+          "ancestor_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.view.ViewGroup",
+              "text": "",
+              "content_desc": "",
+              "clickable": false,
+              "bounds": [
+                1042,
+                152,
+                1280,
+                265
+              ]
+            }
+          ],
+          "child_chain": null
+        }
+      },
+      "description": "点击更多"
+    },
+    {
+      "from": "home",
+      "to": "forum_detail",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "贴子",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "post_create",
+      "to": "detail",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": [
+            {
+              "resource_id": null,
+              "class_name": "android.view.View",
+              "text": null,
+              "content_desc": "11:03",
+              "clickable": false
+            }
+          ]
+        }
+      },
+      "description": "点击标题输入框"
+    },
+    {
+      "from": "home",
+      "to": "mall",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "小卖部",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "我的",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "post_detail",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "androidx.recyclerview.widget.RecyclerView",
+              "text": "",
+              "content_desc": "",
+              "clickable": false,
+              "bounds": [
+                23,
+                1180,
+                1257,
+                2696
+              ]
+            },
+            {
+              "resource_id": "",
+              "class_name": "android.widget.RelativeLayout",
+              "text": "",
+              "content_desc": "",
+              "clickable": true,
+              "bounds": [
+                23,
+                1180,
+                1257,
+                2696
+              ]
+            }
+          ],
+          "child_chain": [
+            {
+              "resource_id": null,
+              "class_name": "android.widget.LinearLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "detail",
+      "to": "detail",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": [
+            {
+              "resource_id": null,
+              "class_name": "android.view.View",
+              "text": null,
+              "content_desc": "11:06",
+              "clickable": false
+            }
+          ]
+        }
+      },
+      "description": "点击倒序"
+    },
+    {
+      "from": "profile",
+      "to": "loan_promo",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "回复",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "detail",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "首页",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击推荐视频"
+    },
+    {
+      "from": "post_detail",
+      "to": "expression_maker",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": null,
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "mall",
+      "to": "mall",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "小卖部",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "mall",
+      "to": "notification",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.LinearLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.view.View",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": null,
+              "class_name": "android.view.View",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "mall",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "进吧",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "mall",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": "我的",
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "detail",
+      "to": "comment_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": null,
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.LinearLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.view.View",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": null,
+              "class_name": "android.view.View",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ]
+        }
+      },
+      "description": "点击评论"
+    },
+    {
+      "from": "profile",
+      "to": "scan",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": null,
+          "text": null,
+          "content_desc": null,
+          "class_name": "FrameLayout",
+          "parent_resource_id": null,
+          "clickable_index": null,
+          "ancestor_chain": null,
+          "child_chain": null
+        }
+      },
+      "description": "点击扫一扫"
+    }
+  ],
+  "popups": [
+    {
+      "id": "popup_1210_1711",
+      "type": "dialog",
+      "description": "快剪辑广告弹窗-关闭按钮",
+      "close_locator": {
+        "resource_id": null,
+        "text": null,
+        "content_desc": null,
+        "class_name": "LinearLayout",
+        "parent_resource_id": null,
+        "clickable_index": null,
+        "ancestor_chain": null,
+        "child_chain": null
+      },
+      "first_seen_page": "detail"
+    }
+  ],
+  "blocks": []
+}

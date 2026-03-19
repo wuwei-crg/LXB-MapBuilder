@@ -1,0 +1,523 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览贴吧推荐内容和帖子列表",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "关注入口"
+      ]
+    },
+    "mall": {
+      "name": "小卖部步行街",
+      "description": "浏览推荐商品和店铺",
+      "features": [
+        "活动横幅",
+        "店铺入口",
+        "商品列表"
+      ]
+    },
+    "chat": {
+      "name": "聊天列表",
+      "description": "查看和管理聊天会话",
+      "features": [
+        "消息列表",
+        "侧边栏贴吧导航"
+      ]
+    },
+    "profile": {
+      "name": "个人主页",
+      "description": "查看用户个人信息、等级、发帖回帖数据及常用功能入口",
+      "features": [
+        "我的发帖",
+        "我的回帖",
+        "关注的吧",
+        "我的收藏",
+        "我的点赞",
+        "浏览历史",
+        "装扮中心",
+        "创建智能体",
+        "成长任务",
+        "商品上新",
+        "印记中心",
+        "度小满钱包",
+        "活动卡片"
+      ]
+    },
+    "post_create": {
+      "name": "发帖页面",
+      "description": "创建并发布新帖子",
+      "features": [
+        "标题输入",
+        "正文输入",
+        "图片上传",
+        "吧选择",
+        "话题添加",
+        "范围设置"
+      ]
+    },
+    "search": {
+      "name": "搜索页",
+      "description": "贴吧搜索功能",
+      "features": [
+        "搜索历史",
+        "快捷访问",
+        "贴吧热榜",
+        "实时热点"
+      ]
+    },
+    "tieba_detail": {
+      "name": "贴吧详情页",
+      "description": "查看贴吧信息、聊天频道和帖子列表",
+      "features": [
+        "聊天频道入口",
+        "帖子列表",
+        "签到功能"
+      ]
+    },
+    "community": {
+      "name": "贴吧社区页面",
+      "description": "浏览帖子、聊天交流、查看吧内信息",
+      "features": [
+        "下拉刷新",
+        "帖子列表",
+        "聊天频道入口",
+        "签到按钮"
+      ]
+    },
+    "forum_detail": {
+      "name": "宫漫吧详情页",
+      "description": "贴吧详情页面，展示吧内信息、聊天频道及帖子列表",
+      "features": [
+        "签到",
+        "聊天频道入口",
+        "帖子列表",
+        "版块切换"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "clickable_index": 0,
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.LinearLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.view.View",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "clickable_index+child_chain",
+          "match_fields": [
+            "clickable_index",
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "mall",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "clickable_index": 2,
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.LinearLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.view.View",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "clickable_index+child_chain",
+          "match_fields": [
+            "clickable_index",
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "chat",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "clickable_index": 3,
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.LinearLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "clickable_index+child_chain",
+          "match_fields": [
+            "clickable_index",
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "clickable_index": 4,
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.LinearLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "clickable_index+child_chain",
+          "match_fields": [
+            "clickable_index",
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "home",
+      "to": "post_create",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "clickable_index": 1,
+          "ancestor_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.view.ViewGroup",
+              "text": "",
+              "content_desc": "",
+              "clickable": false,
+              "bounds": [
+                1042,
+                152,
+                1280,
+                265
+              ]
+            }
+          ],
+          "child_chain": "__IGNORE__",
+          "strategy": "clickable_index+ancestor_chain",
+          "match_fields": [
+            "clickable_index",
+            "ancestor_chain"
+          ]
+        }
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "clickable_index": "__IGNORE__",
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.ImageView",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": null,
+              "class_name": "android.widget.TextSwitcher",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "child_chain",
+          "match_fields": [
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击菜单"
+    },
+    {
+      "from": "profile",
+      "to": "mall",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "clickable_index": 2,
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.LinearLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.view.View",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "clickable_index+child_chain",
+          "match_fields": [
+            "clickable_index",
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "clickable_index": "__IGNORE__",
+          "ancestor_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.LinearLayout",
+              "text": "",
+              "content_desc": "",
+              "clickable": false,
+              "bounds": [
+                37,
+                185,
+                1105,
+                275
+              ]
+            }
+          ],
+          "child_chain": "__IGNORE__",
+          "strategy": "ancestor_chain",
+          "match_fields": [
+            "ancestor_chain"
+          ]
+        }
+      },
+      "description": "点击大家都在搜：错认国人,菲律宾女孩遭猎艳"
+    },
+    {
+      "from": "search",
+      "to": "chat",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "取消",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "clickable_index": "__IGNORE__",
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": "__IGNORE__",
+          "strategy": "text",
+          "match_fields": [
+            "text"
+          ]
+        }
+      },
+      "description": "点击取消"
+    },
+    {
+      "from": "search",
+      "to": "tieba_detail",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "clickable_index": 0,
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": null,
+              "class_name": "android.widget.LinearLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "clickable_index+child_chain",
+          "match_fields": [
+            "clickable_index",
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击孙笑川"
+    },
+    {
+      "from": "search",
+      "to": "community",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "clickable_index": 2,
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": null,
+              "class_name": "android.widget.LinearLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "clickable_index+child_chain",
+          "match_fields": [
+            "clickable_index",
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击孤独..."
+    },
+    {
+      "from": "search",
+      "to": "forum_detail",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "clickable_index": 4,
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": null,
+              "class_name": "android.widget.LinearLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "clickable_index+child_chain",
+          "match_fields": [
+            "clickable_index",
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击宫漫"
+    }
+  ],
+  "popups": [
+    {
+      "id": "popup_638_291",
+      "type": "dialog",
+      "description": "微信消息悬浮窗-遮挡顶部导航栏",
+      "close_locator": {
+        "resource_id": "__IGNORE__",
+        "text": "__IGNORE__",
+        "content_desc": "__IGNORE__",
+        "class_name": "__IGNORE__",
+        "parent_resource_id": "__IGNORE__",
+        "clickable_index": "__IGNORE__",
+        "ancestor_chain": "__IGNORE__",
+        "child_chain": "__IGNORE__"
+      },
+      "first_seen_page": "home"
+    }
+  ],
+  "blocks": []
+}

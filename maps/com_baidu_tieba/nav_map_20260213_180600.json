@@ -1,0 +1,460 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home__0c844059ed": {
+      "name": "首页",
+      "description": "浏览推荐贴子、搜索内容、查看各吧动态",
+      "features": [
+        "顶部标签导航",
+        "搜索",
+        "帖子浏览",
+        "底部功能导航"
+      ],
+      "legacy_page_id": "home",
+      "route_page_id": "home__0c844059ed",
+      "target_aliases": [
+        "home"
+      ]
+    },
+    "profile__04c9f72b4f": {
+      "name": "我的",
+      "description": "用户个人中心页面，包含签到、任务、足迹及关注的吧",
+      "features": [
+        "签到进度",
+        "任务中心",
+        "浏览足迹",
+        "关注吧列表",
+        "一键签到"
+      ],
+      "legacy_page_id": "profile",
+      "route_page_id": "profile__04c9f72b4f",
+      "target_aliases": [
+        "profile"
+      ]
+    },
+    "spring_festival__bd6c27a476": {
+      "name": "春节活动页",
+      "description": "展示春节专题内容，包含明星评分、春节话题及活动入口",
+      "features": [
+        "频道切换",
+        "明星打分",
+        "活动推荐",
+        "底部导航切换"
+      ],
+      "legacy_page_id": "spring_festival",
+      "route_page_id": "spring_festival__bd6c27a476",
+      "target_aliases": [
+        "spring_festival"
+      ]
+    },
+    "shop__acd2c194e2": {
+      "name": "小卖部",
+      "description": "贴吧商城频道，展示各吧周边商品及社区小店入口",
+      "features": [
+        "商品搜索",
+        "广告轮播图",
+        "社区小铺推荐",
+        "商品信息流"
+      ],
+      "legacy_page_id": "shop",
+      "route_page_id": "shop__acd2c194e2",
+      "target_aliases": [
+        "shop"
+      ]
+    },
+    "enter_bar__b9a4d734c2": {
+      "name": "进吧",
+      "description": "展示用户足迹、关注的贴吧及推荐吧单内容",
+      "features": [
+        "查看历史足迹",
+        "进入关注的吧",
+        "搜索贴吧",
+        "一键签到",
+        "浏览推荐吧单"
+      ],
+      "legacy_page_id": "enter_bar",
+      "route_page_id": "enter_bar__b9a4d734c2",
+      "target_aliases": [
+        "enter_bar"
+      ]
+    },
+    "message__c928d28804": {
+      "name": "消息",
+      "description": "展示聊天消息、官方通知及关注的贴吧动态",
+      "features": [
+        "侧边栏贴吧导航",
+        "消息/通知列表切换",
+        "私信入口",
+        "底部主导航"
+      ],
+      "legacy_page_id": "message",
+      "route_page_id": "message__c928d28804",
+      "target_aliases": [
+        "message"
+      ]
+    },
+    "search__6330bca7d0": {
+      "name": "搜索页",
+      "description": "提供搜索功能，展示搜索历史、快捷访问及实时热点榜单",
+      "features": [
+        "输入搜索内容",
+        "清除历史记录",
+        "访问快捷贴吧",
+        "切换热榜分类",
+        "查看热搜详情"
+      ],
+      "legacy_page_id": "search",
+      "route_page_id": "search__6330bca7d0",
+      "target_aliases": [
+        "search"
+      ]
+    },
+    "likes_list__761adbe2d3": {
+      "name": "点赞页",
+      "description": "展示用户收到的回复点赞通知列表",
+      "features": [
+        "查看点赞详情",
+        "跳转到原帖",
+        "返回"
+      ],
+      "legacy_page_id": "likes_list",
+      "route_page_id": "likes_list__761adbe2d3",
+      "target_aliases": [
+        "likes_list"
+      ]
+    },
+    "broadcast__46c89bcdb3": {
+      "name": "吧广播",
+      "description": "浏览贴吧内的广播内容流，包含各吧推荐贴子和资讯",
+      "features": [
+        "返回",
+        "贴子列表",
+        "互动功能(分享/评论/点赞)"
+      ],
+      "legacy_page_id": "broadcast",
+      "route_page_id": "broadcast__46c89bcdb3",
+      "target_aliases": [
+        "broadcast"
+      ]
+    },
+    "competition_ranking__419b34caa2": {
+      "name": "贴吧强厅赛排行榜",
+      "description": "展示强厅赛活动的实时排名、规则说明及荣耀值",
+      "features": [
+        "排行榜列表",
+        "规则展示"
+      ],
+      "legacy_page_id": "competition_ranking",
+      "route_page_id": "competition_ranking__419b34caa2",
+      "target_aliases": [
+        "competition_ranking"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home__0c844059ed",
+      "to": "profile__04c9f72b4f",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "ImageView",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            1161,
+            158,
+            1263,
+            260
+          ]
+        }
+      },
+      "description": "点击发布内容",
+      "legacy_from": "home",
+      "legacy_to": "profile"
+    },
+    {
+      "from": "home__0c844059ed",
+      "to": "spring_festival__bd6c27a476",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "春节",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            640,
+            177,
+            788,
+            239
+          ]
+        }
+      },
+      "description": "点击春节",
+      "legacy_from": "home",
+      "legacy_to": "spring_festival"
+    },
+    {
+      "from": "home__0c844059ed",
+      "to": "home__0c844059ed",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "有料",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            344,
+            177,
+            492,
+            239
+          ]
+        }
+      },
+      "description": "点击有料",
+      "legacy_from": "home",
+      "legacy_to": "home"
+    },
+    {
+      "from": "home__0c844059ed",
+      "to": "shop__acd2c194e2",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "小卖部",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            512,
+            2555,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击小卖部",
+      "legacy_from": "home",
+      "legacy_to": "shop"
+    },
+    {
+      "from": "home__0c844059ed",
+      "to": "enter_bar__b9a4d734c2",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "进吧",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            256,
+            2555,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击进吧",
+      "legacy_from": "home",
+      "legacy_to": "enter_bar"
+    },
+    {
+      "from": "home__0c844059ed",
+      "to": "message__c928d28804",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            768,
+            2555,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息",
+      "legacy_from": "home",
+      "legacy_to": "message"
+    },
+    {
+      "from": "home__0c844059ed",
+      "to": "search__6330bca7d0",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "大家都在搜：大的来了!官方整治不婚不育",
+          "class": "RelativeLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            37,
+            282,
+            1243,
+            384
+          ]
+        }
+      },
+      "description": "点击大家都在搜",
+      "legacy_from": "home",
+      "legacy_to": "search"
+    },
+    {
+      "from": "spring_festival__bd6c27a476",
+      "to": "home__0c844059ed",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "ImageView",
+          "bounds_hint": [
+            1042,
+            158,
+            1144,
+            260
+          ]
+        }
+      },
+      "description": "点击搜索",
+      "legacy_from": "spring_festival",
+      "legacy_to": "home"
+    },
+    {
+      "from": "message__c928d28804",
+      "to": "message__c928d28804",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "通知",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            152,
+            197,
+            344
+          ]
+        }
+      },
+      "description": "点击通知",
+      "legacy_from": "message",
+      "legacy_to": "message"
+    },
+    {
+      "from": "search__6330bca7d0",
+      "to": "search__6330bca7d0",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "searchBox",
+          "class": "EditText",
+          "bounds_hint": [
+            136,
+            172,
+            1075,
+            230
+          ]
+        }
+      },
+      "description": "点击搜索框",
+      "legacy_from": "search",
+      "legacy_to": "search"
+    },
+    {
+      "from": "message__c928d28804",
+      "to": "likes_list__761adbe2d3",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "点赞 特异企鹅赞了你的回复",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            229,
+            354,
+            1248,
+            534
+          ]
+        }
+      },
+      "description": "点击粉丝",
+      "legacy_from": "message",
+      "legacy_to": "likes_list"
+    },
+    {
+      "from": "message__c928d28804",
+      "to": "broadcast__46c89bcdb3",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            152,
+            197,
+            344
+          ]
+        }
+      },
+      "description": "点击聊天",
+      "legacy_from": "message",
+      "legacy_to": "broadcast"
+    },
+    {
+      "from": "profile__04c9f72b4f",
+      "to": "profile__04c9f72b4f",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "exploeº 关注 17 粉丝 9 等级 Lv.7 设置形象 成为贴吧会员 吧经验加速，享游戏折扣，穿个性装扮 立即开通",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            0,
+            1280,
+            661
+          ]
+        }
+      },
+      "description": "点击设置",
+      "legacy_from": "profile",
+      "legacy_to": "profile"
+    },
+    {
+      "from": "home__0c844059ed",
+      "to": "competition_ranking__419b34caa2",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "派对",
+          "class": "RelativeLayout",
+          "bounds_hint": [
+            651,
+            2357,
+            1230,
+            2555
+          ]
+        }
+      },
+      "description": "点击搜索框",
+      "legacy_from": "home",
+      "legacy_to": "competition_ranking"
+    }
+  ],
+  "popups": [],
+  "blocks": [],
+  "metadata": {
+    "schema_version": "v5.route_page_uid.1",
+    "page_id_policy": "route_page_id = legacy_page_id + sha1(page_payload)[:10]",
+    "legacy_page_id_retained": true,
+    "generated_at": "2026-02-14",
+    "page_id_map": {
+      "home": "home__0c844059ed",
+      "profile": "profile__04c9f72b4f",
+      "spring_festival": "spring_festival__bd6c27a476",
+      "shop": "shop__acd2c194e2",
+      "enter_bar": "enter_bar__b9a4d734c2",
+      "message": "message__c928d28804",
+      "search": "search__6330bca7d0",
+      "likes_list": "likes_list__761adbe2d3",
+      "broadcast": "broadcast__46c89bcdb3",
+      "competition_ranking": "competition_ranking__419b34caa2"
+    }
+  }
+}

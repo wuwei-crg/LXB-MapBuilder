@@ -1,0 +1,13 @@
+{
+  "package": "com.taobao.taobao",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "应用首页",
+      "features": []
+    }
+  },
+  "transitions": [],
+  "popups": [],
+  "blocks": []
+}

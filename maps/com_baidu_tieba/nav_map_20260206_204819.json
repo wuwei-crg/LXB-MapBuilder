@@ -1,0 +1,361 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "百度贴吧首页，展示推荐贴子、直播内容及关注的贴吧入口",
+      "features": [
+        "搜索框",
+        "顶部导航切换",
+        "关注吧列表",
+        "推荐流内容",
+        "底部导航栏"
+      ]
+    },
+    "profile": {
+      "name": "我的",
+      "description": "百度贴吧个人中心，管理个人信息、签到任务、浏览足迹及关注的贴吧",
+      "features": [
+        "个人信息",
+        "会员中心",
+        "签到奖励",
+        "限时任务",
+        "我的足迹",
+        "关注列表",
+        "一键签到"
+      ]
+    },
+    "publish": {
+      "name": "发布页面",
+      "description": "发布各种类型的社区内容，包括文章、贴子、视频和求助",
+      "features": [
+        "类型切换",
+        "标题输入",
+        "正文编辑",
+        "所属板块选择",
+        "话题添加",
+        "展示范围设置",
+        "内容声明"
+      ]
+    },
+    "forum_list": {
+      "name": "进吧页",
+      "description": "管理和浏览已关注及推荐的贴吧",
+      "features": [
+        "浏览足迹",
+        "关注列表",
+        "吧单推荐",
+        "搜索入口"
+      ]
+    },
+    "shop": {
+      "name": "小卖部",
+      "description": "浏览各贴吧专属商店及周边推荐商品",
+      "features": [
+        "搜索",
+        "轮播位",
+        "店铺推荐",
+        "商品展示",
+        "底部导航"
+      ]
+    },
+    "message": {
+      "name": "通知",
+      "description": "展示各类社交互动通知（点赞、回复、提及、粉丝）及社区系统消息（互助、广播）。",
+      "features": [
+        "侧边栏导航",
+        "通知分类列表",
+        "底部导航栏"
+      ]
+    },
+    "home_live": {
+      "name": "直播首页",
+      "description": "浏览各类直播间及频道分类",
+      "features": [
+        "顶部频道切换、搜索、发布功能、分类导航栏、直播间卡片列表、底部主导航栏"
+      ]
+    },
+    "search": {
+      "name": "搜索页",
+      "description": "用户可在此页面进行全站内容搜索，查看搜索历史、快捷访问的贴吧以及实时热点榜单。",
+      "features": [
+        "搜索历史",
+        "快捷访问",
+        "热点榜单切换",
+        "实时热点列表"
+      ]
+    },
+    "followed_tiebas": {
+      "name": "我的吧",
+      "description": "展示用户关注和管理的贴吧列表",
+      "features": [
+        "返回",
+        "搜索",
+        "贴吧广场",
+        "签到",
+        "查看关注列表",
+        "查看管理列表"
+      ]
+    },
+    "create_post": {
+      "name": "发布贴子页",
+      "description": "用于编写并发布贴子内容，支持标题、正文输入，选择所属贴吧、话题及设置展示范围",
+      "features": [
+        "切换发布类型",
+        "标题输入",
+        "正文输入",
+        "多媒体附件",
+        "选择贴吧",
+        "添加话题",
+        "设置可见性",
+        "内容声明"
+      ]
+    },
+    "post_create_help": {
+      "name": "发布求助贴",
+      "description": "用户在此页面编辑并发布求助类帖子，可设置悬赏金额、添加标签及选择目标吧。",
+      "features": [
+        "输入标题",
+        "输入描述",
+        "上传图片/视频",
+        "设置悬赏金额",
+        "选择发布的吧",
+        "添加标签",
+        "设置可见范围"
+      ]
+    },
+    "post_help": {
+      "name": "发布求助",
+      "description": "用于编辑并发布带有悬赏金额的求助类帖子",
+      "features": [
+        "标题输入",
+        "内容描述输入",
+        "图片上传",
+        "悬赏设置",
+        "贴吧选择",
+        "标签添加",
+        "可见性设置"
+      ]
+    },
+    "create": {
+      "name": "发布求助",
+      "description": "发布求助帖子的编辑页面",
+      "features": [
+        "输入标题",
+        "输入描述",
+        "添加附件",
+        "设置悬赏",
+        "选择贴吧",
+        "添加标签",
+        "设置可见范围"
+      ]
+    },
+    "likes_list": {
+      "name": "点赞页",
+      "description": "展示用户收到的点赞记录列表",
+      "features": [
+        "通知列表展示",
+        "内容预览"
+      ]
+    },
+    "post": {
+      "name": "内容发布页",
+      "description": "在此页面用户可选择发布文章、贴子、视频或发起求助。当前正显示摄像头权限请求弹窗。",
+      "features": [
+        "内容类型切换",
+        "权限授权"
+      ]
+    },
+    "post_video": {
+      "name": "发布视频页",
+      "description": "用户进入发布视频功能时，系统弹出摄像头权限请求弹窗。",
+      "features": [
+        "权限请求确认",
+        "发布模式切换",
+        "退出发布"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击侧边栏"
+    },
+    {
+      "from": "home",
+      "to": "publish",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "home",
+      "to": "forum_list",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "shop",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "home_live",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "home",
+      "to": "followed_tiebas",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击全部关注"
+    },
+    {
+      "from": "publish",
+      "to": "publish",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击文章"
+    },
+    {
+      "from": "publish",
+      "to": "create_post",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击贴子"
+    },
+    {
+      "from": "publish",
+      "to": "post_create_help",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击求助"
+    },
+    {
+      "from": "publish",
+      "to": "post_help",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击请输入完整帖子标题"
+    },
+    {
+      "from": "publish",
+      "to": "create",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击正文输入框"
+    },
+    {
+      "from": "message",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击聊天"
+    },
+    {
+      "from": "message",
+      "to": "likes_list",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击@我的"
+    },
+    {
+      "from": "profile",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击设置形象"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "publish",
+      "to": "post",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击拍摄"
+    },
+    {
+      "from": "post_help",
+      "to": "post_video",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击贴贝余额"
+    }
+  ]
+}

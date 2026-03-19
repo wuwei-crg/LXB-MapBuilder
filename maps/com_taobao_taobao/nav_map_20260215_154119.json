@@ -1,0 +1,1036 @@
+{
+  "package": "com.taobao.taobao",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览商品推荐、搜索商品、进入各功能模块（如：百亿补贴、淘宝秒杀等）",
+      "features": [
+        "搜索、分类频道、特价商品展示、商品流、底部导航"
+      ]
+    },
+    "search": {
+      "name": "搜索结果页",
+      "description": "展示“高端小药盒”的商品搜索结果，支持筛选、排序及再次搜索",
+      "features": [
+        "商品列表展示",
+        "关键词搜索",
+        "拍照搜索",
+        "排序筛选功能"
+      ]
+    },
+    "scan": {
+      "name": "扫码页",
+      "description": "当前页面为扫码界面，用户可以通过摄像头扫描商品条码、快递单号或丰巢柜取件码。页面下方提供了相册入口，允许从本地图片中识别二维码。",
+      "features": [
+        "扫码识别",
+        "拍照切换",
+        "相册导入",
+        "红包入口"
+      ]
+    },
+    "message": {
+      "name": "消息",
+      "description": "展示各类交易物流、售后保障、优惠活动及互动消息，提供消息管理和搜索功能",
+      "features": [
+        "清除未读",
+        "搜索",
+        "通讯录",
+        "发起聊天",
+        "消息列表",
+        "底部导航"
+      ]
+    },
+    "cart": {
+      "name": "购物车",
+      "description": "显示购物车内的商品，提供管理、对比功能，空购物车时显示商品推荐。",
+      "features": [
+        "搜索",
+        "对比",
+        "管理",
+        "降价/分组/常购/失效过滤",
+        "推荐列表",
+        "底部导航",
+        "全选",
+        "结算"
+      ]
+    },
+    "profile": {
+      "name": "我的淘宝",
+      "description": "个人中心页面，展示用户资产、订单状态及各类功能入口",
+      "features": [
+        "个人信息",
+        "资产(红包/优惠券/金币)",
+        "订单追踪",
+        "功能卡片(农场/游戏等)",
+        "底部导航",
+        "猜你喜欢商品推荐"
+      ]
+    },
+    "following": {
+      "name": "关注页",
+      "description": "浏览已关注店铺的新品动态、兴趣内容",
+      "features": [
+        "搜索",
+        "扫码",
+        "切换频道",
+        "浏览动态",
+        "底部导航"
+      ]
+    },
+    "list": {
+      "name": "搜索结果页",
+      "description": "展示根据关键词搜索到的商品列表，提供筛选、排序和反馈功能",
+      "features": [
+        "商品列表",
+        "排序选项",
+        "筛选标签",
+        "搜索框",
+        "拍照搜索"
+      ]
+    },
+    "search_filter": {
+      "name": "搜索筛选",
+      "description": "对商品搜索结果进行多维度筛选，包括物流、优惠、评分、价格区间等",
+      "features": [
+        "地理位置修改",
+        "物流筛选",
+        "优惠筛选",
+        "店铺评分筛选",
+        "价格区间筛选",
+        "清空选择",
+        "确定"
+      ]
+    },
+    "survey": {
+      "name": "满意度调研",
+      "description": "填写淘宝搜索结果满意度反馈问卷以获取奖励",
+      "features": [
+        "五星评分",
+        "提交反馈"
+      ]
+    },
+    "takeaway_home": {
+      "name": "闪购外卖",
+      "description": "提供外卖订餐、超市便利、看病买药等本地生活服务",
+      "features": [
+        "分类导航",
+        "新人福利",
+        "商家列表",
+        "搜索",
+        "底部导航"
+      ]
+    },
+    "national_subsidy": {
+      "name": "国补频道",
+      "description": "浏览和购买政府补贴商品",
+      "features": [
+        "商品搜索",
+        "分类浏览",
+        "补贴商品列表",
+        "活动横幅"
+      ]
+    },
+    "fliggy_home": {
+      "name": "飞猪频道页",
+      "description": "飞猪旅游频道首页，提供酒店、机票、火车票、景点门票等预订服务及优惠活动",
+      "features": [
+        "搜索框",
+        "分类入口",
+        "领券活动",
+        "底部导航"
+      ]
+    },
+    "search_result": {
+      "name": "搜索结果页",
+      "description": "展示搜索到的商品列表，支持排序、筛选和跳转到详情或店铺",
+      "features": [
+        "搜索框",
+        "分类标签",
+        "排序筛选",
+        "商品列表"
+      ]
+    },
+    "video_feed": {
+      "name": "视频推荐页",
+      "description": "浏览推荐视频内容并支持查看相关商品",
+      "features": [
+        "视频播放",
+        "点赞",
+        "评论",
+        "分享",
+        "查看详情",
+        "分类导航"
+      ]
+    },
+    "activity_promotions": {
+      "name": "活动优惠",
+      "description": "展示活动优惠消息、红包提醒及根据搜索历史推荐的商品列表",
+      "features": [
+        "返回",
+        "设置",
+        "查看红包",
+        "商品比价",
+        "推荐商品跳转"
+      ]
+    },
+    "followed_list": {
+      "name": "关注店铺列表",
+      "description": "浏览已关注的店铺，支持搜索、排序筛选及进入店铺操作",
+      "features": [
+        "搜索商品",
+        "排序",
+        "筛选",
+        "店铺列表",
+        "进入店铺"
+      ]
+    },
+    "flash_sale": {
+      "name": "淘宝秒杀",
+      "description": "展示限时秒杀商品、大牌折扣及促销红包活动",
+      "features": [
+        "秒杀商品列表",
+        "搜索",
+        "品牌抢购",
+        "红包领取"
+      ]
+    },
+    "package_list": {
+      "name": "菜鸟驿站",
+      "description": "查看取件码、包裹状态及取件指引",
+      "features": [
+        "取件码展示",
+        "身份码核验指引",
+        "包裹详情查询",
+        "底部导航"
+      ]
+    },
+    "subsidies": {
+      "name": "百亿补贴",
+      "description": "浏览和领取百亿补贴活动中的商品及优惠券",
+      "features": [
+        "商品搜索",
+        "领券中心",
+        "补贴商品列表",
+        "活动分类导航"
+      ]
+    },
+    "search_list": {
+      "name": "搜索结果页",
+      "description": "展示搜索“迷你小药瓶”的商品列表，当前呼出了底部分享与功能菜单",
+      "features": [
+        "商品排序",
+        "筛选",
+        "商品展示",
+        "分享",
+        "快捷导航"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "搜索",
+          "content_desc": "搜索",
+          "class": "FrameLayout",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            1008,
+            297,
+            1237,
+            399
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home",
+      "to": "scan",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "扫一扫",
+          "content_desc": "扫一扫",
+          "class": "FrameLayout",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            65,
+            302,
+            157,
+            394
+          ]
+        }
+      },
+      "description": "点击扫一扫"
+    },
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "首页",
+          "content_desc": "首页",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            0,
+            2538,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息",
+          "content_desc": "消息",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            512,
+            2538,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "cart",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "购物车",
+          "content_desc": "购物车",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            768,
+            2538,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击购物车"
+    },
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的淘宝",
+          "content_desc": "我的淘宝",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            1024,
+            2538,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的淘宝"
+    },
+    {
+      "from": "home",
+      "to": "following",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "关注",
+          "class": "LinearLayout",
+          "parent_rid": "multi_tab",
+          "bounds_hint": [
+            0,
+            152,
+            222,
+            275
+          ]
+        }
+      },
+      "description": "点击关注"
+    },
+    {
+      "from": "search",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "btn_go_back",
+          "text": "返回上一页",
+          "content_desc": "返回上一页",
+          "class": "ImageView",
+          "bounds_hint": [
+            52,
+            191,
+            120,
+            259
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "search",
+      "to": "list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "更多",
+          "content_desc": "更多",
+          "class": "View",
+          "bounds_hint": [
+            511,
+            2520,
+            609,
+            2585
+          ]
+        }
+      },
+      "description": "点击更多菜单"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "searchEdit",
+          "text": "高端小药盒",
+          "class": "TextView",
+          "parent_rid": "search_bar_wrapper",
+          "bounds_hint": [
+            146,
+            176,
+            440,
+            274
+          ]
+        }
+      },
+      "description": "点击搜索输入框"
+    },
+    {
+      "from": "search",
+      "to": "search_filter",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "筛选按钮",
+          "content_desc": "筛选按钮",
+          "class": "View",
+          "bounds_hint": [
+            1113,
+            437,
+            1280,
+            533
+          ]
+        }
+      },
+      "description": "点击筛选按钮"
+    },
+    {
+      "from": "search",
+      "to": "survey",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "toolbar_review",
+          "text": "满意度调研",
+          "content_desc": "满意度调研",
+          "class": "ImageView",
+          "bounds_hint": [
+            1127,
+            2566,
+            1254,
+            2693
+          ]
+        }
+      },
+      "description": "点击反馈建议"
+    },
+    {
+      "from": "scan",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "返回 按钮",
+          "content_desc": "返回 按钮",
+          "class": "View",
+          "bounds_hint": [
+            10,
+            154,
+            192,
+            336
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "scan",
+      "to": "scan",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "tab_album",
+          "text": "相册",
+          "content_desc": "相册，已选中，按钮",
+          "class": "TextView",
+          "bounds_hint": [
+            0,
+            2303,
+            214,
+            2449
+          ]
+        }
+      },
+      "description": "点击相册"
+    },
+    {
+      "from": "home",
+      "to": "takeaway_home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "闪购",
+          "class": "LinearLayout",
+          "parent_rid": "multi_tab",
+          "bounds_hint": [
+            398,
+            152,
+            630,
+            275
+          ]
+        }
+      },
+      "description": "点击闪购"
+    },
+    {
+      "from": "home",
+      "to": "national_subsidy",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "国补",
+          "class": "LinearLayout",
+          "parent_rid": "multi_tab",
+          "bounds_hint": [
+            630,
+            152,
+            774,
+            275
+          ]
+        }
+      },
+      "description": "点击国补"
+    },
+    {
+      "from": "home",
+      "to": "fliggy_home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "飞猪",
+          "class": "LinearLayout",
+          "parent_rid": "multi_tab",
+          "bounds_hint": [
+            774,
+            152,
+            918,
+            275
+          ]
+        }
+      },
+      "description": "点击飞猪"
+    },
+    {
+      "from": "message",
+      "to": "search_result",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "搜索",
+          "content_desc": "搜索",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            902,
+            186,
+            984,
+            268
+          ]
+        }
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "cart",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "首页",
+          "content_desc": "首页",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            0,
+            2538,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "cart",
+      "to": "video_feed",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "视频",
+          "content_desc": "视频",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            256,
+            2538,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击视频"
+    },
+    {
+      "from": "cart",
+      "to": "activity_promotions",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息",
+          "content_desc": "消息",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            512,
+            2538,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "cart",
+      "to": "cart",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "购物车",
+          "content_desc": "购物车",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            768,
+            2538,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击购物车"
+    },
+    {
+      "from": "cart",
+      "to": "followed_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的淘宝",
+          "content_desc": "我的淘宝",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            1024,
+            2538,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的淘宝"
+    },
+    {
+      "from": "home",
+      "to": "flash_sale",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "淘宝秒杀",
+          "content_desc": "淘宝秒杀",
+          "class": "FrameLayout",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            284,
+            418,
+            492,
+            636
+          ]
+        }
+      },
+      "description": "点击淘宝秒杀"
+    },
+    {
+      "from": "home",
+      "to": "package_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "菜鸟驿站",
+          "content_desc": "菜鸟驿站",
+          "class": "FrameLayout",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            1040,
+            418,
+            1248,
+            636
+          ]
+        }
+      },
+      "description": "点击菜鸟驿站"
+    },
+    {
+      "from": "home",
+      "to": "subsidies",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "百亿补贴",
+          "content_desc": "百亿补贴",
+          "class": "FrameLayout",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            32,
+            418,
+            240,
+            636
+          ]
+        }
+      },
+      "description": "点击百亿补贴"
+    },
+    {
+      "from": "list",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "btn_go_back",
+          "text": "返回上一页",
+          "content_desc": "返回上一页",
+          "class": "ImageView",
+          "bounds_hint": [
+            52,
+            191,
+            120,
+            259
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "list",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "searchEdit",
+          "text": "日本进口小药盒",
+          "class": "TextView",
+          "parent_rid": "search_bar_wrapper",
+          "bounds_hint": [
+            146,
+            176,
+            542,
+            274
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "list",
+      "to": "scan",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "photoBtn",
+          "text": "拍立淘",
+          "content_desc": "拍立淘",
+          "class": "ImageView",
+          "bounds_hint": [
+            1008,
+            191,
+            1076,
+            259
+          ]
+        }
+      },
+      "description": "点击相机搜索"
+    },
+    {
+      "from": "list",
+      "to": "list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "uik_action_overflow",
+          "text": "更多3 按钮",
+          "content_desc": "更多3 按钮",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            1124,
+            146,
+            1280,
+            302
+          ]
+        }
+      },
+      "description": "点击购物车"
+    },
+    {
+      "from": "search",
+      "to": "search_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "searchbtn",
+          "text": "搜索",
+          "content_desc": "搜索",
+          "class": "Button",
+          "parent_rid": "vp_content",
+          "bounds_hint": [
+            1072,
+            318,
+            1241,
+            414
+          ]
+        }
+      },
+      "description": "点击搜索输入框"
+    },
+    {
+      "from": "search_filter",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "btn_go_back",
+          "text": "返回上一页",
+          "content_desc": "返回上一页",
+          "class": "ImageView",
+          "bounds_hint": [
+            52,
+            191,
+            120,
+            259
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "search_filter",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "search_bar_wrapper",
+          "text": "便携小药盒",
+          "class": "RelativeLayout",
+          "bounds_hint": [
+            146,
+            176,
+            1008,
+            274
+          ]
+        }
+      },
+      "description": "点击修改地址"
+    }
+  ],
+  "popups": [
+    {
+      "id": "popup_640_2093",
+      "type": "dialog",
+      "description": "淘金币春节活动弹窗-关闭按钮",
+      "close_locator": {
+        "text": "关闭按钮",
+        "content_desc": "关闭按钮",
+        "class": "ImageView",
+        "parent_rid": "tb_main_fragment",
+        "bounds_hint": [
+          578,
+          2030,
+          701,
+          2153
+        ]
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_845_395",
+      "type": "dialog",
+      "description": "商品反馈弹窗-关闭按钮",
+      "close_locator": {
+        "text": "https://img.alicdn.com/imgextra/i1/O1CN01V2AEi71itJSQhuPHh_!!6000000004470-2-tps-60-60.png 商品问题 https://img.alicdn.com/imgextra/i2/O1CN01KSBqZ11neGWWz9WfJ_!!6000000005114-2-tps-60-60.png 不感兴趣",
+        "class": "FrameLayout",
+        "bounds_hint": [
+          0,
+          0,
+          1280,
+          2772
+        ]
+      },
+      "first_seen_page": "search"
+    },
+    {
+      "id": "popup_1178_195",
+      "type": "dialog",
+      "description": "筛选面板-关闭按钮",
+      "close_locator": {
+        "resource_id": "uik_action_overflow",
+        "text": "更多3 按钮",
+        "content_desc": "更多3 按钮",
+        "class": "FrameLayout",
+        "bounds_hint": [
+          1124,
+          146,
+          1280,
+          302
+        ]
+      },
+      "first_seen_page": "search"
+    },
+    {
+      "id": "popup_640_1915",
+      "type": "dialog",
+      "description": "飞猪新人惊喜红包弹窗-开心收下按钮",
+      "close_locator": {
+        "resource_id": "tb_main_fragment",
+        "text": "闪购 国补 飞猪 不打烊 穿搭 居家 数码 推荐 搜索栏 雷克雅未克 拍立淘 搜索 首页 视频 消息 3 购物车 我的淘宝",
+        "class": "FrameLayout",
+        "bounds_hint": [
+          0,
+          0,
+          1280,
+          2720
+        ]
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_640_2030",
+      "type": "dialog",
+      "description": "天天砸金蛋弹窗-关闭按钮",
+      "close_locator": {
+        "bounds_hint": [
+          640,
+          2030,
+          640,
+          2030
+        ]
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_640_1880",
+      "type": "dialog",
+      "description": "砸金蛋兑红包弹窗",
+      "close_locator": {
+        "bounds_hint": [
+          640,
+          1880,
+          640,
+          1880
+        ]
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_962_2506",
+      "type": "dialog",
+      "description": "取件攻略弹窗-知道了按钮",
+      "close_locator": {
+        "resource_id": "ice-container",
+        "text": "下拉刷新 查询取件码 追踪未到站包裹 代取 收货密令 O1CN01s6VhPS1malvJyca6c_!!6000000004971-2-tps-96-56.png_q75.jpg_ 绿色公益 跑腿 身份码 寄快递 更省心 去寄件 寄快递 更省心 O1CN01rt8kPb1cV8uhETtGt_!!6000000003605-2-tps-436-256.png_q75.jpg_ O1CN01YpUrst1Eon7gm6y9K_!!6000000000399-2-tps-44-44.png_q75.jpg_ 去寄件 跑腿送 送快递 快递送到楼 跑腿送 送快递 O1CN01ezcjLy1PBpCeOfHlo_!!6000000001803-2-tps-436-256.png_q75.jpg_ O1CN01nyctoN1hreS9uWDWT_!!6000000004331-2-tps-44-44.png_q75.jpg_ 快递送到楼 校园淘 超低价 学生福利购 校园淘 超低价 O1CN01IOwDdK1sx6wqlYI8n_!!6000000005832-2-tps-436-256.png_q75.jpg_ O1CN01aoxKwf1tbsCJrZESS_!!6000000005921-2-tps-44-44.png_q75.jpg_ 学生福利购 O1CN01FcvFWI1OdTQko14sI_!!6000000001728-2-tps-560-400.png_460x460q75.jpg_ 暂无待取包裹 您可通过以下方式查询未展示包裹 添加包裹 绑定手机号 O1CN0147N91n1fkf9byrqj6_!!6000000004045-2-tps-1436-56.png_q75.jpg_ O1CN015wBqFv1ZgBbKbwVxl_!!6000000003223-2-tps-1053-1500.png_q75.jpg_ O1CN01MC0Xox220A7KDlgDm_!!6000000007057-2-tps-279-54.png_q75.jpg_ alldollscode O1CN01OSTvAT2Cq3BDiV0dx_!!2212852608524.jpg_q75.jpg_ 英菲克M9无线鼠标静音无声可充电typec笔记本电脑男生人体工学usb 学生专享| ¥39.00 红包抵后价 O1CN01g8EOf31PzkGeQ6cKr_!!6000000001912-2-yinhe.png_320x320q75.jpg_ 英菲克M9无线鼠标静音无声可充电typec笔记本电脑男生人体工学usb 学生专享| ¥39.00 红包抵后价 唐狮集团DESSO春秋冬季卫衣男士圆领长袖休闲上衣青少年加绒学生 学生专享| ¥68.00 红包抵后价 O1CN01j9B10f2AvQZVvSCYj_!!302388265.jpg_320x320q75.jpg_ 唐狮集团DESSO春秋冬季卫衣男士圆领长袖休闲上衣青少年加绒学生 ¥68.00 白象方便面桶装泡面整箱多口味免煮精炖红烧香辣夜宵速食官旗正品 学生专享| ¥21.90 红包抵后价 O1CN01Jus3JD1Lz3HyHV07C_!!6000000001369-2-yinhe.png_320x320q75.jpg_ 白象方便面桶装泡面整箱多口味免煮精炖红烧香辣夜宵速食官旗正品 ¥21.90 川崎正品网球带线回弹高弹耐打训练器单人带绳耐打固定训练器底座 学生专享| ¥9.90 红包抵后价 O1CN01nNyzGG2MZEmXwaMwo_!!4611686018427384801-2-item_pic.png_320x320q75.jpg_ 川崎正品网球带线回弹高弹耐打训练器单人带绳耐打固定训练器底座 ¥9.90 唯特医生猫草片猫咪化毛球片化毛膏猫咪专用维特祛除毛球营养温和 学生专享| ¥26.90 红包抵后价 O1CN01ZQt2ej1oKrQEeEPHR_!!197885207.jpg_320x320q75.jpg_ 唯特医生猫草片猫咪化毛球片化毛膏猫咪专用维特祛除毛球营养温和 ¥26.90 小推车置物架厨房落地卧室多层婴儿零食移动浴室卫生间收纳储物架 学生专享| ¥17.90 红包抵后价 O1CN01aM10Sx1pqHrpigLp4_!!2-item_pic.png_320x320q75.jpg_ 小推车置物架厨房落地卧室多层婴儿零食移动浴室卫生间收纳储物架 ¥17.90 免安装一体式学生宿舍床帘蚊帐支架杆伸缩上下铺通用加粗床帘架子 学生专享| ¥34.90 红包抵后价 O1CN01ODOq381NqvVBPkr0C_!!189261622.jpg_320x320q75.jpg_ 免安装一体式学生宿舍床帘蚊帐支架杆伸缩上下铺通用加粗床帘架子 ¥34.90 德国耳塞睡眠睡觉专用超级隔音不伤耳朵花朵防吵降噪神器女防噪声 学生专享| ¥14.70 红包抵后价 O1CN01A6zw3J1n3AWQuDc8Y_!!779635033.jpg_320x320q75.jpg_ 德国耳塞睡眠睡觉专用超级隔音不伤耳朵花朵防吵降噪神器女防噪声 ¥14.70 2XY银曜石双层手链双圈手串珠黑曜石男招财纯银转运情侣多圈高级 学生专享| ¥65.60 红包抵后价 O1CN018UBfJY2I5gdAv3Blw_!!129369235.jpg_320x320q75.jpg_ 2XY银曜石双层手链双圈手串珠黑曜石男招财纯银转运情侣多圈高级 ¥65.60 白象卤蛋鸡蛋即食整箱小吃小包装休闲零食食品熟食代餐官方旗舰店 学生专享| ¥28.90 红包抵后价 O1CN01FgBAZ51V4qqCzDyJd_!!6000000002600-2-yinhe.png_320x320q75.jpg_ 白象卤蛋鸡蛋即食整箱小吃小包装休闲零食食品熟食代餐官方旗舰店 ¥28.90 PEAK/匹克网球正品高弹性专业训练回弹无压网球耐打耐磨比赛用球 学生专享| ¥15.10 红包抵后价 O1CN01HXYF8D235wT5gQgmq_!!2-item_pic.png_320x320q75.jpg_ PEAK/匹克网球正品高弹性专业训练回弹无压网球耐打耐磨比赛用球 ¥15.10 驼背部矫正神器开肩美背舒适佳透气腰隐形护带男女通用内穿矫姿带 学生专享| ¥35.10 红包抵后价 O1CN01wSmXQ81bI1vEV9bxO_!!6000000003441-2-yinhe.png_320x320q75.jpg_ 驼背部矫正神器开肩美背舒适佳透气腰隐形护带男女通用内穿矫姿带 ¥35.10 小推车置物架家用零食落地多层客厅收纳书包架移动厨房果蔬菜篮子 学生专享| ¥15.90 红包抵后价 O1CN01yiBIH91liGW1gWkFD_!!6000000004852-2-yinhe.png_320x320q75.jpg_ 小推车置物架家用零食落地多层客厅收纳书包架移动厨房果蔬菜篮子 ¥15.90 伸缩床帘支架大学生寝室宿舍蚊帐加厚挂床幔杆子上下铺单人床加粗 学生专享| ¥9.10 红包抵后价 O1CN01rIPlVC1NqvFIO39Vf_!!189261622.jpg_320x320q75.jpg_ 伸缩床帘支架大学生寝室宿舍蚊帐加厚挂床幔杆子上下铺单人床加粗 ¥9.10 英菲克M1二代无线鼠标蓝牙静音无声typec可充电笔记本男女生无限 学生专享| ¥29.90 红包抵后价 O1CN01zi3i2K1SJ68h3H2Sj_!!6000000002225-2-yinhe.png_320x320q75.jpg_ 英菲克M1二代无线鼠标蓝牙静音无声typec可充电笔记本男女生无限 ¥29.90 新款学生宿舍U型铝合金弯头轨道床帘支架双滑轨杆子伸缩通用2米长 学生专享| ¥76.50 红包抵后价 O1CN01QICkqr1NqvUs5iWRO_!!189261622.jpg_320x320q75.jpg_ 新款学生宿舍U型铝合金弯头轨道床帘支架双滑轨杆子伸缩通用2米长 ¥76.50 白象火鸡面袋装方便面泡面奶油咸蛋黄干拌面经典组合夜宵速食食品 学生专享| ¥15.90 红包抵后价 O1CN01h2SVJb1zqsshF3sD1_!!6000000006766-2-yinhe.png_320x320q75.jpg_ 白象火鸡面袋装方便面泡面奶油咸蛋黄干拌面经典组合夜宵速食食品 匹克乒乓球拍正品胶皮小学生儿童初学者高弹力专业兵乓横直单双拍 学生专享| ¥19.90 红包抵后价 O1CN01Clx0IZ235wZ4aDtva_!!2-item_pic.png_320x320q75.jpg_ 匹克乒乓球拍正品胶皮小学生儿童初学者高弹力专业兵乓横直单双拍 ¥19.90 【普陀山直发】乌金黑曜石本命佛手串男蛇年本命年手链女款转运珠 学生专享| ¥124.20 红包抵后价 O1CN01oN2AUe1EbVd5ZNMm0_!!2209283080370.jpg_320x320q75.jpg_ 【普陀山直发】乌金黑曜石本命佛手串男蛇年本命年手链女款转运珠 ¥124.20 折叠晾衣架落地室内家用阳台卧室不锈钢室外凉伸缩杆式晒被子神器 学生专享| ¥19.30 红包抵后价 O1CN01YVwg8R1EdKpDeClsR_!!6000000000374-2-yinhe.png_320x320q75.jpg_ 折叠晾衣架落地室内家用阳台卧室不锈钢室外凉伸缩杆式晒被子神器 ¥19.30 加载中 O1CN01NHXhGX1bfqTTq1Hhg_!!6000000003493-2-tps-72-72.png_90x90q75.jpg_ O1CN01OEAW7Y1nMP3MwvsBv_!!6000000005075-2-tps-240-240.png_q75.jpg_ O1CN01R7gZ0Z1xIsByu3APj_!!6000000006421-2-tps-1504-356.png_q75.jpg_ O1CN01rfaQmW1KHiCmC0Az8_!!6000000001139-2-tps-1500-2400.png_q75.jpg_",
+        "class": "View",
+        "bounds_hint": [
+          0,
+          0,
+          1283,
+          2721
+        ]
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_640_2617",
+      "type": "dialog",
+      "description": "更多功能与分享菜单-取消按钮",
+      "close_locator": {
+        "resource_id": "uik_menu_panel_view",
+        "text": "关闭浮层",
+        "content_desc": "关闭浮层",
+        "class": "View",
+        "bounds_hint": [
+          0,
+          0,
+          1280,
+          2772
+        ]
+      },
+      "first_seen_page": "list"
+    },
+    {
+      "id": "popup_859_1750",
+      "type": "dialog",
+      "description": "权限提示弹窗-取消按钮",
+      "close_locator": {
+        "resource_id": "button2",
+        "text": "取消",
+        "class": "Button",
+        "bounds_hint": [
+          741,
+          1654,
+          949,
+          1830
+        ]
+      },
+      "first_seen_page": "search"
+    }
+  ],
+  "blocks": []
+}

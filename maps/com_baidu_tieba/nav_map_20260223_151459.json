@@ -1,0 +1,372 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "feed": {
+      "name": "推荐页",
+      "description": "贴吧内容聚合浏览",
+      "features": [
+        "分类切换",
+        "搜索",
+        "发帖"
+      ]
+    },
+    "feed__n_7111960e": {
+      "name": "推荐页",
+      "description": "贴吧信息流",
+      "features": [
+        "下拉刷新",
+        "搜索"
+      ]
+    },
+    "profile__n_b950614b": {
+      "name": "我的",
+      "description": "个人中心",
+      "features": [
+        "足迹",
+        "关注列表",
+        "签到"
+      ]
+    },
+    "mall_street__n_e7746bbb": {
+      "name": "小卖部步行街",
+      "description": "电商聚合页",
+      "features": [
+        "搜索",
+        "Banner",
+        "商品流"
+      ]
+    },
+    "notification_center__n_ef8773f8": {
+      "name": "通知中心",
+      "description": "消息聚合页",
+      "features": [
+        "消息分类",
+        "侧边栏管理"
+      ]
+    },
+    "profile__n_e203c427": {
+      "name": "个人中心",
+      "description": "用户主页及功能聚合",
+      "features": [
+        "数据统计",
+        "常用功能",
+        "任务中心"
+      ]
+    },
+    "feed__n_d57cb779": {
+      "name": "贴吧首页",
+      "description": "资讯与互动流",
+      "features": [
+        "搜索",
+        "发帖",
+        "导航"
+      ]
+    },
+    "feed__n_ad323730": {
+      "name": "推荐页",
+      "description": "贴吧内容推荐流",
+      "features": [
+        "下拉刷新"
+      ]
+    },
+    "spring_festival__n_eb91a77f": {
+      "name": "春节专题",
+      "description": "春节活动聚合页",
+      "features": [
+        "新春打分",
+        "年味聚焦"
+      ]
+    },
+    "feed__n_f114a205": {
+      "name": "贴吧推荐页",
+      "description": "信息流浏览",
+      "features": [
+        "搜索",
+        "分类切换"
+      ]
+    },
+    "live_feed__n_4c1fa34e": {
+      "name": "直播广场",
+      "description": "直播推荐流",
+      "features": [
+        "分类切换"
+      ]
+    },
+    "channel_selector__n_22a6ad85": {
+      "name": "选择聊天频道",
+      "description": "管理/添加常用聊天频道",
+      "features": [
+        "无"
+      ]
+    },
+    "avatar_editor__n_ca785e55": {
+      "name": "虚拟形象捏脸",
+      "description": "角色外观定制",
+      "features": [
+        "保存",
+        "切换分类"
+      ]
+    },
+    "vip_purchase__n_cf337081": {
+      "name": "会员购买页",
+      "description": "VIP开通与续费",
+      "features": [
+        "套餐选择",
+        "支付"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "feed",
+      "to": "feed__n_7111960e",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "首页",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            0,
+            2555,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "feed",
+      "to": "profile__n_b950614b",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "进吧",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            256,
+            2555,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "feed",
+      "to": "mall_street__n_e7746bbb",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "小卖部",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            512,
+            2555,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "feed",
+      "to": "notification_center__n_ef8773f8",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            768,
+            2555,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "feed",
+      "to": "profile__n_e203c427",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            1024,
+            2555,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "feed__n_7111960e",
+      "to": "feed__n_d57cb779",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "有料",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            344,
+            177,
+            492,
+            239
+          ]
+        }
+      },
+      "description": "点击有料"
+    },
+    {
+      "from": "feed__n_7111960e",
+      "to": "feed__n_ad323730",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "推荐",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            492,
+            177,
+            640,
+            239
+          ]
+        }
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "feed__n_7111960e",
+      "to": "spring_festival__n_eb91a77f",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "春节",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            640,
+            177,
+            788,
+            239
+          ]
+        }
+      },
+      "description": "点击春节"
+    },
+    {
+      "from": "feed__n_7111960e",
+      "to": "feed__n_f114a205",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "全部关注",
+          "class": "ViewGroup",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            36,
+            407,
+            177,
+            660
+          ]
+        }
+      },
+      "description": "点击全部关注"
+    },
+    {
+      "from": "feed__n_7111960e",
+      "to": "live_feed__n_4c1fa34e",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "直播",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            788,
+            177,
+            936,
+            239
+          ]
+        }
+      },
+      "description": "点击宫漫吧"
+    },
+    {
+      "from": "notification_center__n_ef8773f8",
+      "to": "channel_selector__n_22a6ad85",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "管理",
+          "class": "LinearLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            0,
+            2352,
+            197,
+            2544
+          ]
+        }
+      },
+      "description": "点击管理"
+    },
+    {
+      "from": "profile__n_e203c427",
+      "to": "avatar_editor__n_ca785e55",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "设置形象",
+          "class": "LinearLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            1054,
+            393,
+            1243,
+            442
+          ]
+        }
+      },
+      "description": "点击设置"
+    },
+    {
+      "from": "profile__n_e203c427",
+      "to": "vip_purchase__n_cf337081",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            459,
+            358,
+            501,
+            400
+          ]
+        }
+      },
+      "description": "点击浏览历史"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

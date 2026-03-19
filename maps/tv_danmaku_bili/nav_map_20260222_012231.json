@@ -1,0 +1,1244 @@
+{
+  "package": "tv.danmaku.bili",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览推荐视频内容",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "分类筛选"
+      ]
+    },
+    "search": {
+      "name": "搜索页",
+      "description": "执行搜索操作并查看热搜/历史记录",
+      "features": [
+        "搜索框",
+        "热搜列表",
+        "搜索历史",
+        "键盘输入"
+      ]
+    },
+    "message": {
+      "name": "消息页面",
+      "description": "查看互动通知和关注动态",
+      "features": [
+        "回复与@",
+        "收到喜欢",
+        "新增粉丝",
+        "消息列表"
+      ]
+    },
+    "follow": {
+      "name": "关注页",
+      "description": "查看已关注UP主的动态和直播状态",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "直播列表"
+      ]
+    },
+    "upload_select": {
+      "name": "上传选择页",
+      "description": "从相册选择视频或图片进行上传",
+      "features": [
+        "媒体选择",
+        "分类筛选"
+      ]
+    },
+    "profile": {
+      "name": "个人主页",
+      "description": "查看个人信息、创作中心及游戏服务",
+      "features": [
+        "离线缓存",
+        "历史记录",
+        "我的收藏",
+        "稍后再看",
+        "创作中心",
+        "稿件管理",
+        "创作激励",
+        "有奖活动",
+        "开播福利",
+        "主播中心",
+        "直播数据",
+        "主播活动",
+        "我的游戏",
+        "我的预约",
+        "下载管理",
+        "小游戏中心"
+      ]
+    },
+    "category_list": {
+      "name": "分区列表",
+      "description": "展示视频内容分类，用户可选择感兴趣的分区浏览内容",
+      "features": [
+        "快捷访问编辑",
+        "全部分区网格列表"
+      ]
+    },
+    "rank_list": {
+      "name": "排行榜",
+      "description": "查看游戏热度排名及下载",
+      "features": [
+        "下拉刷新",
+        "榜单切换",
+        "游戏列表"
+      ]
+    },
+    "activity": {
+      "name": "活动页",
+      "description": "展示游戏相关活动和福利信息",
+      "features": [
+        "下拉刷新",
+        "活动列表",
+        "签到功能"
+      ]
+    },
+    "hot_search": {
+      "name": "热搜榜",
+      "description": "查看当前热门话题和搜索趋势",
+      "features": [
+        "热搜列表",
+        "话题详情跳转"
+      ]
+    },
+    "search_result": {
+      "name": "搜索结果页",
+      "description": "展示PV MOUZ相关赛事直播、视频及图文内容",
+      "features": [
+        "下拉刷新",
+        "内容列表",
+        "筛选排序"
+      ]
+    },
+    "notifications": {
+      "name": "回复与@",
+      "description": "查看用户收到的评论、回复和@消息通知",
+      "features": [
+        "消息列表",
+        "回复操作",
+        "点赞操作"
+      ]
+    },
+    "followers_list": {
+      "name": "新增粉丝列表",
+      "description": "查看关注我的用户列表并进行回关操作",
+      "features": [
+        "粉丝列表",
+        "回关按钮"
+      ]
+    },
+    "following_list": {
+      "name": "我的关注",
+      "description": "查看已关注的用户列表，支持搜索和排序",
+      "features": [
+        "搜索关注用户",
+        "排序方式切换",
+        "直播状态显示"
+      ]
+    },
+    "gallery": {
+      "name": "最近项目",
+      "description": "选择相册/文件夹以上传图片或视频",
+      "features": [
+        "相册列表",
+        "草稿箱入口"
+      ]
+    },
+    "draft_box": {
+      "name": "草稿箱",
+      "description": "查看和管理未发布的草稿内容",
+      "features": [
+        "空状态提示",
+        "返回导航"
+      ]
+    },
+    "upload": {
+      "name": "最近项目",
+      "description": "选择本地图片/视频进行上传",
+      "features": [
+        "内容网格展示",
+        "分类筛选(全部/视频/照片)",
+        "底部操作栏"
+      ]
+    },
+    "camera": {
+      "name": "相机页面",
+      "description": "拍摄照片或录制视频",
+      "features": [
+        "相机预览",
+        "权限说明"
+      ]
+    },
+    "publish_dynamic": {
+      "name": "发布动态",
+      "description": "发布图文/视频动态",
+      "features": [
+        "图片上传",
+        "标题输入",
+        "内容编辑",
+        "可见性设置"
+      ]
+    },
+    "permission_request": {
+      "name": "相机权限说明页",
+      "description": "展示相机权限使用说明并请求用户授权",
+      "features": [
+        "权限说明文本",
+        "权限请求弹窗"
+      ]
+    },
+    "list": {
+      "name": "家装房产列表页",
+      "description": "浏览家装、装修、房产相关视频内容",
+      "features": [
+        "下拉刷新",
+        "视频卡片列表"
+      ]
+    },
+    "test_schedule": {
+      "name": "开测表",
+      "description": "查看游戏测试/公测时间表",
+      "features": [
+        "按日期分组的游戏列表",
+        "关注/预约按钮"
+      ]
+    },
+    "growth_plan": {
+      "name": "成长计划-装扮特权",
+      "description": "查看并领取装扮特权",
+      "features": [
+        "装扮展示",
+        "权益说明",
+        "限时领取提示"
+      ]
+    },
+    "cloud_game_list": {
+      "name": "云游戏列表",
+      "description": "浏览和启动云游戏服务",
+      "features": [
+        "我的云玩状态",
+        "福利领取",
+        "游戏列表"
+      ]
+    },
+    "gifts": {
+      "name": "我的礼包",
+      "description": "查看和管理用户的游戏礼包、活动奖品及已过期礼包",
+      "features": [
+        "礼包列表展示",
+        "分类切换"
+      ]
+    },
+    "voucher_list": {
+      "name": "我的代金券",
+      "description": "查看和管理已领取、已过期和已使用的代金券",
+      "features": [
+        "空状态提示",
+        "Tab切换"
+      ]
+    },
+    "game_event_detail": {
+      "name": "游戏赛事详情",
+      "description": "查看CSGO赛事直播、赛程及比分信息",
+      "features": [
+        "直播观看",
+        "全部赛程",
+        "积分排名",
+        "赛事预测",
+        "赛事视频",
+        "赛程日历"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "推荐,7之2,标签",
+          "content_desc": "推荐,7之2,标签",
+          "class": "ViewGroup",
+          "parent_rid": "tabs",
+          "bounds_hint": [
+            181,
+            334,
+            359,
+            451
+          ]
+        }
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "expand_search",
+          "text": "搜索栏，按钮",
+          "content_desc": "搜索栏，按钮",
+          "class": "LinearLayout",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            221,
+            188,
+            941,
+            298
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息,按钮",
+          "content_desc": "消息,按钮",
+          "class": "FrameLayout",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            1130,
+            168,
+            1280,
+            318
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "follow",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "关注,5之2,标签",
+          "content_desc": "关注,5之2,标签",
+          "class": "FrameLayout",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            256,
+            2503,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击关注"
+    },
+    {
+      "from": "home",
+      "to": "upload_select",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "发布内容,5之3,标签",
+          "content_desc": "发布内容,5之3,标签",
+          "class": "FrameLayout",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            512,
+            2503,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的,5之5,标签",
+          "content_desc": "我的,5之5,标签",
+          "class": "FrameLayout",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            1024,
+            2503,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "home",
+      "to": "category_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "category_click_area",
+          "text": "分区，按钮",
+          "class": "FrameLayout",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            1104,
+            334,
+            1280,
+            451
+          ]
+        }
+      },
+      "description": "点击分区"
+    },
+    {
+      "from": "home",
+      "to": "rank_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "排行榜",
+          "class": "ActionBar$d",
+          "bounds_hint": [
+            256,
+            2535,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击排行榜"
+    },
+    {
+      "from": "home",
+      "to": "activity",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "发现",
+          "class": "ActionBar$d",
+          "bounds_hint": [
+            768,
+            2535,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击发现"
+    },
+    {
+      "from": "search",
+      "to": "hot_search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "container_entrance",
+          "text": "完整榜单",
+          "class": "LinearLayout",
+          "parent_rid": "search_discover_list",
+          "bounds_hint": [
+            1046,
+            343,
+            1280,
+            395
+          ]
+        }
+      },
+      "description": "点击完整榜单"
+    },
+    {
+      "from": "search",
+      "to": "search_result",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "PV vs MOUZ PGL",
+          "class": "ViewGroup",
+          "parent_rid": "search_discover_list",
+          "bounds_hint": [
+            640,
+            425,
+            1280,
+            538
+          ]
+        }
+      },
+      "description": "点击刷新发现"
+    },
+    {
+      "from": "message",
+      "to": "notifications",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "回复与@\n",
+          "content_desc": "回复与@\n",
+          "class": "View",
+          "bounds_hint": [
+            104,
+            295,
+            448,
+            631
+          ]
+        }
+      },
+      "description": "点击回复与@"
+    },
+    {
+      "from": "message",
+      "to": "followers_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "新增粉丝\n",
+          "content_desc": "新增粉丝\n",
+          "class": "View",
+          "bounds_hint": [
+            832,
+            295,
+            1176,
+            631
+          ]
+        }
+      },
+      "description": "点击新增粉丝"
+    },
+    {
+      "from": "follow",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "首页,5之1,标签",
+          "content_desc": "首页,5之1,标签",
+          "class": "FrameLayout",
+          "parent_rid": "dy_list",
+          "bounds_hint": [
+            0,
+            2503,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "follow",
+      "to": "follow",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "title",
+          "text": "关注",
+          "class": "TextView",
+          "bounds_hint": [
+            585,
+            201,
+            695,
+            286
+          ]
+        }
+      },
+      "description": "点击关注"
+    },
+    {
+      "from": "follow",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的,5之5,标签",
+          "content_desc": "我的,5之5,标签",
+          "class": "FrameLayout",
+          "parent_rid": "dy_list",
+          "bounds_hint": [
+            1024,
+            2503,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "follow",
+      "to": "upload_select",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "发布内容,5之3,标签",
+          "content_desc": "发布内容,5之3,标签",
+          "class": "FrameLayout",
+          "parent_rid": "dy_list",
+          "bounds_hint": [
+            512,
+            2503,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "follow",
+      "to": "following_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "dy_more_container",
+          "text": "8人直播中 · 更多",
+          "class": "LinearLayout",
+          "parent_rid": "dy_list",
+          "bounds_hint": [
+            898,
+            458,
+            1280,
+            510
+          ]
+        }
+      },
+      "description": "点击更多"
+    },
+    {
+      "from": "upload_select",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "iv_album_close",
+          "class": "ImageView",
+          "bounds_hint": [
+            39,
+            204,
+            117,
+            282
+          ]
+        }
+      },
+      "description": "点击关闭"
+    },
+    {
+      "from": "upload_select",
+      "to": "gallery",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "最近项目",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            378,
+            152,
+            901,
+            334
+          ]
+        }
+      },
+      "description": "点击最近项目"
+    },
+    {
+      "from": "upload_select",
+      "to": "draft_box",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "tv_album_draft",
+          "text": "草稿箱",
+          "class": "TextView",
+          "bounds_hint": [
+            1115,
+            209,
+            1241,
+            277
+          ]
+        }
+      },
+      "description": "点击草稿箱"
+    },
+    {
+      "from": "upload_select",
+      "to": "upload",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "全部",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            334,
+            426,
+            477
+          ]
+        }
+      },
+      "description": "点击全部"
+    },
+    {
+      "from": "upload_select",
+      "to": "upload_select",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "视频",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            426,
+            334,
+            852,
+            477
+          ]
+        }
+      },
+      "description": "点击视频"
+    },
+    {
+      "from": "upload_select",
+      "to": "camera",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "cp_tab_text",
+          "text": "拍摄",
+          "class": "TextView",
+          "parent_rid": "wtlTabs",
+          "bounds_hint": [
+            404,
+            2616,
+            506,
+            2686
+          ]
+        }
+      },
+      "description": "点击拍摄"
+    },
+    {
+      "from": "upload_select",
+      "to": "publish_dynamic",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "cp_tab_text",
+          "text": "发图文",
+          "class": "TextView",
+          "parent_rid": "wtlTabs",
+          "bounds_hint": [
+            1029,
+            2620,
+            1167,
+            2682
+          ]
+        }
+      },
+      "description": "点击发图文"
+    },
+    {
+      "from": "profile",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "首页,5之1,标签",
+          "content_desc": "首页,5之1,标签",
+          "class": "FrameLayout",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            0,
+            2503,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "profile",
+      "to": "follow",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "关注,5之2,标签",
+          "content_desc": "关注,5之2,标签",
+          "class": "FrameLayout",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            256,
+            2503,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击关注"
+    },
+    {
+      "from": "profile",
+      "to": "upload_select",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "发布内容,5之3,标签",
+          "content_desc": "发布内容,5之3,标签",
+          "class": "FrameLayout",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            512,
+            2503,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "profile",
+      "to": "permission_request",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "mine_scan",
+          "class": "ImageView",
+          "bounds_hint": [
+            869,
+            155,
+            1006,
+            292
+          ]
+        }
+      },
+      "description": "点击空间"
+    },
+    {
+      "from": "category_list",
+      "to": "list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "家装房产",
+          "class": "View",
+          "bounds_hint": [
+            20,
+            2161,
+            330,
+            2389
+          ]
+        }
+      },
+      "description": "点击家装房产"
+    },
+    {
+      "from": "home",
+      "to": "list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "最新",
+          "class": "LinearLayout",
+          "bounds_hint": [
+            960,
+            296,
+            1280,
+            419
+          ]
+        }
+      },
+      "description": "点击最新"
+    },
+    {
+      "from": "activity",
+      "to": "test_schedule",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "开测表",
+          "class": "ActionBar$d",
+          "bounds_hint": [
+            442,
+            152,
+            715,
+            308
+          ]
+        }
+      },
+      "description": "点击开测表"
+    },
+    {
+      "from": "profile",
+      "to": "growth_plan",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "成长计划",
+          "class": "ViewGroup",
+          "parent_rid": "rv_enter",
+          "bounds_hint": [
+            720,
+            354,
+            921,
+            530
+          ]
+        }
+      },
+      "description": "点击立即玩"
+    },
+    {
+      "from": "profile",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "btn_game_action",
+          "text": "下载",
+          "class": "FrameLayout",
+          "parent_rid": "vp_list",
+          "bounds_hint": [
+            999,
+            2529,
+            1175,
+            2562
+          ]
+        }
+      },
+      "description": "点击下载"
+    },
+    {
+      "from": "profile",
+      "to": "cloud_game_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "云畅玩",
+          "class": "ViewGroup",
+          "parent_rid": "rv_enter",
+          "bounds_hint": [
+            39,
+            354,
+            240,
+            529
+          ]
+        }
+      },
+      "description": "点击云畅玩"
+    },
+    {
+      "from": "profile",
+      "to": "gifts",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的礼包",
+          "class": "ViewGroup",
+          "parent_rid": "rv_enter",
+          "bounds_hint": [
+            266,
+            354,
+            467,
+            529
+          ]
+        }
+      },
+      "description": "点击我的礼包"
+    },
+    {
+      "from": "profile",
+      "to": "voucher_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "代金券",
+          "class": "ViewGroup",
+          "parent_rid": "rv_enter",
+          "bounds_hint": [
+            1174,
+            354,
+            1280,
+            529
+          ]
+        }
+      },
+      "description": "点击代金券"
+    },
+    {
+      "from": "search",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "转到上一层级",
+          "content_desc": "转到上一层级",
+          "class": "ImageButton",
+          "bounds_hint": [
+            0,
+            152,
+            130,
+            282
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "et_search",
+          "text": " 鸣潮",
+          "class": "EditText",
+          "bounds_hint": [
+            130,
+            168,
+            1052,
+            266
+          ]
+        }
+      },
+      "description": "点击鸣潮"
+    },
+    {
+      "from": "search_result",
+      "to": "search_result",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "tab_title",
+          "text": "综合",
+          "class": "TextView",
+          "parent_rid": "pager_layout",
+          "bounds_hint": [
+            0,
+            315,
+            182,
+            445
+          ]
+        }
+      },
+      "description": "点击综合"
+    },
+    {
+      "from": "search_result",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "tab_title",
+          "text": "番剧",
+          "class": "TextView",
+          "parent_rid": "pager_layout",
+          "bounds_hint": [
+            182,
+            315,
+            358,
+            445
+          ]
+        }
+      },
+      "description": "点击番剧"
+    },
+    {
+      "from": "search_result",
+      "to": "game_event_detail",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "match_all_btn",
+          "text": "赛事专题",
+          "class": "TextView",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            1039,
+            495,
+            1195,
+            547
+          ]
+        }
+      },
+      "description": "点击赛事专题"
+    },
+    {
+      "from": "notifications",
+      "to": "notifications",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "全部",
+          "class": "View",
+          "bounds_hint": [
+            29,
+            339,
+            185,
+            495
+          ]
+        }
+      },
+      "description": "点击全部"
+    },
+    {
+      "from": "following_list",
+      "to": "following_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "dy_iv_search",
+          "class": "ImageView",
+          "bounds_hint": [
+            78,
+            367,
+            150,
+            439
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "draft_box",
+      "to": "upload_select",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "activity_draft_img_finish",
+          "class": "ImageView",
+          "bounds_hint": [
+            0,
+            152,
+            150,
+            295
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "publish_dynamic",
+      "to": "publish_dynamic",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "publish_bt",
+          "text": "发布",
+          "class": "TextView",
+          "bounds_hint": [
+            1072,
+            198,
+            1241,
+            289
+          ]
+        }
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "publish_dynamic",
+      "to": "gallery",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "following_image_view",
+          "class": "ImageView",
+          "bounds_hint": [
+            39,
+            347,
+            299,
+            607
+          ]
+        }
+      },
+      "description": "点击稿件"
+    },
+    {
+      "from": "permission_request",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "拒绝",
+          "class": "Button",
+          "parent_rid": "parentPanel",
+          "bounds_hint": [
+            129,
+            2249,
+            1150,
+            2408
+          ]
+        }
+      },
+      "description": "点击拒绝"
+    }
+  ],
+  "popups": [
+    {
+      "id": "popup_54_893",
+      "type": "dialog",
+      "description": "底部横幅广告-关闭按钮",
+      "close_locator": {
+        "text": "物华弥新 限定器者太阳神鸟登场 「日升如恒」版本开启 下载",
+        "class": "ViewGroup",
+        "parent_rid": "tri_home_pager",
+        "bounds_hint": [
+          39,
+          446,
+          1241,
+          1558
+        ]
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_480_731",
+      "type": "dialog",
+      "description": "新春福利弹窗-领取按钮",
+      "close_locator": {
+        "bounds_hint": [
+          480,
+          731,
+          480,
+          731
+        ]
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_498_786",
+      "type": "permission",
+      "description": "相机权限请求-仅在使用中允许按钮",
+      "close_locator": {
+        "resource_id": "dialog_dim_bg",
+        "class": "View",
+        "bounds_hint": [
+          0,
+          0,
+          1280,
+          2772
+        ]
+      },
+      "first_seen_page": "upload_select"
+    },
+    {
+      "id": "popup_54_893",
+      "type": "dialog",
+      "description": "底部横幅广告-关闭按钮",
+      "close_locator": {
+        "text": "更新 三国群英传：策定九州 9.1 策略",
+        "class": "ViewGroup",
+        "parent_rid": "tri_home_pager",
+        "bounds_hint": [
+          39,
+          590,
+          623,
+          1144
+        ]
+      },
+      "first_seen_page": "home"
+    }
+  ],
+  "blocks": []
+}

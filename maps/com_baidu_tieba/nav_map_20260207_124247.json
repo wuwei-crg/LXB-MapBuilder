@@ -1,0 +1,387 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览贴吧推荐帖子和直播内容",
+      "features": [
+        "内容流卡片",
+        "频道切换",
+        "搜索",
+        "发布帖子",
+        "底部导航"
+      ]
+    },
+    "profile": {
+      "name": "我的",
+      "description": "个人主页与任务中心，展示签到进度、浏览足迹及关注的贴吧",
+      "features": [
+        "每日签到",
+        "浏览足迹",
+        "关注列表管理",
+        "一键签到"
+      ]
+    },
+    "forum_list": {
+      "name": "进吧",
+      "description": "展示用户最近访问、关注的贴吧以及推荐的贴吧合集内容",
+      "features": [
+        "搜索",
+        "最近访问列表",
+        "关注贴吧列表",
+        "吧单推荐",
+        "底部导航"
+      ]
+    },
+    "message": {
+      "name": "消息",
+      "description": "查看系统通知、互动消息及快捷进入关注的贴吧",
+      "features": [
+        "左侧贴吧快捷导航",
+        "点赞列表",
+        "回复列表",
+        "@我的列表",
+        "粉丝列表",
+        "吧友互助",
+        "吧广播"
+      ]
+    },
+    "store": {
+      "name": "小卖部",
+      "description": "百度贴吧应用内的商城页面，提供商品搜索、分类浏览及店铺推荐功能",
+      "features": [
+        "搜商品",
+        "轮播广告",
+        "店铺入口",
+        "商品列表",
+        "底部导航"
+      ]
+    },
+    "search": {
+      "name": "搜索页",
+      "description": "用户可以在此进行内容搜索，查看历史搜索记录和当前热榜信息。",
+      "features": [
+        "搜索内容输入",
+        "清除历史记录",
+        "快速访问贴吧",
+        "热榜分类切换"
+      ]
+    },
+    "post_creation": {
+      "name": "内容发布页面",
+      "description": "选择要发布的内容类型（文章、贴子、视频、求助）或通过相机拍摄内容。",
+      "features": [
+        "类型切换",
+        "相机拍摄"
+      ]
+    },
+    "create_post": {
+      "name": "发帖页面",
+      "description": "用户可以在此页面创作并发布文章、帖子、视频或求助内容",
+      "features": [
+        "切换发布类型",
+        "输入标题",
+        "输入正文",
+        "选择所属贴吧",
+        "添加话题",
+        "设置展示范围",
+        "声明内容"
+      ]
+    },
+    "post_editor": {
+      "name": "发布贴子",
+      "description": "用户可以编辑贴子标题、正文、上传图片，并选择发布的贴吧、话题及设置可见范围",
+      "features": [
+        "输入标题",
+        "输入正文",
+        "上传图片",
+        "选择贴吧",
+        "添加话题",
+        "设置展示范围",
+        "内容声明"
+      ]
+    },
+    "media_selection": {
+      "name": "媒体选择页",
+      "description": "选择或拍摄媒体内容进行发布",
+      "features": [
+        "分类切换",
+        "开启相机"
+      ]
+    },
+    "ask_help": {
+      "name": "求助发布页",
+      "description": "发布求助咨询类帖子，包含标题、描述、图片、悬赏及分类设置",
+      "features": [
+        "标题输入",
+        "内容输入",
+        "图片上传",
+        "悬赏选择",
+        "社区选择",
+        "标签添加",
+        "展示范围设置"
+      ]
+    },
+    "chat_channel_selection": {
+      "name": "选择聊天频道",
+      "description": "浏览并选择贴吧聊天频道，将其添加至常用频道列表",
+      "features": [
+        "返回",
+        "常用频道管理",
+        "频道列表浏览",
+        "添加频道"
+      ]
+    },
+    "post_edit": {
+      "name": "发布贴子",
+      "description": "编辑并发布图文贴子，支持选择频道、添加话题及设置可见范围",
+      "features": [
+        "标题输入",
+        "正文输入",
+        "图片上传",
+        "频道选择",
+        "话题添加",
+        "权限设置"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击有料"
+    },
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击侧边栏"
+    },
+    {
+      "from": "home",
+      "to": "forum_list",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "store",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "home",
+      "to": "post_creation",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击发布内容"
+    },
+    {
+      "from": "message",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击聊天"
+    },
+    {
+      "from": "profile",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击扫一扫"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索输入框"
+    },
+    {
+      "from": "post_creation",
+      "to": "create_post",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击文章"
+    },
+    {
+      "from": "post_creation",
+      "to": "post_editor",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击贴子"
+    },
+    {
+      "from": "post_creation",
+      "to": "media_selection",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击视频"
+    },
+    {
+      "from": "post_creation",
+      "to": "ask_help",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击求助"
+    },
+    {
+      "from": "message",
+      "to": "chat_channel_selection",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击点赞"
+    },
+    {
+      "from": "post_editor",
+      "to": "post_edit",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击选择的吧"
+    }
+  ],
+  "popups": [
+    {
+      "id": "popup_917_275",
+      "type": "ad_banner",
+      "description": "侧边栏推荐位关闭按钮",
+      "close_locator": {},
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_1143_668",
+      "type": "ad_banner",
+      "description": "关闭右侧悬浮广告",
+      "close_locator": {},
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_917_651",
+      "type": "ad_banner",
+      "description": "侧边栏促销信息关闭按钮",
+      "close_locator": {},
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_923_1470",
+      "type": "ad_banner",
+      "description": "底部分享推荐关闭按钮",
+      "close_locator": {},
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_1110_905",
+      "type": "ad_banner",
+      "description": "美团广告卡片-关闭按钮",
+      "close_locator": {
+        "text": "2ch吧 关注 65W 贴子 1.9KW 爱泼斯坦假死  绷不住还有智斗巅峰#(笑眼)  我爱小萝莉👧 75 本来就假死。掌握这么多秘密的人轻易死去就不合理  1 42 283"
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_1125_2509",
+      "type": "ad_banner",
+      "description": "美团广告横幅-关闭按钮",
+      "close_locator": {
+        "text": "美团 刚刚 美团周末福利到~最高立减30元！"
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_1091_320",
+      "type": "ad_banner",
+      "description": "2ch吧推荐卡片-关闭按钮",
+      "close_locator": {
+        "text": "大家都在搜：洋夫骗贷跑路,宝妈扛债养两娃"
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_1173_700",
+      "type": "ad_banner",
+      "description": "内容推荐卡片-不感兴趣/关闭按钮",
+      "close_locator": {
+        "text": "2ch吧 关注 65W 贴子 1.9KW 共同社：⏰批准了多项向日本出口稀土的协议  这素在?  浏览最多贴 No.13 2 120 2697"
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_1178_1892",
+      "type": "ad_banner",
+      "description": "京东热卖广告-关闭按钮",
+      "close_locator": {
+        "text": "京东热卖的头像 的头像 京东热卖 刚刚 国产奶粉排名前十的是哪些品牌-京东母婴，更安全，更舒适!"
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_1170_275",
+      "type": "ad_banner",
+      "description": "内容卡片-关闭按钮",
+      "close_locator": {
+        "text": "贴吧用户_53JCaEe 向你求助 18小时前 来自chatgpt吧 求助X上现在是什么情况，我根本登不进去，有没有人能告诉我？？  100 互动得贴贝 我来回答"
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_1170_455",
+      "type": "ad_banner",
+      "description": "直播推广-关闭按钮",
+      "close_locator": {
+        "resource_id": "obfuscated"
+      },
+      "first_seen_page": "home"
+    }
+  ]
+}

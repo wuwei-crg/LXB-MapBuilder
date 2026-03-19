@@ -1,0 +1,905 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "展示个性化推荐的贴子内容流，包含顶部搜索、频道导航和底部功能导航。",
+      "features": [
+        "推荐贴子列表",
+        "频道切换",
+        "搜索功能",
+        "发布功能",
+        "底部导航栏"
+      ]
+    },
+    "profile": {
+      "name": "我的",
+      "description": "个人信息展示、签到管理与关注的吧列表",
+      "features": [
+        "签到奖励、我的足迹、关注的吧列表、一键签到"
+      ]
+    },
+    "explore": {
+      "name": "进吧",
+      "description": "展示用户足迹、已关注的贴吧列表以及推荐的吧单内容",
+      "features": [
+        "搜索吧",
+        "一键签到",
+        "查看关注列表",
+        "浏览推荐吧单"
+      ]
+    },
+    "canteen": {
+      "name": "小卖部步行街",
+      "description": "展示校园周边店铺、商品及促销活动",
+      "features": [
+        "搜索商品",
+        "轮播广告",
+        "店铺入口",
+        "商品列表"
+      ]
+    },
+    "notifications": {
+      "name": "通知",
+      "description": "查看各类互动消息、通知以及已加入的社区列表",
+      "features": [
+        "点赞回复分类",
+        "社区侧边栏",
+        "消息列表",
+        "底部导航"
+      ]
+    },
+    "post_editor": {
+      "name": "发布页面",
+      "description": "用户可以在此页面编辑并发布不同类型的帖子，包括文章、普通贴子、视频和求助内容。",
+      "features": [
+        "切换内容类型",
+        "输入标题",
+        "输入正文",
+        "选择贴吧",
+        "添加话题",
+        "设置展示范围",
+        "内容声明"
+      ]
+    },
+    "detail": {
+      "name": "贴子详情页",
+      "description": "展示贴子正文内容及其下方的用户评论列表",
+      "features": [
+        "浏览正文",
+        "查看评论",
+        "发表回复",
+        "跳转吧首页",
+        "搜索"
+      ]
+    },
+    "search": {
+      "name": "搜索页",
+      "description": "提供搜索功能，展示搜索历史、快捷访问的贴吧以及实时热点榜单",
+      "features": [
+        "搜索输入框",
+        "搜索历史管理",
+        "快捷访问贴吧",
+        "实时热点排行榜",
+        "软键盘输入"
+      ]
+    },
+    "event_ranking": {
+      "name": "贴吧活动排行榜",
+      "description": "展示贴吧强厅赛活动荣耀值排名及规则",
+      "features": [
+        "查看排行榜",
+        "查看规则"
+      ]
+    },
+    "likes_list": {
+      "name": "点赞列表",
+      "description": "查看用户对自己回复的点赞历史记录",
+      "features": [
+        "返回按钮、点赞列表展示"
+      ]
+    },
+    "message": {
+      "name": "消息",
+      "description": "展示私信、官方通知、AI智能体以及关注贴吧的动态快捷入口",
+      "features": [
+        "私信列表",
+        "贴吧侧边栏",
+        "发私信入口",
+        "通知中心",
+        "侧边栏管理"
+      ]
+    },
+    "publish_select": {
+      "name": "内容发布选择页",
+      "description": "选择发布内容的类型及素材，当前处于视频选择状态",
+      "features": [
+        "切换发布类型",
+        "拍照/录像",
+        "选择本地视频素材"
+      ]
+    },
+    "post_help": {
+      "name": "发布求助",
+      "description": "用户编辑求助帖子，可设置悬赏、选择贴吧及添加标签",
+      "features": [
+        "输入标题",
+        "输入描述",
+        "上传图片",
+        "设置悬赏金额",
+        "选择贴吧",
+        "添加标签",
+        "设置展示范围"
+      ]
+    },
+    "edit": {
+      "name": "发布页面",
+      "description": "编辑并发布帖子、文章或视频内容",
+      "features": [
+        "标题输入",
+        "正文输入",
+        "选择发布贴吧",
+        "添加话题",
+        "设置展示范围",
+        "内容声明"
+      ]
+    },
+    "post_edit": {
+      "name": "发布帖子",
+      "description": "编写并发布新贴或文章的编辑页面",
+      "features": [
+        "标题输入",
+        "正文内容编辑",
+        "选择贴吧",
+        "添加话题",
+        "权限设置",
+        "内容声明"
+      ]
+    },
+    "editor": {
+      "name": "发布编辑器",
+      "description": "用户在此页面撰写并发布文章、贴子、视频或求助内容",
+      "features": [
+        "切换发布类型",
+        "输入标题",
+        "输入正文",
+        "选择所属吧",
+        "添加话题",
+        "设置可见范围",
+        "内容声明"
+      ]
+    },
+    "spring_festival": {
+      "name": "春节活动页",
+      "description": "百度贴吧春节专题互动页面，包含春晚主持评分、春节热点资讯等功能",
+      "features": [
+        "顶部导航标签",
+        "搜索",
+        "发布按钮",
+        "侧边栏菜单",
+        "春晚主持评分列表",
+        "更多打分入口",
+        "年味资讯流",
+        "底部导航栏"
+      ]
+    },
+    "create_post": {
+      "name": "发布贴子页",
+      "description": "用于编辑和发布贴子，支持输入标题、正文、上传图片、选择所属贴吧及话题",
+      "features": [
+        "标题输入",
+        "正文输入",
+        "媒体上传",
+        "选择吧",
+        "添加话题",
+        "展示范围设置"
+      ]
+    },
+    "post_create": {
+      "name": "发布页面",
+      "description": "用户在此编辑并发布帖子、文章、视频或求助内容。",
+      "features": [
+        "标题输入",
+        "正文输入",
+        "媒体上传",
+        "选择版块",
+        "添加话题",
+        "权限设置",
+        "内容声明"
+      ]
+    },
+    "video_record": {
+      "name": "视频录制页",
+      "description": "拍摄短视频，可添加音乐、滤镜和道具",
+      "features": [
+        "翻转摄像头",
+        "选择滤镜",
+        "选择音乐",
+        "录制时长切换",
+        "拍摄按钮",
+        "选择道具",
+        "进入相册"
+      ]
+    },
+    "post_detail": {
+      "name": "帖子详情页",
+      "description": "浏览帖子的详细评论内容，并支持发表回复和跳转到吧首页",
+      "features": [
+        "评论列表",
+        "排序切换",
+        "回复发表",
+        "查看子回复",
+        "跳转吧首页"
+      ]
+    },
+    "post_create_help": {
+      "name": "发布求助",
+      "description": "用户可以在此页面编辑并发布带有悬赏贴贝的求助内容，支持设置标题、详细描述、图片、悬赏金额、所属贴吧、标签及可见范围。",
+      "features": [
+        "输入标题",
+        "输入内容",
+        "上传图片",
+        "设置悬赏金额",
+        "选择贴吧",
+        "添加标签",
+        "设置展示范围"
+      ]
+    },
+    "user_profile": {
+      "name": "贴吧用户主页",
+      "description": "展示用户在特定贴吧的个人信息、等级、关注天数及发帖记录",
+      "features": [
+        "查看关注天数",
+        "查看连签天数",
+        "查看发帖列表"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "ImageView",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            17,
+            158,
+            119,
+            260
+          ]
+        }
+      },
+      "description": "点击侧边栏菜单"
+    },
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "推荐",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            492,
+            177,
+            640,
+            239
+          ]
+        }
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "home",
+      "to": "explore",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "进吧",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            256,
+            2555,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "canteen",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "小卖部",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            512,
+            2555,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "notifications",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            768,
+            2555,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "post_editor",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "ImageView",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            1161,
+            158,
+            1263,
+            260
+          ]
+        }
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "home",
+      "to": "detail",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "有料 推荐 春节 直播",
+          "class": "RelativeLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            119,
+            152,
+            1161,
+            265
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "ImageView",
+          "bounds_hint": [
+            1042,
+            158,
+            1144,
+            260
+          ]
+        }
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "home",
+      "to": "event_ranking",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "FrameLayout",
+          "bounds_hint": [
+            49,
+            298,
+            1231,
+            695
+          ]
+        }
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "notifications",
+      "to": "likes_list",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "点赞 特异企鹅赞了你的回复",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            229,
+            354,
+            1248,
+            534
+          ]
+        }
+      },
+      "description": "点击粉丝"
+    },
+    {
+      "from": "notifications",
+      "to": "notifications",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            152,
+            197,
+            344
+          ]
+        }
+      },
+      "description": "点击聊天"
+    },
+    {
+      "from": "notifications",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "聊天",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            344,
+            197,
+            536
+          ]
+        }
+      },
+      "description": "点击聊天"
+    },
+    {
+      "from": "profile",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "exploeº 关注 17 粉丝 9 等级 Lv.7 设置形象 成为贴吧会员 吧经验加速，享游戏折扣，穿个性装扮 立即开通",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            0,
+            1280,
+            661
+          ]
+        }
+      },
+      "description": "点击扫一扫"
+    },
+    {
+      "from": "post_editor",
+      "to": "post_editor",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "贴子",
+          "class": "TextView",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            466,
+            169,
+            640,
+            277
+          ]
+        }
+      },
+      "description": "点击贴子"
+    },
+    {
+      "from": "post_editor",
+      "to": "publish_select",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "视频",
+          "class": "TextView",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            640,
+            169,
+            814,
+            277
+          ]
+        }
+      },
+      "description": "点击视频"
+    },
+    {
+      "from": "post_editor",
+      "to": "post_help",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "求助",
+          "class": "TextView",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            814,
+            169,
+            988,
+            277
+          ]
+        }
+      },
+      "description": "点击求助"
+    },
+    {
+      "from": "post_editor",
+      "to": "edit",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "文章",
+          "class": "TextView",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            292,
+            169,
+            481,
+            277
+          ]
+        }
+      },
+      "description": "点击文章"
+    },
+    {
+      "from": "post_editor",
+      "to": "post_edit",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "表情",
+          "content_desc": "表情",
+          "class": "ImageView",
+          "bounds_hint": [
+            386,
+            2620,
+            591,
+            2687
+          ]
+        }
+      },
+      "description": "点击提及好友"
+    },
+    {
+      "from": "post_editor",
+      "to": "editor",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "@好友",
+          "content_desc": "@好友",
+          "class": "ImageView",
+          "bounds_hint": [
+            687,
+            2620,
+            893,
+            2687
+          ]
+        }
+      },
+      "description": "点击更多工具"
+    },
+    {
+      "from": "detail",
+      "to": "spring_festival",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "直播中 来嘛？试试呢 12人在看",
+          "class": "LinearLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            0,
+            0,
+            1280,
+            221
+          ]
+        }
+      },
+      "description": "点击贴吧名称"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "searchBox",
+          "class": "EditText",
+          "bounds_hint": [
+            136,
+            172,
+            1075,
+            230
+          ]
+        }
+      },
+      "description": "点击搜索输入框"
+    },
+    {
+      "from": "message",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "通知",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            152,
+            197,
+            344
+          ]
+        }
+      },
+      "description": "点击通知"
+    },
+    {
+      "from": "post_editor",
+      "to": "create_post",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "请输入完整贴子标题(5-31个字)\n",
+          "class": "EditText",
+          "bounds_hint": [
+            35,
+            295,
+            1244,
+            412
+          ]
+        }
+      },
+      "description": "点击添加图片"
+    },
+    {
+      "from": "post_editor",
+      "to": "post_create",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "请输入正文（建议200-2000字）\n",
+          "class": "EditText",
+          "bounds_hint": [
+            35,
+            499,
+            1244,
+            581
+          ]
+        }
+      },
+      "description": "点击选择的吧入口"
+    },
+    {
+      "from": "publish_select",
+      "to": "video_record",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "RelativeLayout",
+          "bounds_hint": [
+            0,
+            295,
+            315,
+            610
+          ]
+        }
+      },
+      "description": "点击相机"
+    },
+    {
+      "from": "post_help",
+      "to": "post_help",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "请输入问题描述（选填，不多于500个字）\n",
+          "class": "EditText",
+          "bounds_hint": [
+            35,
+            691,
+            1244,
+            772
+          ]
+        }
+      },
+      "description": "点击选择的吧"
+    },
+    {
+      "from": "spring_festival",
+      "to": "post_detail",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            638,
+            184,
+            790,
+            232
+          ]
+        }
+      },
+      "description": "点击春节"
+    },
+    {
+      "from": "create_post",
+      "to": "post_edit",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "语音",
+          "content_desc": "语音",
+          "class": "ImageView",
+          "bounds_hint": [
+            429,
+            2620,
+            505,
+            2687
+          ]
+        }
+      },
+      "description": "点击地点"
+    },
+    {
+      "from": "create_post",
+      "to": "post_create",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "链接",
+          "content_desc": "链接",
+          "class": "ImageView",
+          "bounds_hint": [
+            601,
+            2620,
+            677,
+            2687
+          ]
+        }
+      },
+      "description": "点击提到"
+    },
+    {
+      "from": "create_post",
+      "to": "post_editor",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "会员",
+          "content_desc": "会员",
+          "class": "ImageView",
+          "bounds_hint": [
+            945,
+            2620,
+            1022,
+            2687
+          ]
+        }
+      },
+      "description": "点击设置"
+    },
+    {
+      "from": "post_help",
+      "to": "post_create_help",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "请输入完整问题(5-31个字)\n",
+          "class": "EditText",
+          "bounds_hint": [
+            35,
+            295,
+            1244,
+            412
+          ]
+        }
+      },
+      "description": "点击添加图片"
+    },
+    {
+      "from": "post_detail",
+      "to": "post_detail",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "广告",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            0,
+            0,
+            1280,
+            221
+          ]
+        }
+      },
+      "description": "点击孙笑川吧标题"
+    },
+    {
+      "from": "post_detail",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "ImageView",
+          "bounds_hint": [
+            368,
+            2414,
+            430,
+            2453
+          ]
+        }
+      },
+      "description": "点击孙笑川吧入口栏"
+    },
+    {
+      "from": "post_detail",
+      "to": "user_profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "全部回复 只看楼主",
+          "class": "LinearLayout",
+          "bounds_hint": [
+            0,
+            221,
+            1280,
+            364
+          ]
+        }
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "post_edit",
+      "to": "post_editor",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "更多功能",
+          "content_desc": "更多功能",
+          "class": "ImageView",
+          "bounds_hint": [
+            1118,
+            2620,
+            1195,
+            2687
+          ]
+        }
+      },
+      "description": "点击更多"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

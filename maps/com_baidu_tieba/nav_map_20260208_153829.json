@@ -1,0 +1,315 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览社区推荐内容、直播和关注的吧",
+      "features": [
+        "搜索",
+        "顶部频道切换",
+        "关注吧快捷入口",
+        "帖子列表",
+        "底部导航栏"
+      ]
+    },
+    "profile": {
+      "name": "个人中心",
+      "description": "管理个人信息、签到奖励、浏览足迹及关注的贴吧",
+      "features": [
+        "签到奖励列表",
+        "限时任务",
+        "足迹吧列表",
+        "关注吧列表",
+        "一键签到"
+      ]
+    },
+    "list_bars": {
+      "name": "进吧",
+      "description": "展示用户关注的贴吧、最近访问记录以及推荐的吧单内容",
+      "features": [
+        "搜索",
+        "一键签到",
+        "最近访问列表",
+        "关注列表",
+        "吧单推荐"
+      ]
+    },
+    "mall": {
+      "name": "小卖部步行街",
+      "description": "浏览和购买贴吧相关的周边、护肤、健身等品类的商品和专题页面",
+      "features": [
+        "搜索商品",
+        "浏览活动横幅",
+        "进店逛逛",
+        "底部导航"
+      ]
+    },
+    "message": {
+      "name": "消息页面",
+      "description": "展示各类互动通知、私聊入口及吧内动态信息",
+      "features": [
+        "查看点赞/回复/@/粉丝通知、吧友互助、吧广播、私聊列表、侧边栏频道切换"
+      ]
+    },
+    "live": {
+      "name": "直播页",
+      "description": "浏览正在直播的内容推荐",
+      "features": [
+        "直播分类筛选",
+        "主播卡片列表",
+        "热门主播推荐"
+      ]
+    },
+    "search": {
+      "name": "搜索页",
+      "description": "提供关键词搜索、搜索历史查看、快捷访问及热度榜单展示功能",
+      "features": [
+        "搜索框",
+        "搜索历史",
+        "快捷访问",
+        "热榜列表",
+        "虚拟键盘"
+      ]
+    },
+    "publish": {
+      "name": "发布页面",
+      "description": "选择发布内容类型并进行投稿或素材选取",
+      "features": [
+        "关闭按钮",
+        "内容分类选项卡",
+        "拍摄/素材选取入口"
+      ]
+    },
+    "forum_list": {
+      "name": "进吧",
+      "description": "浏览关注的和最近访问的贴吧列表，提供吧内签到和创建吧功能",
+      "features": [
+        "足迹展示",
+        "关注列表",
+        "一键签到",
+        "创建吧入口",
+        "推荐吧单"
+      ]
+    },
+    "post_media_picker": {
+      "name": "发布媒体选择页",
+      "description": "选择要发布的视频内容",
+      "features": [
+        "内容类型切换",
+        "相机拍摄",
+        "媒体库选择"
+      ]
+    },
+    "likes": {
+      "name": "点赞",
+      "description": "展示用户收到的回复点赞通知列表",
+      "features": [
+        "列表浏览",
+        "返回上一级"
+      ]
+    },
+    "create_post": {
+      "name": "发布求助",
+      "description": "发布求助贴页面，支持输入问题内容、上传图片、设置悬赏以及选择发布的贴吧和标签",
+      "features": [
+        "输入标题",
+        "输入描述",
+        "添加图片",
+        "悬赏设置",
+        "选择贴吧",
+        "添加标签",
+        "可见范围设置"
+      ]
+    },
+    "editor": {
+      "name": "发贴编辑页",
+      "description": "发布新贴或文章，可输入标题、正文，选择所属贴吧及话题，设置展示范围。",
+      "features": [
+        "标题输入",
+        "正文编辑",
+        "吧社群选择",
+        "话题添加",
+        "可见性设置",
+        "内容声明"
+      ]
+    },
+    "post_create": {
+      "name": "发布页面",
+      "description": "编辑并发布帖子内容，支持设置标题、正文、所属贴吧、话题及可见范围",
+      "features": [
+        "标题输入",
+        "正文输入",
+        "选择贴吧",
+        "添加话题",
+        "展示范围设置",
+        "内容声明"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击有料"
+    },
+    {
+      "from": "home",
+      "to": "list_bars",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "mall",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "live",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "home",
+      "to": "publish",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "list_bars",
+      "to": "forum_list",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "message",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击聊天"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "profile",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击设置"
+    },
+    {
+      "from": "publish",
+      "to": "publish",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击文章"
+    },
+    {
+      "from": "publish",
+      "to": "post_media_picker",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击视频"
+    },
+    {
+      "from": "message",
+      "to": "likes",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击@我的"
+    },
+    {
+      "from": "publish",
+      "to": "create_post",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击求助"
+    },
+    {
+      "from": "publish",
+      "to": "editor",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击提到(@)"
+    },
+    {
+      "from": "publish",
+      "to": "post_create",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击选择的吧"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

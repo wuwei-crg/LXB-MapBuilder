@@ -1,0 +1,239 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览社区推荐内容与快捷进入贴吧",
+      "features": [
+        "搜索框",
+        "关注贴吧快捷入口",
+        "推荐贴子流",
+        "底部导航栏"
+      ]
+    },
+    "jinba": {
+      "name": "进吧",
+      "description": "浏览和管理关注的贴吧、查看足迹、探索新贴吧社区",
+      "features": [
+        "搜索、一键签到、足迹列表、关注吧列表、创建吧、吧单推荐、底部导航"
+      ]
+    },
+    "message": {
+      "name": "消息",
+      "description": "查看系统通知、互动消息（点赞、回复、@我的、粉丝）及贴吧广播等内容",
+      "features": [
+        "查看点赞列表",
+        "查看回复列表",
+        "查看被提及列表",
+        "查看粉丝列表",
+        "查看吧友互助",
+        "查看贴吧广播",
+        "切换贴吧频道"
+      ]
+    },
+    "profile": {
+      "name": "我的",
+      "description": "展示个人账户信息、常用功能入口及会员/钱包权益",
+      "features": [
+        "用户等级",
+        "发贴/回贴数",
+        "收藏",
+        "历史",
+        "装扮",
+        "任务中心",
+        "钱包",
+        "底部导航"
+      ]
+    },
+    "shop": {
+      "name": "小卖部",
+      "description": "浏览并购买贴吧相关的周边商品和活动内容",
+      "features": [
+        "商品搜索",
+        "活动横幅浏览",
+        "吧店铺入口",
+        "商品推荐列表",
+        "底部导航栏"
+      ]
+    },
+    "live": {
+      "name": "直播首页",
+      "description": "展示各类直播间列表及分类导航",
+      "features": [
+        "分类Tab切换",
+        "直播间预览",
+        "搜索",
+        "底部导航"
+      ]
+    },
+    "search": {
+      "name": "搜索页",
+      "description": "提供搜索功能，展示搜索历史、快捷访问和实时热点榜单",
+      "features": [
+        "搜索输入",
+        "搜索历史删除",
+        "快捷访问贴吧跳转",
+        "热点内容浏览"
+      ]
+    },
+    "detail": {
+      "name": "帖子详情页",
+      "description": "浏览帖子图文内容及互动",
+      "features": [
+        "返回按钮",
+        "全部/楼主切换",
+        "内容文本",
+        "底部互动栏"
+      ]
+    },
+    "square": {
+      "name": "广场",
+      "description": "浏览推荐的AI智能体和游戏列表",
+      "features": [
+        "顶部导航",
+        "分类标签",
+        "搜索",
+        "创建入口"
+      ]
+    },
+    "broadcast_list": {
+      "name": "吧广播",
+      "description": "该页面展示了来自不同贴吧的精选内容（广播），以信息流形式呈现，方便用户发现热门内容。",
+      "features": [
+        "帖子列表",
+        "互动功能（点赞、评论、分享）",
+        "吧链接跳转"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "jinba",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "home",
+      "to": "shop",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "live",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击发布内容"
+    },
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击大家都在搜"
+    },
+    {
+      "from": "home",
+      "to": "detail",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "message",
+      "to": "square",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击粉丝"
+    },
+    {
+      "from": "profile",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击设置"
+    },
+    {
+      "from": "message",
+      "to": "broadcast_list",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击聊天"
+    },
+    {
+      "from": "live",
+      "to": "live",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击推荐分类"
+    },
+    {
+      "from": "live",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击去围观"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索输入框"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

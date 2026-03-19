@@ -1,0 +1,481 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览贴吧推荐内容和直播",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "关注列表"
+      ]
+    },
+    "home__n_fd84b8e6": {
+      "name": "首页",
+      "description": "浏览贴吧推荐内容",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "关注列表"
+      ]
+    },
+    "home__n_dc0e1e1d": {
+      "name": "首页",
+      "description": "浏览关注的贴吧、足迹和推荐内容",
+      "features": [
+        "我的足迹",
+        "我关注的吧列表",
+        "吧单推荐"
+      ]
+    },
+    "mall__n_4b7732ca": {
+      "name": "小卖部步行街",
+      "description": "电商购物页面，展示精选商品和促销活动",
+      "features": [
+        "商品列表",
+        "活动横幅",
+        "店铺推荐"
+      ]
+    },
+    "chat__n_cf4a7c81": {
+      "name": "消息列表",
+      "description": "查看聊天会话和通知",
+      "features": [
+        "下拉刷新",
+        "会话列表"
+      ]
+    },
+    "profile__n_b3862e4b": {
+      "name": "个人中心",
+      "description": "查看个人信息、等级、常用功能及钱包服务",
+      "features": [
+        "我的发贴",
+        "我的回贴",
+        "关注的吧",
+        "我的收藏",
+        "我的点赞",
+        "浏览历史",
+        "装扮中心",
+        "创建智能体",
+        "成长任务",
+        "商品上新",
+        "印记中心",
+        "度小满钱包",
+        "游戏专区"
+      ]
+    },
+    "tieba_detail__n_bf5c08f6": {
+      "name": "孙笑川吧详情页",
+      "description": "贴吧社区页面，展示聊天频道、帖子列表及互动功能",
+      "features": [
+        "聊天频道入口",
+        "帖子列表",
+        "签到按钮",
+        "搜索入口"
+      ]
+    },
+    "home__n_a9dfcb0c": {
+      "name": "首页",
+      "description": "浏览推荐内容和热点资讯",
+      "features": [
+        "投票互动",
+        "评论列表",
+        "热点排行"
+      ]
+    },
+    "live__n_b00ac6db": {
+      "name": "直播广场",
+      "description": "浏览推荐直播间和主播列表",
+      "features": [
+        "下拉刷新",
+        "分类筛选",
+        "内容卡片"
+      ]
+    },
+    "profile__n_cc06121e": {
+      "name": "我的关注页",
+      "description": "查看用户足迹和关注的贴吧列表",
+      "features": [
+        "我的足迹",
+        "我关注的吧",
+        "创建吧",
+        "展开更多"
+      ]
+    },
+    "forum_detail__n_f7a799af": {
+      "name": "哔咔交流吧详情页",
+      "description": "贴吧/论坛详情页面，展示吧内信息、聊天频道及帖子列表",
+      "features": [
+        "签到",
+        "聊天频道入口",
+        "帖子列表",
+        "筛选排序"
+      ]
+    },
+    "notification__n_1af6cb19": {
+      "name": "通知中心",
+      "description": "查看点赞、回复、@我的等互动消息及吧广播",
+      "features": [
+        "点赞列表",
+        "回复列表",
+        "@我的列表",
+        "粉丝列表",
+        "吧友互助",
+        "吧广播"
+      ]
+    },
+    "chat_list__n_f46bda9c": {
+      "name": "聊天频道列表",
+      "description": "查看贴吧内公共频道、签到群及主题群消息列表",
+      "features": [
+        "频道列表",
+        "热度显示",
+        "消息预览"
+      ]
+    },
+    "home__n_171ac6d2": {
+      "name": "首页",
+      "description": "浏览贴吧推荐内容和帖子列表",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "关注入口"
+      ]
+    },
+    "event_detail__n_81328faf": {
+      "name": "贴吧阵营大比拼活动页",
+      "description": "查看2026年2月贴吧阵营对抗活动详情、奖励及玩法说明",
+      "features": [
+        "活动主视觉",
+        "活动时间(2.18-2.28)",
+        "奖项分类(阵营对抗/主持荣耀/神豪荣耀)",
+        "本场奖励展示(49个樱花风铃礼物)"
+      ]
+    },
+    "forum_detail__n_6a56cb91": {
+      "name": "哔咔交流吧详情页",
+      "description": "贴吧社区页面，展示吧内信息、聊天频道及帖子列表",
+      "features": [
+        "签到",
+        "聊天频道入口",
+        "帖子列表",
+        "广告卡片"
+      ]
+    },
+    "channel_selection__n_8222198c": {
+      "name": "选择聊天频道",
+      "description": "添加常用聊天频道",
+      "features": [
+        "常用频道列表",
+        "关注吧列表"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home__n_fd84b8e6",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "首页",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            2555,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "home__n_dc0e1e1d",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "进吧",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            256,
+            2555,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "mall__n_4b7732ca",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "小卖部",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            512,
+            2555,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "chat__n_cf4a7c81",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            768,
+            2555,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "profile__n_b3862e4b",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            1024,
+            2555,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "home__n_fd84b8e6",
+      "to": "tieba_detail__n_bf5c08f6",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            1130,
+            2588,
+            1225,
+            2683
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "home__n_fd84b8e6",
+      "to": "home__n_a9dfcb0c",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "有料",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            344,
+            177,
+            492,
+            239
+          ]
+        }
+      },
+      "description": "点击核战避难所吧"
+    },
+    {
+      "from": "home__n_fd84b8e6",
+      "to": "live__n_b00ac6db",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "直播",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            788,
+            177,
+            936,
+            239
+          ]
+        }
+      },
+      "description": "点击宫漫吧"
+    },
+    {
+      "from": "home__n_dc0e1e1d",
+      "to": "profile__n_cc06121e",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "class": "RelativeLayout",
+          "bounds_hint": [
+            0,
+            0,
+            1280,
+            295
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home__n_dc0e1e1d",
+      "to": "forum_detail__n_f7a799af",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "WebView",
+          "bounds_hint": [
+            0,
+            0,
+            1280,
+            2555
+          ]
+        }
+      },
+      "description": "点击展开"
+    },
+    {
+      "from": "chat__n_cf4a7c81",
+      "to": "notification__n_1af6cb19",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "通知",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            152,
+            197,
+            344
+          ]
+        }
+      },
+      "description": "点击贴吧列表"
+    },
+    {
+      "from": "chat__n_cf4a7c81",
+      "to": "chat_list__n_f46bda9c",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "1011",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            774,
+            197,
+            966
+          ]
+        }
+      },
+      "description": "点击管理"
+    },
+    {
+      "from": "tieba_detail__n_bf5c08f6",
+      "to": "home__n_171ac6d2",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "class": "RelativeLayout",
+          "child_level_1": {
+            "class": "FrameLayout"
+          },
+          "child_level_2": {
+            "resource_id": "obfuscated",
+            "class": "TextureView"
+          },
+          "bounds_hint": [
+            0,
+            0,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击热门"
+    },
+    {
+      "from": "live__n_b00ac6db",
+      "to": "event_detail__n_81328faf",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "class": "FrameLayout",
+          "parent_level_1": {
+            "resource_id": "obfuscated",
+            "class": "ViewPager"
+          },
+          "child_level_1": {
+            "resource_id": "obfuscated",
+            "class": "ImageView"
+          },
+          "bounds_hint": [
+            49,
+            298,
+            1231,
+            695
+          ]
+        }
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "forum_detail__n_f7a799af",
+      "to": "forum_detail__n_6a56cb91",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "返回",
+          "class": "RelativeLayout",
+          "bounds_hint": [
+            0,
+            0,
+            1280,
+            295
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "notification__n_1af6cb19",
+      "to": "channel_selection__n_8222198c",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "管理",
+          "class": "LinearLayout",
+          "bounds_hint": [
+            0,
+            2352,
+            197,
+            2544
+          ]
+        }
+      },
+      "description": "点击首页"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

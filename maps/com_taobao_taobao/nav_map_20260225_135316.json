@@ -1,0 +1,1792 @@
+{
+  "package": "com.taobao.taobao",
+  "pages": {
+    "home": {
+      "name": "淘宝首页",
+      "description": "电商聚合首页",
+      "features": [
+        "搜索、扫码、频道切换、底部导航"
+      ]
+    },
+    "search_page__n_c0da7a88": {
+      "name": "搜索入口页",
+      "description": "提供商品搜索功能，展示搜索历史及实时热榜分类",
+      "features": [
+        "输入搜索词",
+        "切换热榜分类"
+      ]
+    },
+    "scan_main__n_19d8b956": {
+      "name": "扫一扫",
+      "description": "核心扫码与拍照识别页面",
+      "features": [
+        "扫描、拍照、打开相册、领取红包"
+      ]
+    },
+    "home_follow__n_1e1be72e": {
+      "name": "首页-关注",
+      "description": "查看已关注店铺的动态详情",
+      "features": [
+        "搜索",
+        "扫码",
+        "频道切换",
+        "列表筛选",
+        "底部导航"
+      ]
+    },
+    "promotion_campaign__n_bc978666": {
+      "name": "38开门红活动页",
+      "description": "大促活动主会场，包含领券、日程导航、类目跳转等功能",
+      "features": [
+        "返回",
+        "搜索",
+        "领券",
+        "类目导航"
+      ]
+    },
+    "taobao_flash_sale__n_a646a51c": {
+      "name": "淘宝闪购外卖页",
+      "description": "淘宝App内的即时配送与闪购首页",
+      "features": [
+        "搜索",
+        "分类导航",
+        "订单查看",
+        "底部导航"
+      ]
+    },
+    "taobao_subsidy_home__n_6a3c4b28": {
+      "name": "国补频道首页",
+      "description": "提供国家补贴政策说明、资格领取及参与补贴的商品导购功能",
+      "features": [
+        "搜索",
+        "补贴领取",
+        "专题榜单",
+        "分类筛选",
+        "底部导航"
+      ]
+    },
+    "taobao_fliggy_home__n_9a02f739": {
+      "name": "飞猪旅行首页",
+      "description": "淘宝APP内的飞猪旅行频道页，提供旅游产品预订入口",
+      "features": [
+        "搜索",
+        "业务分类",
+        "底部导航"
+      ]
+    },
+    "baba_farm__n_340690f9": {
+      "name": "芭芭农场",
+      "description": "农场互动营销页，通过参与活动免费领取水果或商品",
+      "features": [
+        "返回",
+        "菜单",
+        "退出",
+        "商品兑换"
+      ]
+    },
+    "taobao_coins__n_1f9a9333": {
+      "name": "淘金币",
+      "description": "淘金币签到与兑换中心",
+      "features": [
+        "签到领金币",
+        "搜索抵扣",
+        "频道入口"
+      ]
+    },
+    "short_video_feed__n_12260e81": {
+      "name": "短视频播放页",
+      "description": "短视频内容浏览与互动",
+      "features": [
+        "搜索",
+        "切换频道",
+        "发表评论"
+      ]
+    },
+    "activity_offers__n_70f809dc": {
+      "name": "活动优惠",
+      "description": "汇总展示营销活动、优惠提醒及价格监控的消息列表",
+      "features": [
+        "返回",
+        "设置"
+      ]
+    },
+    "cart__n_f857e6b4": {
+      "name": "购物车",
+      "description": "管理购物车内的商品，当前为空状态，显示商品推荐",
+      "features": [
+        "搜索",
+        "管理",
+        "结算"
+      ]
+    },
+    "followed_stores__n_4ce8aab7": {
+      "name": "关注列表页",
+      "description": "查看并管理已关注的店铺和商品",
+      "features": [
+        "返回、搜索、各子栏目切换、管理关注"
+      ]
+    },
+    "taobao_home__n_c18fa2cf": {
+      "name": "淘宝首页",
+      "description": "电商平台主页，包含搜索、促销入口、业务金刚区和内容分发",
+      "features": [
+        "搜索",
+        "扫一扫",
+        "业务导航",
+        "底部导航"
+      ]
+    },
+    "search_result__n_a5dd9616": {
+      "name": "搜索结果页",
+      "description": "展示关键词搜索出的商品列表",
+      "features": [
+        "搜索",
+        "视觉搜索",
+        "更多功能"
+      ]
+    },
+    "specialty_scanner__n_ee665a5d": {
+      "name": "拍特产识别",
+      "description": "特产识别与拍照扫描页",
+      "features": [
+        "拍照",
+        "扫码",
+        "相册",
+        "历史记录",
+        "反转"
+      ]
+    },
+    "search_results__n_bd86d509": {
+      "name": "商品搜索结果页",
+      "description": "展示根据关键词搜索到的商品列表",
+      "features": [
+        "返回",
+        "搜索",
+        "拍照搜索",
+        "更多功能"
+      ]
+    },
+    "search_hub__n_bb6a3651": {
+      "name": "搜索中心",
+      "description": "提供搜索输入、历史管理及品类热榜浏览",
+      "features": [
+        "搜索",
+        "语音搜索",
+        "历史管理",
+        "热榜切换"
+      ]
+    },
+    "search_main__n_ddf08583": {
+      "name": "搜索首页",
+      "description": "提供搜索输入、搜索历史管理、频道分类跳转及趋势导向功能",
+      "features": [
+        "搜索",
+        "拍照搜索",
+        "频道导航"
+      ]
+    },
+    "search_landing__n_f8b69ff5": {
+      "name": "搜索首页",
+      "description": "提供搜索功能、历史搜索管理及分类热门排行榜",
+      "features": [
+        "搜索",
+        "历史管理",
+        "分类筛选"
+      ]
+    },
+    "scan_page__n_9d8b7505": {
+      "name": "扫码页",
+      "description": "应用扫码与拍照界面",
+      "features": [
+        "扫码识别",
+        "拍照",
+        "从相册选择"
+      ]
+    },
+    "specialty_scan__n_8d1c2148": {
+      "name": "扫码识物页",
+      "description": "拍摄或扫描商品进行识别",
+      "features": [
+        "返回",
+        "扫码",
+        "拍照",
+        "相册",
+        "历史记录"
+      ]
+    },
+    "visual_search__n_a215b696": {
+      "name": "拍照识物页",
+      "description": "通过相机扫码或拍摄商品进行搜索识物",
+      "features": [
+        "返回",
+        "红包",
+        "翻转",
+        "更多菜单",
+        "快门",
+        "扫码模式",
+        "拍照模式",
+        "相册",
+        "历史记录"
+      ]
+    },
+    "search_results__n_9d47cd93": {
+      "name": "搜索结果页",
+      "description": "展示特定关键词的商品搜索结果列表",
+      "features": [
+        "搜索、返回、视觉搜索"
+      ]
+    },
+    "activity_discounts__n_618a277e": {
+      "name": "活动优惠",
+      "description": "汇总展示各类营销活动、优惠提醒及商品比价推荐",
+      "features": [
+        "返回",
+        "设置"
+      ]
+    },
+    "cart_empty__n_4ff21f2f": {
+      "name": "购物车",
+      "description": "查看及结算待购商品",
+      "features": [
+        "搜索",
+        "对比",
+        "管理",
+        "结算"
+      ]
+    },
+    "followed_stores__n_471c3dc5": {
+      "name": "关注店铺",
+      "description": "展示用户关注的店铺列表，支持搜索、筛选和管理",
+      "features": [
+        "搜索",
+        "切换标签",
+        "筛选",
+        "排序",
+        "店铺管理"
+      ]
+    },
+    "mall_product_list__n_b5f3f719": {
+      "name": "商品列表页",
+      "description": "展示特定专题或搜索结果的商品列表，提供分类切换功能",
+      "features": [
+        "搜索",
+        "返回",
+        "分类切换",
+        "菜单"
+      ]
+    },
+    "address_selector__n_414b6bf8": {
+      "name": "切换地址",
+      "description": "选择或管理收货地址",
+      "features": [
+        "新增地址",
+        "确认选择",
+        "关闭弹窗"
+      ]
+    },
+    "subsidy_qualification__n_9757bcda": {
+      "name": "国补资格",
+      "description": "展示并领取各类家电数码产品的国家补贴资格",
+      "features": [
+        "位置切换",
+        "实名认证",
+        "资格领取",
+        "我的资格查询"
+      ]
+    },
+    "baba_farm__n_a1e0e889": {
+      "name": "芭芭农场",
+      "description": "通过模拟种植互动领取实物水果的游戏页面",
+      "features": [
+        "施肥",
+        "集肥料",
+        "好友互动",
+        "任务中心"
+      ]
+    },
+    "taobao_home__n_5b339b64": {
+      "name": "淘宝首页",
+      "description": "电商核心功能聚合页",
+      "features": [
+        "搜索",
+        "扫一扫",
+        "分类频道",
+        "金刚区功能入口",
+        "底部导航"
+      ]
+    },
+    "user_center__n_9c4ff748": {
+      "name": "个人中心",
+      "description": "管理个人信息、查看收益及常用功能入口",
+      "features": [
+        "查看主页",
+        "发布内容",
+        "消息中心",
+        "提现",
+        "签到",
+        "查看记录",
+        "创作中心"
+      ]
+    },
+    "search_discovery__n_2f61bb11": {
+      "name": "搜索页",
+      "description": "搜索功能、搜索发现与直播排行推荐",
+      "features": [
+        "搜索输入",
+        "返回操作"
+      ]
+    },
+    "home__n_96d44a75": {
+      "name": "淘宝首页",
+      "description": "电商综合门户页面，提供搜索、促销入口及个性化商品推荐",
+      "features": [
+        "搜索",
+        "分类导航",
+        "功能金刚区",
+        "底部导航"
+      ]
+    },
+    "anti_addiction_guide__n_8113bdc0": {
+      "name": "防沉迷引导页",
+      "description": "未实名认证拦截页，提示用户进行认证或退出应用",
+      "features": [
+        "前往认证",
+        "退出"
+      ]
+    },
+    "anti_addiction_guidance__n_a0b8892d": {
+      "name": "防沉迷引导页",
+      "description": "由于未实名认证被拦截，要求进行实名认证或退出程序",
+      "features": [
+        "前往认证",
+        "退出"
+      ]
+    },
+    "search_discovery__n_8bcfbefa": {
+      "name": "搜索发现页",
+      "description": "商品搜索、历史管理及热门榜单浏览",
+      "features": [
+        "搜索",
+        "扫码搜",
+        "历史管理",
+        "榜单分类"
+      ]
+    },
+    "search_page__n_bd1beeb4": {
+      "name": "搜索建议页",
+      "description": "提供关键词输入及相关联想建议",
+      "features": [
+        "返回",
+        "搜索",
+        "语音搜索",
+        "反馈"
+      ]
+    },
+    "specialty_recognition__n_95a9d7ca": {
+      "name": "拍特产识别页",
+      "description": "通过拍照或扫码识别广东特产",
+      "features": [
+        "拍照",
+        "扫码",
+        "相册",
+        "拍摄历史"
+      ]
+    },
+    "specialty_capture__n_a8baf79c": {
+      "name": "特产拍摄识别页",
+      "description": "拍摄或扫描特产商品进行识别",
+      "features": [
+        "扫码",
+        "拍照",
+        "红包",
+        "相册"
+      ]
+    },
+    "scan_main__n_1fbb2e98": {
+      "name": "扫码页",
+      "description": "用于扫描条码、快递码或拍照识物",
+      "features": [
+        "返回",
+        "红包",
+        "扫码/拍照切换",
+        "相册",
+        "历史记录"
+      ]
+    },
+    "camera_scan__n_974eb983": {
+      "name": "拍照识物页",
+      "description": "通过相机扫描或拍摄商品进行自动识别",
+      "features": [
+        "返回",
+        "红包",
+        "翻转相机",
+        "模式切换",
+        "快门",
+        "相册分类"
+      ]
+    },
+    "gallery_main__n_5d81b455": {
+      "name": "相册",
+      "description": "浏览与管理本地媒体文件",
+      "features": [
+        "相册切换",
+        "媒体类型筛选",
+        "缩略图浏览"
+      ]
+    },
+    "search_page__n_82d673a3": {
+      "name": "搜索输入页",
+      "description": "用户输入关键词并获取搜索建议",
+      "features": [
+        "搜索框",
+        "联想建议",
+        "语音输入",
+        "反馈"
+      ]
+    },
+    "satisfaction_survey__n_4b3099bd": {
+      "name": "满意度调研",
+      "description": "用户对搜索结果的满意度评价页面",
+      "features": [
+        "返回",
+        "评分",
+        "提交"
+      ]
+    },
+    "search_main__n_fafe7dd2": {
+      "name": "搜索页",
+      "description": "商品搜索起始页，包含搜索引导、历史管理及语音搜索",
+      "features": [
+        "返回",
+        "搜索框",
+        "拍照搜索",
+        "搜索按钮",
+        "清空历史",
+        "语音搜索",
+        "反馈"
+      ]
+    },
+    "survey__n_8da7265d": {
+      "name": "问卷调查",
+      "description": "搜索推荐满意度调研页面",
+      "features": [
+        "星级评价",
+        "问题分类选择",
+        "文本建议提交"
+      ]
+    },
+    "search_discovery__n_155b1d56": {
+      "name": "搜索发现页",
+      "description": "提供搜索输入、管理历史记录及浏览热点分类推荐",
+      "features": [
+        "搜索",
+        "历史清理",
+        "分类切换"
+      ]
+    },
+    "search_discovery__n_2b864c9a": {
+      "name": "搜索发现页",
+      "description": "提供搜索历史、分类发现及内容推荐功能",
+      "features": [
+        "搜索",
+        "拍照搜",
+        "历史清除",
+        "分类切换"
+      ]
+    },
+    "help_scan_alternative__n_8806a7b0": {
+      "name": "扫码辅助页面",
+      "description": "提供扫码失败后的拍照解码及手动输入条码查询功能",
+      "features": [
+        "拍照解码",
+        "条码查询"
+      ]
+    },
+    "search_suggest__n_7a738576": {
+      "name": "搜索建议页",
+      "description": "提供搜索输入、搜索联想及语音搜索功能",
+      "features": [
+        "返回",
+        "搜索输入",
+        "搜索执行",
+        "语音搜索"
+      ]
+    },
+    "subsidy_portal__n_12f27eab": {
+      "name": "国补资格",
+      "description": "政府家电以旧换新补贴申领页",
+      "features": [
+        "实名认证",
+        "补贴领取",
+        "我的资格",
+        "去逛逛"
+      ]
+    },
+    "national_subsidy_certification__n_965e1311": {
+      "name": "国家补贴认证页",
+      "description": "用户需在此页面完成实名认证和手机绑定以领取补贴",
+      "features": [
+        "立即认证",
+        "返回"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "search_page__n_c0da7a88",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "搜索栏",
+          "content_desc": "搜索栏",
+          "class": "View",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            218,
+            294,
+            895,
+            403
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home",
+      "to": "scan_main__n_19d8b956",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "扫一扫",
+          "content_desc": "扫一扫",
+          "class": "FrameLayout",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            65,
+            302,
+            157,
+            394
+          ]
+        }
+      },
+      "description": "点击分类/扫码"
+    },
+    {
+      "from": "home",
+      "to": "home_follow__n_1e1be72e",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "关注",
+          "content_desc": "",
+          "class": "LinearLayout",
+          "parent_rid": "multi_tab",
+          "bounds_hint": [
+            0,
+            152,
+            222,
+            275
+          ]
+        }
+      },
+      "description": "点击关注"
+    },
+    {
+      "from": "home",
+      "to": "promotion_campaign__n_bc978666",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "homepage_root_layout",
+          "text": "百亿补贴 淘宝秒杀 超低 淘宝直播 天猫汽车 菜鸟驿站 红包签到 芭芭农场 领淘金币 斗地主 连连消 叠加大额券 7.7折起 ，速抢 ¥889 券后价 ¥6.7 ¥385 商品图片 解闷神器 | 自从有了讨伐棒\n… 超级立减10% ¥14.2 收藏1409,按钮 1409   热销100W+】德国轻奢\n木纹挪车牌 ¥68 收藏3340,按钮 3340 关注 推荐 闪购 国补 飞猪 开门红 穿搭 扫一扫 搜索栏 高端小钱包 拍立淘 搜索",
+          "content_desc": "",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            0,
+            0,
+            1280,
+            2564
+          ]
+        }
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "home",
+      "to": "taobao_flash_sale__n_a646a51c",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "闪购",
+          "content_desc": "",
+          "class": "LinearLayout",
+          "parent_rid": "multi_tab",
+          "bounds_hint": [
+            398,
+            152,
+            630,
+            275
+          ]
+        }
+      },
+      "description": "点击内购"
+    },
+    {
+      "from": "home",
+      "to": "taobao_subsidy_home__n_6a3c4b28",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "国补",
+          "content_desc": "",
+          "class": "LinearLayout",
+          "parent_rid": "multi_tab",
+          "bounds_hint": [
+            630,
+            152,
+            774,
+            275
+          ]
+        }
+      },
+      "description": "点击国外"
+    },
+    {
+      "from": "home",
+      "to": "taobao_fliggy_home__n_9a02f739",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "飞猪",
+          "content_desc": "",
+          "class": "LinearLayout",
+          "parent_rid": "multi_tab",
+          "bounds_hint": [
+            774,
+            152,
+            918,
+            275
+          ]
+        }
+      },
+      "description": "点击飞猪"
+    },
+    {
+      "from": "home",
+      "to": "baba_farm__n_340690f9",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "芭芭农场",
+          "content_desc": "芭芭农场",
+          "class": "FrameLayout",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            284,
+            636,
+            492,
+            854
+          ]
+        }
+      },
+      "description": "点击芭芭农场"
+    },
+    {
+      "from": "home",
+      "to": "taobao_coins__n_1f9a9333",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "领淘金币",
+          "content_desc": "领淘金币",
+          "class": "FrameLayout",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            536,
+            636,
+            744,
+            854
+          ]
+        }
+      },
+      "description": "点击闲鱼"
+    },
+    {
+      "from": "home",
+      "to": "short_video_feed__n_12260e81",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "视频",
+          "content_desc": "视频",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            256,
+            2538,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击逛逛"
+    },
+    {
+      "from": "home",
+      "to": "activity_offers__n_70f809dc",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "消息",
+          "content_desc": "消息",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            512,
+            2538,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "cart__n_f857e6b4",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "购物车",
+          "content_desc": "购物车",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            768,
+            2538,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击购物车"
+    },
+    {
+      "from": "home",
+      "to": "followed_stores__n_4ce8aab7",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "我的淘宝",
+          "content_desc": "我的淘宝",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            1024,
+            2538,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的淘宝"
+    },
+    {
+      "from": "search_page__n_c0da7a88",
+      "to": "taobao_home__n_c18fa2cf",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "btn_back",
+          "text": "返回上一页",
+          "content_desc": "返回上一页",
+          "class": "ImageView",
+          "bounds_hint": [
+            29,
+            183,
+            111,
+            265
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "search_page__n_c0da7a88",
+      "to": "search_result__n_a5dd9616",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "searchEdit",
+          "text": "高端小钱包",
+          "content_desc": "",
+          "class": "EditText",
+          "parent_rid": "vp_content",
+          "bounds_hint": [
+            26,
+            317,
+            977,
+            415
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "search_page__n_c0da7a88",
+      "to": "specialty_scanner__n_ee665a5d",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "photoBtn",
+          "text": "拍立淘",
+          "content_desc": "拍立淘",
+          "class": "ImageView",
+          "parent_rid": "vp_content",
+          "bounds_hint": [
+            977,
+            332,
+            1045,
+            400
+          ]
+        }
+      },
+      "description": "点击拍立淘"
+    },
+    {
+      "from": "search_page__n_c0da7a88",
+      "to": "search_results__n_bd86d509",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "searchbtn",
+          "text": "搜索",
+          "content_desc": "搜索",
+          "class": "Button",
+          "parent_rid": "vp_content",
+          "bounds_hint": [
+            1072,
+            318,
+            1241,
+            414
+          ]
+        }
+      },
+      "description": "点击搜索按钮"
+    },
+    {
+      "from": "search_page__n_c0da7a88",
+      "to": "search_hub__n_bb6a3651",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "淘宝热榜已选中",
+          "content_desc": "淘宝热榜已选中",
+          "class": "View",
+          "parent_rid": "vp_content",
+          "bounds_hint": [
+            40,
+            956,
+            340,
+            1085
+          ]
+        }
+      },
+      "description": "点击淘宝热榜"
+    },
+    {
+      "from": "search_page__n_c0da7a88",
+      "to": "search_main__n_ddf08583",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "玩具潮玩未选中",
+          "content_desc": "玩具潮玩未选中",
+          "class": "View",
+          "parent_rid": "vp_content",
+          "bounds_hint": [
+            834,
+            956,
+            1080,
+            1085
+          ]
+        }
+      },
+      "description": "点击玩具潮玩"
+    },
+    {
+      "from": "search_page__n_c0da7a88",
+      "to": "search_landing__n_f8b69ff5",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "手机数码未选中",
+          "content_desc": "手机数码未选中",
+          "class": "View",
+          "parent_rid": "vp_content",
+          "bounds_hint": [
+            1080,
+            956,
+            1259,
+            1085
+          ]
+        }
+      },
+      "description": "点击手机数码"
+    },
+    {
+      "from": "scan_main__n_19d8b956",
+      "to": "scan_page__n_9d8b7505",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "更多，按钮",
+          "content_desc": "更多，按钮",
+          "class": "View",
+          "bounds_hint": [
+            1178,
+            211,
+            1246,
+            280
+          ]
+        }
+      },
+      "description": "点击更多"
+    },
+    {
+      "from": "scan_main__n_19d8b956",
+      "to": "specialty_scan__n_8d1c2148",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "拍照  按钮",
+          "content_desc": "拍照  按钮",
+          "class": "View",
+          "bounds_hint": [
+            695,
+            2069,
+            817,
+            2281
+          ]
+        }
+      },
+      "description": "点击拍照模式"
+    },
+    {
+      "from": "home_follow__n_1e1be72e",
+      "to": "visual_search__n_a215b696",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "拍立淘",
+          "content_desc": "拍立淘",
+          "class": "FrameLayout",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            895,
+            307,
+            977,
+            389
+          ]
+        }
+      },
+      "description": "点击拍照搜索"
+    },
+    {
+      "from": "home_follow__n_1e1be72e",
+      "to": "search_results__n_9d47cd93",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "搜索",
+          "content_desc": "搜索",
+          "class": "FrameLayout",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            1008,
+            297,
+            1237,
+            399
+          ]
+        }
+      },
+      "description": "点击搜索按钮"
+    },
+    {
+      "from": "home_follow__n_1e1be72e",
+      "to": "activity_discounts__n_618a277e",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "消息",
+          "content_desc": "消息",
+          "class": "FrameLayout",
+          "parent_rid": "poplayer_inner_view",
+          "bounds_hint": [
+            512,
+            2538,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home_follow__n_1e1be72e",
+      "to": "cart_empty__n_4ff21f2f",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "购物车",
+          "content_desc": "购物车",
+          "class": "FrameLayout",
+          "parent_rid": "poplayer_inner_view",
+          "bounds_hint": [
+            768,
+            2538,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击购物车"
+    },
+    {
+      "from": "home_follow__n_1e1be72e",
+      "to": "followed_stores__n_471c3dc5",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "我的淘宝",
+          "content_desc": "我的淘宝",
+          "class": "FrameLayout",
+          "parent_rid": "poplayer_inner_view",
+          "bounds_hint": [
+            1024,
+            2538,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的淘宝"
+    },
+    {
+      "from": "promotion_campaign__n_bc978666",
+      "to": "mall_product_list__n_b5f3f719",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "精选",
+          "content_desc": "",
+          "class": "TextView",
+          "parent_rid": "main-tabs-scroller",
+          "bounds_hint": [
+            3,
+            2512,
+            152,
+            2609
+          ]
+        }
+      },
+      "description": "点击精选"
+    },
+    {
+      "from": "taobao_subsidy_home__n_6a3c4b28",
+      "to": "address_selector__n_414b6bf8",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "address",
+          "text": "O1CN01v58twS1b0AVDVRqtT_!!6000000003402-2-tps-58-58.png_90x90q95.jpg_ 海淀",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "ice-container",
+          "bounds_hint": [
+            52,
+            590,
+            630,
+            648
+          ]
+        }
+      },
+      "description": "点击地区选择"
+    },
+    {
+      "from": "taobao_subsidy_home__n_6a3c4b28",
+      "to": "subsidy_qualification__n_9757bcda",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "领资格 享国补",
+          "content_desc": "",
+          "class": "TextView",
+          "parent_rid": "ice-container",
+          "bounds_hint": [
+            52,
+            899,
+            601,
+            999
+          ]
+        }
+      },
+      "description": "点击领资格"
+    },
+    {
+      "from": "baba_farm__n_340690f9",
+      "to": "baba_farm__n_a1e0e889",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "更多，按钮",
+          "content_desc": "",
+          "class": "Button",
+          "parent_rid": "wrap-widget-22",
+          "bounds_hint": [
+            1131,
+            484,
+            1244,
+            598
+          ]
+        }
+      },
+      "description": "点击关闭新手引导横幅"
+    },
+    {
+      "from": "taobao_coins__n_1f9a9333",
+      "to": "taobao_home__n_5b339b64",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "返回",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "ice-container",
+          "bounds_hint": [
+            32,
+            172,
+            130,
+            273
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "short_video_feed__n_12260e81",
+      "to": "user_center__n_9c4ff748",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "个人主页，按钮",
+          "content_desc": "个人主页，按钮",
+          "class": "FrameLayout",
+          "parent_rid": "fluid_sdk_v_mediaset_list",
+          "bounds_hint": [
+            167,
+            184,
+            278,
+            280
+          ]
+        }
+      },
+      "description": "点击更多菜单"
+    },
+    {
+      "from": "short_video_feed__n_12260e81",
+      "to": "search_discovery__n_2f61bb11",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "搜索，按钮",
+          "content_desc": "搜索，按钮",
+          "class": "ImageView",
+          "parent_rid": "fluid_sdk_v_mediaset_list",
+          "bounds_hint": [
+            1149,
+            184,
+            1245,
+            280
+          ]
+        }
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "cart__n_f857e6b4",
+      "to": "home__n_96d44a75",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "首页",
+          "content_desc": "首页",
+          "class": "FrameLayout",
+          "parent_rid": "tb_main_fragment",
+          "bounds_hint": [
+            0,
+            2538,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "taobao_home__n_c18fa2cf",
+      "to": "anti_addiction_guide__n_8113bdc0",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "斗地主",
+          "content_desc": "斗地主",
+          "class": "FrameLayout",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            788,
+            636,
+            996,
+            854
+          ]
+        }
+      },
+      "description": "点击斗地主"
+    },
+    {
+      "from": "taobao_home__n_c18fa2cf",
+      "to": "anti_addiction_guidance__n_a0b8892d",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "连连消",
+          "content_desc": "连连消",
+          "class": "FrameLayout",
+          "parent_rid": "homepage_root_layout",
+          "bounds_hint": [
+            1040,
+            636,
+            1248,
+            854
+          ]
+        }
+      },
+      "description": "点击连连消"
+    },
+    {
+      "from": "search_result__n_a5dd9616",
+      "to": "search_discovery__n_8bcfbefa",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "btn_go_back",
+          "text": "返回上一页",
+          "content_desc": "返回上一页",
+          "class": "ImageView",
+          "bounds_hint": [
+            52,
+            191,
+            120,
+            259
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "search_result__n_a5dd9616",
+      "to": "search_page__n_bd1beeb4",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "searchEdit",
+          "text": "高端小钱包",
+          "content_desc": "",
+          "class": "TextView",
+          "parent_rid": "search_bar_wrapper",
+          "bounds_hint": [
+            146,
+            176,
+            440,
+            274
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "search_result__n_a5dd9616",
+      "to": "specialty_recognition__n_95a9d7ca",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "photoBtn",
+          "text": "拍立淘",
+          "content_desc": "拍立淘",
+          "class": "ImageView",
+          "bounds_hint": [
+            1008,
+            191,
+            1076,
+            259
+          ]
+        }
+      },
+      "description": "点击视觉搜索"
+    },
+    {
+      "from": "specialty_scanner__n_ee665a5d",
+      "to": "specialty_capture__n_a8baf79c",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "切换到前置摄像，按钮",
+          "content_desc": "切换到前置摄像，按钮",
+          "class": "View",
+          "bounds_hint": [
+            1048,
+            185,
+            1116,
+            253
+          ]
+        }
+      },
+      "description": "点击反转"
+    },
+    {
+      "from": "specialty_scanner__n_ee665a5d",
+      "to": "scan_main__n_1fbb2e98",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "扫码  按钮",
+          "content_desc": "扫码  按钮",
+          "class": "View",
+          "bounds_hint": [
+            463,
+            2069,
+            585,
+            2281
+          ]
+        }
+      },
+      "description": "点击扫码模式"
+    },
+    {
+      "from": "specialty_scanner__n_ee665a5d",
+      "to": "camera_scan__n_974eb983",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "拍照 已选中 按钮",
+          "content_desc": "拍照 已选中 按钮",
+          "class": "View",
+          "bounds_hint": [
+            695,
+            2069,
+            817,
+            2281
+          ]
+        }
+      },
+      "description": "点击拍照模式"
+    },
+    {
+      "from": "specialty_scanner__n_ee665a5d",
+      "to": "gallery_main__n_5d81b455",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "btn_fold",
+          "text": "展开，按钮",
+          "content_desc": "展开，按钮",
+          "class": "ImageView",
+          "bounds_hint": [
+            1149,
+            2327,
+            1246,
+            2424
+          ]
+        }
+      },
+      "description": "点击展开面板"
+    },
+    {
+      "from": "search_results__n_bd86d509",
+      "to": "search_page__n_82d673a3",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "searchEdit",
+          "text": "女士高端精致钱包",
+          "content_desc": "",
+          "class": "TextView",
+          "parent_rid": "search_bar_wrapper",
+          "bounds_hint": [
+            146,
+            176,
+            593,
+            274
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "search_results__n_bd86d509",
+      "to": "satisfaction_survey__n_4b3099bd",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "toolbar_review",
+          "text": "满意度调研",
+          "content_desc": "满意度调研",
+          "class": "ImageView",
+          "bounds_hint": [
+            1127,
+            2566,
+            1254,
+            2693
+          ]
+        }
+      },
+      "description": "点击客服反馈"
+    },
+    {
+      "from": "search_hub__n_bb6a3651",
+      "to": "search_input__n_6240b0f0",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "searchEdit",
+          "text": "女士高端精致钱包",
+          "content_desc": "",
+          "class": "EditText",
+          "parent_rid": "vp_content",
+          "bounds_hint": [
+            26,
+            317,
+            977,
+            415
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "search_hub__n_bb6a3651",
+      "to": "search_main__n_fafe7dd2",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "record_btn",
+          "text": "语音搜索",
+          "content_desc": "语音搜索",
+          "class": "View",
+          "parent_rid": "vp_content",
+          "bounds_hint": [
+            557,
+            2554,
+            723,
+            2720
+          ]
+        }
+      },
+      "description": "点击语音搜索"
+    },
+    {
+      "from": "search_hub__n_bb6a3651",
+      "to": "survey__n_8da7265d",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "反馈",
+          "content_desc": "",
+          "class": "LinearLayout",
+          "parent_rid": "vp_content",
+          "bounds_hint": [
+            1026,
+            2587,
+            1232,
+            2688
+          ]
+        }
+      },
+      "description": "点击反馈"
+    },
+    {
+      "from": "search_landing__n_f8b69ff5",
+      "to": "search_discovery__n_155b1d56",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "unfold_arrow_btn",
+          "text": "展开，按钮",
+          "content_desc": "展开，按钮",
+          "class": "FrameLayout",
+          "parent_rid": "vp_content",
+          "bounds_hint": [
+            707,
+            703,
+            809,
+            805
+          ]
+        }
+      },
+      "description": "点击展开历史"
+    },
+    {
+      "from": "search_landing__n_f8b69ff5",
+      "to": "search_discovery__n_2b864c9a",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "手机数码已选中",
+          "content_desc": "手机数码已选中",
+          "class": "View",
+          "parent_rid": "vp_content",
+          "bounds_hint": [
+            745,
+            956,
+            992,
+            1085
+          ]
+        }
+      },
+      "description": "点击手机数码"
+    },
+    {
+      "from": "scan_page__n_9d8b7505",
+      "to": "help_scan_alternative__n_8806a7b0",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "帮助 按钮",
+          "content_desc": "帮助 按钮",
+          "class": "View",
+          "bounds_hint": [
+            862,
+            336,
+            1239,
+            486
+          ]
+        }
+      },
+      "description": "点击帮助"
+    },
+    {
+      "from": "search_results__n_9d47cd93",
+      "to": "search_suggest__n_7a738576",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "searchEdit",
+          "text": "独特小钱包",
+          "content_desc": "",
+          "class": "TextView",
+          "parent_rid": "search_bar_wrapper",
+          "bounds_hint": [
+            146,
+            176,
+            440,
+            274
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "subsidy_qualification__n_9757bcda",
+      "to": "subsidy_portal__n_12f27eab",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "北京",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "ice-container",
+          "bounds_hint": [
+            159,
+            149,
+            419,
+            302
+          ]
+        }
+      },
+      "description": "点击切换地区"
+    },
+    {
+      "from": "subsidy_qualification__n_9757bcda",
+      "to": "national_subsidy_certification__n_965e1311",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "去逛逛",
+          "content_desc": "",
+          "class": "TextView",
+          "parent_rid": "ice-container",
+          "bounds_hint": [
+            52,
+            2528,
+            1228,
+            2668
+          ]
+        }
+      },
+      "description": "点击去逛逛"
+    }
+  ],
+  "popups": [
+    {
+      "id": "popup_640_2397",
+      "type": "dialog",
+      "description": "红包领取弹窗-关闭按钮",
+      "close_locator": {
+        "resource_id": "tb_main_fragment",
+        "text": "关注 推荐 闪购 国补 飞猪 开门红 穿搭 搜索栏 蜜雪冰城果茶 拍立淘 搜索 首页 跳转到猜你喜欢 视频 消息 1 购物车 我的淘宝",
+        "content_desc": "",
+        "class": "FrameLayout",
+        "bounds_hint": [
+          0,
+          0,
+          1280,
+          2720
+        ]
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_640_2009",
+      "type": "dialog",
+      "description": "蒙牛新春联动活动弹窗-关闭按钮",
+      "close_locator": {
+        "resource_id": "",
+        "text": "关闭",
+        "content_desc": "",
+        "class": "Button",
+        "parent_rid": "wrap-widget-22",
+        "locator_index": 1,
+        "locator_count": 2,
+        "bounds_hint": [
+          578,
+          1946,
+          705,
+          2073
+        ]
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_640_1995",
+      "type": "dialog",
+      "description": "签到领现金弹窗-关闭按钮",
+      "close_locator": {
+        "resource_id": "tb_main_fragment",
+        "text": "返回，按钮 个人主页，按钮 6 未选中，逛逛，按钮 未选中，直播，按钮 直播 未选中，短剧，按钮 短剧 未选中，穿搭，按钮 穿搭 未选中，关注，按钮 关注 已选中，推荐，按钮 推荐 搜索，按钮 tab2Interaction 15 O1CN01hmSCxw1KGKnu8EMoT_!!6000000001136-2-tps-172-68.png_200x200q50.jpg_ O1CN01b0um2V1vkgqxZxPXs_!!6000000006211-2-tps-135-126.png_200x200q50.jpg_ 立即领 O1CN01gIWbLi1wv3Qj1yXLh_!!6000000006369-2-tps-108-108.png_90x90q50.jpg_ 上滑2次领奖励 ￥ 3 . 7 1",
+        "content_desc": "",
+        "class": "FrameLayout",
+        "parent_rid": "ice-container",
+        "bounds_hint": [
+          0,
+          0,
+          1280,
+          2720
+        ]
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_1205_502",
+      "type": "dialog",
+      "description": "引导弹窗-切换列表模式",
+      "close_locator": {
+        "bounds_hint": [
+          1205,
+          502,
+          1205,
+          502
+        ]
+      },
+      "first_seen_page": "home"
+    },
+    {
+      "id": "popup_1202_623",
+      "type": "dialog",
+      "description": "切换地址弹窗",
+      "close_locator": {
+        "resource_id": "",
+        "text": "O1CN01KQGrEy1z5i0FYRxvK_!!6000000006663-55-tps-28-28",
+        "content_desc": "",
+        "class": "View",
+        "parent_rid": "ice-container",
+        "bounds_hint": [
+          1150,
+          576,
+          1248,
+          674
+        ]
+      },
+      "first_seen_page": "taobao_subsidy_home__n_6a3c4b28"
+    },
+    {
+      "id": "popup_1049_1732",
+      "type": "permission",
+      "description": "权限引导弹窗-确认",
+      "close_locator": {
+        "resource_id": "button1",
+        "text": "确认",
+        "content_desc": "",
+        "class": "Button",
+        "bounds_hint": [
+          949,
+          1654,
+          1157,
+          1830
+        ]
+      },
+      "first_seen_page": "search_hub__n_bb6a3651"
+    }
+  ],
+  "blocks": []
+}

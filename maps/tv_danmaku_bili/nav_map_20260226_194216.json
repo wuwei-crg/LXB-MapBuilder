@@ -1,0 +1,3180 @@
+{
+  "package": "tv.danmaku.bili",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "应用内容分发页，当前处于推荐标签下",
+      "features": [
+        "搜索",
+        "消息",
+        "分类切换",
+        "底部导航"
+      ]
+    },
+    "history_recent__n_9208d25a": {
+      "name": "最近记录",
+      "description": "展示用户最近的历史、下载、收藏及小程序记录",
+      "features": [
+        "分类Tab",
+        "核心功能入口"
+      ]
+    },
+    "search_main__n_48c7db25": {
+      "name": "搜索页",
+      "description": "提供搜索输入、热搜榜单入口及历史记录查看",
+      "features": [
+        "搜索框",
+        "热搜榜",
+        "历史记录"
+      ]
+    },
+    "message_main__n_d38d4b15": {
+      "name": "消息中心",
+      "description": "聚合各种消息通知、互动提醒和私信入口",
+      "features": [
+        "分类消息跳转",
+        "清理未读",
+        "消息设置"
+      ]
+    },
+    "home_recommend__n_285b4dc6": {
+      "name": "首页推荐",
+      "description": "推荐视频内容浏览",
+      "features": [
+        "搜索",
+        "导航切换",
+        "投稿"
+      ]
+    },
+    "home_trending__n_cd1ab283": {
+      "name": "首页-热门",
+      "description": "哔哩哔哩热门视频浏览页",
+      "features": [
+        "搜索",
+        "频道分类",
+        "榜单入口",
+        "底部导航"
+      ]
+    },
+    "all_partitions__n_1349ca97": {
+      "name": "分区",
+      "description": "展示APP内所有视频频道分类入口",
+      "features": [
+        "分类跳转",
+        "快捷访问编辑"
+      ]
+    },
+    "bilibili_home__n_e579f1d5": {
+      "name": "首页推荐",
+      "description": "浏览视频推荐及分类内容",
+      "features": [
+        "搜索",
+        "分类切换",
+        "底部导航"
+      ]
+    },
+    "following__n_19e5c402": {
+      "name": "关注页",
+      "description": "浏览已关注UP主的动态与视频",
+      "features": [
+        "发布动态",
+        "全部/视频切换",
+        "直播列表入口",
+        "底部导航"
+      ]
+    },
+    "user_center__n_60b55a15": {
+      "name": "个人中心",
+      "description": "用户资料展示、常用功能服务及创作/游戏中心入口",
+      "features": [
+        "扫一扫",
+        "设置",
+        "历史记录",
+        "创作中心",
+        "发布",
+        "游戏中心"
+      ]
+    },
+    "home_recommendation__n_343332c7": {
+      "name": "首页推荐",
+      "description": "浏览推荐视频与直播内容",
+      "features": [
+        "搜索",
+        "切换频道",
+        "底部导航"
+      ]
+    },
+    "recent_main__n_16f17de9": {
+      "name": "最近",
+      "description": "个人中心最近浏览与功能快捷入口",
+      "features": [
+        "历史记录",
+        "离线缓存",
+        "收藏",
+        "稍后再看",
+        "小程序"
+      ]
+    },
+    "media_center_video__n_6b9f0c3a": {
+      "name": "媒体中心-视频页",
+      "description": "短视频/最近视频播放与浏览",
+      "features": [
+        "返回",
+        "分类切换",
+        "设置"
+      ]
+    },
+    "audio_history__n_e3482355": {
+      "name": "听视频历史",
+      "description": "用户收听视频音频的历史记录列表",
+      "features": [
+        "返回",
+        "切换历史分类",
+        "搜索历史内容"
+      ]
+    },
+    "avatar_entrance_settings__n_c69599b6": {
+      "name": "首页头像入口设置",
+      "description": "设置首页头像点击后的跳转目标及快捷功能入口",
+      "features": [
+        "返回",
+        "跳转模式选择",
+        "快捷功能编辑"
+      ]
+    },
+    "offline_downloads__n_3edcd00f": {
+      "name": "离线缓存-听视频",
+      "description": "管理和浏览已下载的音视频内容",
+      "features": [
+        "顶部页签切换",
+        "列表浏览"
+      ]
+    },
+    "history_audio__n_dfbab6d8": {
+      "name": "历史记录-听视频",
+      "description": "展示并切换音频收听历史记录",
+      "features": [
+        "分类切换",
+        "返回",
+        "搜索"
+      ]
+    },
+    "bilibili_audio_mode__n_ada08663": {
+      "name": "听视频",
+      "description": "音频模式主页，支持历史与收藏访问",
+      "features": [
+        "标签页切换",
+        "历史记录",
+        "收藏夹"
+      ]
+    },
+    "audio_main__n_aa3ac22b": {
+      "name": "听视频",
+      "description": "音频聚合页面",
+      "features": [
+        "浏览最近播放、切换视频/音频模式、浏览推荐音频"
+      ]
+    },
+    "audio_history__n_71ade85b": {
+      "name": "听视频历史",
+      "description": "展示视频转音频的播放历史与收藏",
+      "features": [
+        "返回",
+        "顶部Tab切换",
+        "搜索",
+        "分类列表入口"
+      ]
+    },
+    "home_recommend__n_bdabca4b": {
+      "name": "首页-推荐",
+      "description": "视频及直播内容推荐列表",
+      "features": [
+        "搜索",
+        "分区切换",
+        "个人中心",
+        "底部导航"
+      ]
+    },
+    "search_suggest__n_6510f689": {
+      "name": "搜索输入页",
+      "description": "用户输入搜索关键词界面，提供热搜、历史及建议",
+      "features": [
+        "搜索输入",
+        "历史清理",
+        "热门榜单入口"
+      ]
+    },
+    "trending_list__n_146725b8": {
+      "name": "Bilibili热搜",
+      "description": "展示全站实时热门搜索话题排行榜",
+      "features": [
+        "返回",
+        "分享"
+      ]
+    },
+    "search_main__n_25cb2658": {
+      "name": "搜索首页",
+      "description": "提供搜索功能、展示热搜及搜索历史",
+      "features": [
+        "返回",
+        "搜索",
+        "输入",
+        "清空历史"
+      ]
+    },
+    "home_recommend__n_11698e8c": {
+      "name": "首页推荐",
+      "description": "B站首页内容分发页，包含搜索、频道切换及主要功能导航",
+      "features": [
+        "搜索",
+        "消息",
+        "频道切换",
+        "底部导航"
+      ]
+    },
+    "message_main__n_d63a49ba": {
+      "name": "消息主页",
+      "description": "展示互动消息分类及私信通知列表",
+      "features": [
+        "返回",
+        "清理",
+        "设置",
+        "消息分类"
+      ]
+    },
+    "message_reply_at__n_b3b6eaa2": {
+      "name": "回复与@",
+      "description": "显示回复与被提及（@）的消息列表",
+      "features": [
+        "切换分类",
+        "消息管理"
+      ]
+    },
+    "message_likes__n_a5fb9ecb": {
+      "name": "收到喜欢",
+      "description": "展示收到的点赞通知列表页",
+      "features": [
+        "返回",
+        "消息设置"
+      ]
+    },
+    "message_fans__n_435d05d1": {
+      "name": "新增粉丝",
+      "description": "查看新增粉丝列表并支持回关操作",
+      "features": [
+        "返回",
+        "菜单"
+      ]
+    },
+    "home_anime__n_687afc50": {
+      "name": "动画频道",
+      "description": "Bilibili动画首页，提供番剧搜索、排表、排行榜及功能入口",
+      "features": [
+        "搜索",
+        "番剧索引",
+        "时间表",
+        "排行榜切换"
+      ]
+    },
+    "home_cinema__n_bb8136e8": {
+      "name": "首页-影视",
+      "description": "影视频道页，提供影视分类导航与推荐内容",
+      "features": [
+        "搜索",
+        "分类导航",
+        "我的追剧",
+        "主导航切换"
+      ]
+    },
+    "home_new_journey__n_342cf8e8": {
+      "name": "首页-新征程",
+      "description": "展示时政与文化专题内容的聚合页",
+      "features": [
+        "搜索",
+        "频道切换",
+        "底部主功能导航"
+      ]
+    },
+    "publish_media_selection__n_4903047a": {
+      "name": "媒体选择页",
+      "description": "选择手机相册中的视频或照片进行发布",
+      "features": [
+        "视频选择",
+        "分类切换",
+        "进入草稿箱",
+        "相机拍摄",
+        "直播入口",
+        "图文发布"
+      ]
+    },
+    "rank_list__n_8886ae19": {
+      "name": "排行榜",
+      "description": "显示全站及各分区的热门视频排行榜",
+      "features": [
+        "分类切换",
+        "搜索",
+        "查看下载"
+      ]
+    },
+    "weekly_must_watch__n_d6025f6b": {
+      "name": "每周必看",
+      "description": "展示B站每周热门视频汇总列表",
+      "features": [
+        "返回",
+        "订阅专题",
+        "分享",
+        "切换往期"
+      ]
+    },
+    "interest_weekly_hotspots__n_70fe239c": {
+      "name": "生活兴趣每周热点",
+      "description": "展示生活兴趣领域的每周热门内容和视频列表",
+      "features": [
+        "返回",
+        "分享",
+        "分类切换",
+        "参与投稿"
+      ]
+    },
+    "home_recommend__n_dddfaadb": {
+      "name": "首页推荐",
+      "description": "哔哩哔哩首页推荐内容流页面",
+      "features": [
+        "搜索",
+        "频道切换",
+        "底部主导航"
+      ]
+    },
+    "edit_shortcuts__n_0fae9580": {
+      "name": "快捷访问编辑",
+      "description": "配置首页快捷访问的分区入口",
+      "features": [
+        "返回",
+        "保存",
+        "选择分区"
+      ]
+    },
+    "partition_anime__n_dae250df": {
+      "name": "番剧频道页",
+      "description": "Bilibili番剧分区首页，提供番剧推荐、索引及时间表功能",
+      "features": [
+        "返回",
+        "搜索",
+        "分区切换",
+        "热门榜",
+        "索引",
+        "历史记录",
+        "时间表"
+      ]
+    },
+    "partition_guochuang__n_014975fc": {
+      "name": "国创分区页",
+      "description": "展示国创相关动漫的排期、榜单及内容推荐",
+      "features": [
+        "顶部导航",
+        "功能入口",
+        "内容刷新"
+      ]
+    },
+    "documentary_channel__n_400380a4": {
+      "name": "纪录片频道",
+      "description": "视频APP纪录片分类页面",
+      "features": [
+        "分类导航",
+        "搜索",
+        "专题入口"
+      ]
+    },
+    "partition_movie__n_faa06c90": {
+      "name": "电影频道",
+      "description": "提供电影内容的分类聚合与功能入口",
+      "features": [
+        "搜索",
+        "排行榜",
+        "电影筛选"
+      ]
+    },
+    "partition_tv__n_3612cadd": {
+      "name": "电视剧频道",
+      "description": "展示电视剧分类导航及推荐内容",
+      "features": [
+        "频道切换",
+        "搜索",
+        "特色分类跳转"
+      ]
+    },
+    "partition_variety__n_6e54c917": {
+      "name": "综艺频道",
+      "description": "展示并推荐各类综艺节目及功能入口",
+      "features": [
+        "频道切换",
+        "搜索",
+        "功能导航"
+      ]
+    },
+    "partition_cinephile__n_0c4500ca": {
+      "name": "影视分区",
+      "description": "展示电影与电视剧相关推荐视频及分类内容",
+      "features": [
+        "返回"
+      ]
+    },
+    "partition_ent__n_a7650af2": {
+      "name": "娱乐分区",
+      "description": "展示娱乐分类下的推荐视频列表",
+      "features": [
+        "返回"
+      ]
+    },
+    "partition_guichu__n_ac3c814f": {
+      "name": "鬼畜分区",
+      "description": "展示鬼畜类别的视频内容列表",
+      "features": [
+        "返回"
+      ]
+    },
+    "partition_game__n_32853ff4": {
+      "name": "游戏分区",
+      "description": "游戏频道内容聚合页，展示各类游戏相关的视频推荐",
+      "features": [
+        "返回",
+        "视频流浏览"
+      ]
+    },
+    "partition_info__n_5a0f5f33": {
+      "name": "资讯分区页",
+      "description": "展示资讯分类下的视频列表",
+      "features": [
+        "返回"
+      ]
+    },
+    "partition_knowledge__n_8bd032d6": {
+      "name": "知识分区",
+      "description": "知识类别视频内容浏览页",
+      "features": [
+        "返回"
+      ]
+    },
+    "partition_ai__n_3a72d165": {
+      "name": "人工智能分区",
+      "description": "浏览人工智能相关的视频列表内容",
+      "features": [
+        "返回"
+      ]
+    },
+    "car_partition__n_c728ffb0": {
+      "name": "汽车频道",
+      "description": "展示汽车类视频内容的垂直分区页面",
+      "features": [
+        "返回",
+        "切换底部导航"
+      ]
+    },
+    "partition_fashion_beauty__n_6957ad0f": {
+      "name": "时尚美妆",
+      "description": "时尚美妆分区视频内容聚合页",
+      "features": [
+        "返回",
+        "视频浏览"
+      ]
+    },
+    "partition_home_real_estate__n_dede7d52": {
+      "name": "家装房产分区",
+      "description": "展示特定分区的视频列表内容",
+      "features": [
+        "返回",
+        "更多功能"
+      ]
+    },
+    "partition_outdoor__n_017a6bdf": {
+      "name": "户外潮流",
+      "description": "分区内容聚合页",
+      "features": [
+        "浏览特定分区的视频列表与活动"
+      ]
+    },
+    "fitness_partition__n_6984e911": {
+      "name": "健身分区",
+      "description": "浏览健身相关视频投稿",
+      "features": [
+        "返回"
+      ]
+    },
+    "partition_sports__n_f3464baf": {
+      "name": "体育运动分区",
+      "description": "展示体育相关的视频流内容",
+      "features": [
+        "返回",
+        "底部导航"
+      ]
+    },
+    "partition_handicraft__n_6172cf09": {
+      "name": "手工分区页",
+      "description": "手工分类下的视频列表展示",
+      "features": [
+        "返回"
+      ]
+    },
+    "mini_theater__n_b597fe95": {
+      "name": "小剧场",
+      "description": "短剧/短视频内容列表页",
+      "features": [
+        "返回"
+      ]
+    },
+    "partition_travel__n_cd9e10fe": {
+      "name": "旅游出行",
+      "description": "分区二级页面，展示该分区的热门活动及推荐视频列表",
+      "features": [
+        "返回"
+      ]
+    },
+    "create_dynamic__n_1267975d": {
+      "name": "发布动态页",
+      "description": "发布图文动态、专栏或设置封面",
+      "features": [
+        "标题正文输入",
+        "添加图片",
+        "功能扩展"
+      ]
+    },
+    "following_video__n_67d1e45b": {
+      "name": "关注-视频",
+      "description": "展示所关注账号的视频动态列表",
+      "features": [
+        "搜索",
+        "发布动态",
+        "切换全部分类",
+        "底部导航"
+      ]
+    },
+    "home_recommend__n_28fdaebc": {
+      "name": "首页推荐",
+      "description": "Bilibili首页推荐视频列表",
+      "features": [
+        "搜索",
+        "分类切换",
+        "底部核心导航"
+      ]
+    },
+    "scan__n_83391a45": {
+      "name": "扫码页",
+      "description": "扫描二维码进行功能跳转",
+      "features": [
+        "扫码",
+        "我的名片",
+        "相册识别"
+      ]
+    },
+    "user_center__n_c746e472": {
+      "name": "我的",
+      "description": "用户个人中心页，提供离线缓存、历史记录、创作工具及游戏中心入口",
+      "features": [
+        "离线缓存",
+        "历史记录",
+        "创作中心",
+        "直播管理",
+        "游戏中心"
+      ]
+    },
+    "offline_cache__n_f906eee3": {
+      "name": "离线缓存",
+      "description": "展示和管理用户已下载的离线视频内容",
+      "features": [
+        "搜索",
+        "批量管理",
+        "列表编辑"
+      ]
+    },
+    "history_records__n_d0efb585": {
+      "name": "历史记录",
+      "description": "浏览和管理用户的浏览记录",
+      "features": [
+        "搜索",
+        "分类切换",
+        "记录管理"
+      ]
+    },
+    "favorites_updates__n_5fbc24f0": {
+      "name": "收藏-追更",
+      "description": "查看订阅内容的最新更新动态",
+      "features": [
+        "返回",
+        "切换收藏分类",
+        "切换内容类型"
+      ]
+    },
+    "watch_later__n_116ab08e": {
+      "name": "稍后再看",
+      "description": "存放稍后观看视频的列表页，当前为空状态",
+      "features": [
+        "管理",
+        "视图切换",
+        "排序",
+        "播放全部"
+      ]
+    },
+    "upload_selection__n_0e890a13": {
+      "name": "媒体选择页",
+      "description": "选择本地媒体文件进行上传或切换发布模式",
+      "features": [
+        "分类筛选",
+        "文件夹切换",
+        "草稿箱",
+        "拍摄模式",
+        "直播模式",
+        "图文模式"
+      ]
+    },
+    "creative_center__n_be286ced": {
+      "name": "创作中心",
+      "description": "UP主创作管理与数据看板页面",
+      "features": [
+        "数据概览",
+        "创作工具",
+        "稿件管理"
+      ]
+    },
+    "home_recommend__n_da6f14f9": {
+      "name": "首页-推荐",
+      "description": "应用首页推荐视频流页面",
+      "features": [
+        "搜索",
+        "频道切换",
+        "底部功能导航"
+      ]
+    },
+    "following__n_703b7cf4": {
+      "name": "关注页",
+      "description": "查看关注博主的动态、视频更新及直播状态",
+      "features": [
+        "全部",
+        "视频",
+        "更多直播",
+        "管理",
+        "底部导航"
+      ]
+    },
+    "upload_media_picker__n_e55d0df8": {
+      "name": "媒体上传选择页",
+      "description": "选择本地媒体文件进行发布",
+      "features": [
+        "切换相册",
+        "切换媒体分类",
+        "切换发布模式",
+        "查看草稿"
+      ]
+    },
+    "user_center__n_c0733626": {
+      "name": "个人中心",
+      "description": "用户个人信息及功能设置页面",
+      "features": [
+        "扫一扫",
+        "创作管理",
+        "直播中心",
+        "游戏中心",
+        "系统设置"
+      ]
+    },
+    "listen_mode__n_9218e1ab": {
+      "name": "听视频页",
+      "description": "音频内容浏览与播放控制页面",
+      "features": [
+        "返回",
+        "最近",
+        "看视频",
+        "听视频",
+        "更多"
+      ]
+    },
+    "shortcut_settings__n_3b1ce237": {
+      "name": "最近页快捷功能设置",
+      "description": "管理个人主页或最近访问页的快捷入口",
+      "features": [
+        "添加/移除功能组件"
+      ]
+    },
+    "shortcut_settings__n_6b40a47d": {
+      "name": "最近页快捷功能设置",
+      "description": "管理和配置个人中心“最近访问”栏目的快捷功能图标",
+      "features": [
+        "功能增减与排序"
+      ]
+    },
+    "recent_shortcut_settings__n_afd52d5b": {
+      "name": "最近页快捷功能设置",
+      "description": "管理和添加“最近”页面的快捷功能入口",
+      "features": [
+        "返回",
+        "各分类功能选择"
+      ]
+    },
+    "shortcut_settings__n_6ae2dd49": {
+      "name": "最近页快捷功能设置",
+      "description": "管理并自定义“最近”页面的快捷功能入口列表",
+      "features": [
+        "功能增减",
+        "返回"
+      ]
+    },
+    "history_recent__n_4098ef7e": {
+      "name": "最近听过",
+      "description": "查看用户最近收听的音频历史列表",
+      "features": [
+        "返回",
+        "进入播放详情",
+        "查看播放队列"
+      ]
+    },
+    "search_result__n_ee81ad36": {
+      "name": "搜索结果页",
+      "description": "展示搜索关键词“JDG AL”相关的赛事数据、直播及视频内容",
+      "features": [
+        "搜索",
+        "分类切换",
+        "筛选",
+        "赛事功能跳转"
+      ]
+    },
+    "search_result__n_b4e9bf8f": {
+      "name": "搜索结果页",
+      "description": "展示各分类下的搜索匹配内容",
+      "features": [
+        "搜索",
+        "切换分类",
+        "筛选"
+      ]
+    },
+    "search_result__n_93d905db": {
+      "name": "搜索结果页",
+      "description": "展示搜索关键词相关的综合内容并提供分类筛选",
+      "features": [
+        "返回",
+        "搜索输入",
+        "执行搜索",
+        "分类Tab切换",
+        "筛选"
+      ]
+    },
+    "message_reply_at__n_efeb9873": {
+      "name": "回复与@",
+      "description": "展示收到的评论回复和提及通知列表",
+      "features": [
+        "切换全部/@我分类"
+      ]
+    },
+    "at_me_messages__n_c88015cd": {
+      "name": "@我消息页面",
+      "description": "查看所有提到我的评论和通知",
+      "features": [
+        "切换通知类型",
+        "返回"
+      ]
+    },
+    "game_center_home__n_d193f200": {
+      "name": "游戏中心首页",
+      "description": "B站游戏分发与发现主页",
+      "features": [
+        "搜索",
+        "下载管理",
+        "游戏分类",
+        "排行",
+        "个人游戏中心"
+      ]
+    },
+    "anime_index__n_74b53992": {
+      "name": "番剧索引",
+      "description": "动画分类筛选与查询页面",
+      "features": [
+        "返回",
+        "搜索",
+        "筛选"
+      ]
+    },
+    "anime_timeline__n_d63de36e": {
+      "name": "番剧时间表",
+      "description": "查看番剧每日更新计划",
+      "features": [
+        "日期切换",
+        "筛选"
+      ]
+    },
+    "anime_home__n_c49f0cc2": {
+      "name": "番剧频道",
+      "description": "展示番剧、国创、少儿动画内容的聚合页面",
+      "features": [
+        "分类切换",
+        "榜单查询",
+        "搜索动画",
+        "播放历史"
+      ]
+    },
+    "guochuang_home__n_a362a7fb": {
+      "name": "国创频道",
+      "description": "B站国创内容聚合页",
+      "features": [
+        "顶部频道切换",
+        "功能快捷入口",
+        "热门作品展示"
+      ]
+    },
+    "kids_section__n_e191e17d": {
+      "name": "少儿频道",
+      "description": "少儿视频聚合页面",
+      "features": [
+        "分类导航",
+        "明星角色导航",
+        "年龄过滤"
+      ]
+    },
+    "anime_incentive_campaign__n_e4914c97": {
+      "name": "动画种草激励活动页",
+      "description": "展示二月动画种草激励活动规则并提供投稿入口",
+      "features": [
+        "分享",
+        "页签切换",
+        "搜索",
+        "投稿"
+      ]
+    },
+    "rankings_list__n_839978a3": {
+      "name": "热门榜单",
+      "description": "展示并切换不同类别的热门动漫与资讯排行榜",
+      "features": [
+        "分类切换",
+        "返回"
+      ]
+    },
+    "home_animation__n_411dba76": {
+      "name": "首页-动画频道",
+      "description": "Bilibili动画频道页面，包含推荐功能、剧集分类入口及排行榜。",
+      "features": [
+        "搜索",
+        "频道切换",
+        "专题功能跳转",
+        "排行榜分类切换",
+        "主Tab导航"
+      ]
+    },
+    "home_anime__n_59aefff7": {
+      "name": "首页-动画频道",
+      "description": "哔哩哔哩动画频道内容聚合页",
+      "features": [
+        "搜索",
+        "频道切换",
+        "功能入口",
+        "排行榜切换",
+        "底部导航"
+      ]
+    },
+    "home_anime_rank__n_a431cb63": {
+      "name": "首页-动画-热搜榜",
+      "description": "哔哩哔哩动画分区的热搜排行页面，提供分类导航和番剧入口",
+      "features": [
+        "搜索",
+        "频道切换",
+        "番剧功能区",
+        "榜单切换",
+        "底部导航"
+      ]
+    },
+    "profile__n_0e85a93d": {
+      "name": "个人中心",
+      "description": "用户主页及功能聚合页",
+      "features": [
+        "创作管理",
+        "游戏中心",
+        "个人资产",
+        "设置"
+      ]
+    },
+    "media_library__n_673b9116": {
+      "name": "全部内容",
+      "description": "影视内容分类检索页面",
+      "features": [
+        "分类切换",
+        "排序过滤",
+        "属性筛选"
+      ]
+    },
+    "movie_list_square__n_5adacf41": {
+      "name": "片单广场",
+      "description": "提供各类影视作品的专题片单浏览",
+      "features": [
+        "返回",
+        "切换分类标签"
+      ]
+    },
+    "movie_channel__n_08facca7": {
+      "name": "电影频道",
+      "description": "提供电影分类浏览、榜单及功能入口",
+      "features": [
+        "频道切换",
+        "搜索",
+        "功能金刚区"
+      ]
+    },
+    "tv_series_channel__n_8aab0e13": {
+      "name": "电视剧频道",
+      "description": "电视剧分类浏览与推荐页面",
+      "features": [
+        "频道导航",
+        "搜索",
+        "分类专题入口"
+      ]
+    },
+    "documentary_channel__n_77076a11": {
+      "name": "纪录片频道",
+      "description": "纪录片内容分类与推荐页",
+      "features": [
+        "分类切换",
+        "搜索",
+        "专题入口"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "history_recent__n_9208d25a",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "avatar_layout",
+          "text": "个人主页，按钮",
+          "content_desc": "个人主页，按钮",
+          "class": "ViewGroup",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            33,
+            178,
+            186,
+            308
+          ]
+        }
+      },
+      "description": "点击个人头像"
+    },
+    {
+      "from": "home",
+      "to": "search_main__n_48c7db25",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "expand_search",
+          "text": "搜索栏，按钮",
+          "content_desc": "搜索栏，按钮",
+          "class": "LinearLayout",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            231,
+            188,
+            941,
+            298
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home",
+      "to": "message_main__n_d38d4b15",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "消息,1条未读,按钮",
+          "content_desc": "消息,1条未读,按钮",
+          "class": "FrameLayout",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            1130,
+            168,
+            1280,
+            318
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "home_recommend__n_285b4dc6",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "推荐,6之2,标签",
+          "content_desc": "推荐,6之2,标签",
+          "class": "ViewGroup",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            202,
+            334,
+            380,
+            451
+          ]
+        }
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "home",
+      "to": "home_trending__n_cd1ab283",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "热门,6之3,标签",
+          "content_desc": "热门,6之3,标签",
+          "class": "ViewGroup",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            380,
+            334,
+            552,
+            451
+          ]
+        }
+      },
+      "description": "点击热门"
+    },
+    {
+      "from": "home",
+      "to": "all_partitions__n_1349ca97",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "category_click_area",
+          "text": "分区，按钮",
+          "content_desc": "",
+          "class": "FrameLayout",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            1104,
+            334,
+            1280,
+            451
+          ]
+        }
+      },
+      "description": "点击频道菜单"
+    },
+    {
+      "from": "home",
+      "to": "bilibili_home__n_e579f1d5",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "首页,5之1,标签",
+          "content_desc": "首页,5之1,标签",
+          "class": "FrameLayout",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            0,
+            2503,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "following__n_19e5c402",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "关注,5之2,标签",
+          "content_desc": "关注,5之2,标签",
+          "class": "FrameLayout",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            256,
+            2503,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击关注"
+    },
+    {
+      "from": "home",
+      "to": "user_center__n_60b55a15",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "我的,5之5,标签",
+          "content_desc": "我的,5之5,标签",
+          "class": "FrameLayout",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            1024,
+            2503,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "history_recent__n_9208d25a",
+      "to": "home_recommendation__n_343332c7",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "sidecenter_back",
+          "text": "",
+          "content_desc": "",
+          "class": "FrameLayout",
+          "parent_rid": "sidecenter_viewpager",
+          "bounds_hint": [
+            0,
+            152,
+            156,
+            295
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "history_recent__n_9208d25a",
+      "to": "recent_main__n_16f17de9",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "最近",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "sidecenter_viewpager",
+          "bounds_hint": [
+            237,
+            152,
+            471,
+            295
+          ]
+        }
+      },
+      "description": "点击最近"
+    },
+    {
+      "from": "history_recent__n_9208d25a",
+      "to": "media_center_video__n_6b9f0c3a",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "看视频",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "sidecenter_viewpager",
+          "bounds_hint": [
+            471,
+            152,
+            757,
+            295
+          ]
+        }
+      },
+      "description": "点击看视频"
+    },
+    {
+      "from": "history_recent__n_9208d25a",
+      "to": "audio_history__n_e3482355",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "听视频",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "sidecenter_viewpager",
+          "bounds_hint": [
+            757,
+            152,
+            1043,
+            295
+          ]
+        }
+      },
+      "description": "点击听视频"
+    },
+    {
+      "from": "history_recent__n_9208d25a",
+      "to": "avatar_entrance_settings__n_c69599b6",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "sidecenter_setting",
+          "text": "",
+          "content_desc": "",
+          "class": "FrameLayout",
+          "parent_rid": "sidecenter_viewpager",
+          "bounds_hint": [
+            1124,
+            152,
+            1280,
+            295
+          ]
+        }
+      },
+      "description": "点击更多"
+    },
+    {
+      "from": "history_recent__n_9208d25a",
+      "to": "offline_downloads__n_3edcd00f",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "离线缓存",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "sidecenter_viewpager",
+          "bounds_hint": [
+            39,
+            373,
+            327,
+            529
+          ]
+        }
+      },
+      "description": "点击离线缓存"
+    },
+    {
+      "from": "history_recent__n_9208d25a",
+      "to": "history_audio__n_dfbab6d8",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "历史记录",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "sidecenter_viewpager",
+          "bounds_hint": [
+            344,
+            373,
+            632,
+            529
+          ]
+        }
+      },
+      "description": "点击历史记录"
+    },
+    {
+      "from": "history_recent__n_9208d25a",
+      "to": "bilibili_audio_mode__n_ada08663",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "我的收藏",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "sidecenter_viewpager",
+          "bounds_hint": [
+            648,
+            373,
+            936,
+            529
+          ]
+        }
+      },
+      "description": "点击我的收藏"
+    },
+    {
+      "from": "history_recent__n_9208d25a",
+      "to": "audio_main__n_aa3ac22b",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "稍后再看",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "sidecenter_viewpager",
+          "bounds_hint": [
+            953,
+            373,
+            1241,
+            529
+          ]
+        }
+      },
+      "description": "点击稍后再看"
+    },
+    {
+      "from": "history_recent__n_9208d25a",
+      "to": "audio_history__n_71ade85b",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "全部",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "sidecenter_viewpager",
+          "locator_index": 1,
+          "locator_count": 2,
+          "bounds_hint": [
+            1101,
+            988,
+            1257,
+            1096
+          ]
+        }
+      },
+      "description": "点击全部视频历史"
+    },
+    {
+      "from": "search_main__n_48c7db25",
+      "to": "home_recommend__n_bdabca4b",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "iv_back_arrow",
+          "text": "",
+          "content_desc": "",
+          "class": "ImageView",
+          "bounds_hint": [
+            0,
+            184,
+            124,
+            282
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "search_main__n_48c7db25",
+      "to": "search_suggest__n_6510f689",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "search_src_text",
+          "text": "老外翻译中文ID",
+          "content_desc": "搜索查询",
+          "class": "EditText",
+          "bounds_hint": [
+            210,
+            184,
+            1072,
+            282
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "search_main__n_48c7db25",
+      "to": "search_result__n_f0cda55a",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "action_search",
+          "text": "搜索",
+          "content_desc": "",
+          "class": "TextView",
+          "bounds_hint": [
+            1072,
+            178,
+            1280,
+            289
+          ]
+        }
+      },
+      "description": "点击搜索按钮"
+    },
+    {
+      "from": "search_main__n_48c7db25",
+      "to": "trending_list__n_146725b8",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "container_entrance",
+          "text": "完整榜单",
+          "content_desc": "",
+          "class": "LinearLayout",
+          "parent_rid": "search_discover_list",
+          "bounds_hint": [
+            1046,
+            343,
+            1280,
+            395
+          ]
+        }
+      },
+      "description": "点击完整榜单"
+    },
+    {
+      "from": "search_main__n_48c7db25",
+      "to": "search_main__n_25cb2658",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "delete_all",
+          "text": "",
+          "content_desc": "",
+          "class": "ImageView",
+          "parent_rid": "search_discover_list",
+          "bounds_hint": [
+            1004,
+            1029,
+            1141,
+            1143
+          ]
+        }
+      },
+      "description": "点击清空历史"
+    },
+    {
+      "from": "message_main__n_d38d4b15",
+      "to": "home_recommend__n_11698e8c",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            0,
+            146,
+            156,
+            295
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "message_main__n_d38d4b15",
+      "to": "message_main__n_d63a49ba",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "一键已读",
+          "content_desc": "一键已读",
+          "class": "ImageView",
+          "bounds_hint": [
+            981,
+            146,
+            1124,
+            295
+          ]
+        }
+      },
+      "description": "点击清理"
+    },
+    {
+      "from": "message_main__n_d38d4b15",
+      "to": "message_settings__n_70467d54",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "菜单",
+          "content_desc": "菜单",
+          "class": "ImageView",
+          "bounds_hint": [
+            1124,
+            146,
+            1280,
+            295
+          ]
+        }
+      },
+      "description": "点击更多"
+    },
+    {
+      "from": "message_main__n_d38d4b15",
+      "to": "message_reply_at__n_b3b6eaa2",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "回复与@\n",
+          "content_desc": "回复与@\n",
+          "class": "View",
+          "bounds_hint": [
+            104,
+            295,
+            448,
+            631
+          ]
+        }
+      },
+      "description": "点击回复与@"
+    },
+    {
+      "from": "message_main__n_d38d4b15",
+      "to": "message_likes__n_a5fb9ecb",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "收到喜欢\n",
+          "content_desc": "收到喜欢\n",
+          "class": "View",
+          "bounds_hint": [
+            468,
+            295,
+            812,
+            631
+          ]
+        }
+      },
+      "description": "点击收到喜欢"
+    },
+    {
+      "from": "message_main__n_d38d4b15",
+      "to": "message_fans__n_435d05d1",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "新增粉丝\n",
+          "content_desc": "新增粉丝\n",
+          "class": "View",
+          "bounds_hint": [
+            832,
+            295,
+            1176,
+            631
+          ]
+        }
+      },
+      "description": "点击新增粉丝"
+    },
+    {
+      "from": "home_recommend__n_285b4dc6",
+      "to": "home_anime__n_687afc50",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "动画,6之4,标签",
+          "content_desc": "动画,6之4,标签",
+          "class": "ViewGroup",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            552,
+            334,
+            724,
+            451
+          ]
+        }
+      },
+      "description": "点击动画"
+    },
+    {
+      "from": "home_recommend__n_285b4dc6",
+      "to": "home_cinema__n_bb8136e8",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "影视,6之5,标签",
+          "content_desc": "影视,6之5,标签",
+          "class": "ViewGroup",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            724,
+            334,
+            896,
+            451
+          ]
+        }
+      },
+      "description": "点击影视"
+    },
+    {
+      "from": "home_recommend__n_285b4dc6",
+      "to": "home_new_journey__n_342cf8e8",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "新征程,6之6,标签",
+          "content_desc": "新征程,6之6,标签",
+          "class": "ViewGroup",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            896,
+            334,
+            1132,
+            451
+          ]
+        }
+      },
+      "description": "点击新征程"
+    },
+    {
+      "from": "home_recommend__n_285b4dc6",
+      "to": "publish_media_selection__n_4903047a",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "发布内容,5之3,标签",
+          "content_desc": "发布内容,5之3,标签",
+          "class": "FrameLayout",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            512,
+            2503,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "home_trending__n_cd1ab283",
+      "to": "rank_list__n_8886ae19",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "排行榜",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            26,
+            490,
+            276,
+            692
+          ]
+        }
+      },
+      "description": "点击排行榜"
+    },
+    {
+      "from": "home_trending__n_cd1ab283",
+      "to": "weekly_must_watch__n_d6025f6b",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "每周必看",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            309,
+            490,
+            559,
+            692
+          ]
+        }
+      },
+      "description": "点击每周必看"
+    },
+    {
+      "from": "home_trending__n_cd1ab283",
+      "to": "must_watch__n_51896254",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "入站必刷",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            592,
+            490,
+            842,
+            692
+          ]
+        }
+      },
+      "description": "点击入站必刷"
+    },
+    {
+      "from": "home_trending__n_cd1ab283",
+      "to": "interest_weekly_hotspots__n_70fe239c",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "玩出名堂",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            875,
+            490,
+            1125,
+            692
+          ]
+        }
+      },
+      "description": "点击玩出名堂"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "home_recommend__n_dddfaadb",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "",
+          "content_desc": "",
+          "class": "Button",
+          "bounds_hint": [
+            0,
+            152,
+            156,
+            303
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "edit_shortcuts__n_0fae9580",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "编辑",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            52,
+            463,
+            1228,
+            626
+          ]
+        }
+      },
+      "description": "点击编辑快捷访问"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_anime__n_dae250df",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "番剧",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            20,
+            821,
+            330,
+            1049
+          ]
+        }
+      },
+      "description": "点击番剧"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_guochuang__n_014975fc",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "国创",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            330,
+            821,
+            640,
+            1049
+          ]
+        }
+      },
+      "description": "点击国创"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "documentary_channel__n_400380a4",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "纪录片",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            640,
+            821,
+            950,
+            1049
+          ]
+        }
+      },
+      "description": "点击纪录片"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_movie__n_faa06c90",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "电影",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            950,
+            821,
+            1260,
+            1049
+          ]
+        }
+      },
+      "description": "点击电影"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_tv__n_3612cadd",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "电视剧",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            20,
+            1089,
+            330,
+            1317
+          ]
+        }
+      },
+      "description": "点击电视剧"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_variety__n_6e54c917",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "综艺",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            330,
+            1089,
+            640,
+            1317
+          ]
+        }
+      },
+      "description": "点击综艺"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_cinephile__n_0c4500ca",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "影视",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            640,
+            1089,
+            950,
+            1317
+          ]
+        }
+      },
+      "description": "点击影视"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_ent__n_a7650af2",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "娱乐",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            950,
+            1089,
+            1260,
+            1317
+          ]
+        }
+      },
+      "description": "点击娱乐"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_guichu__n_ac3c814f",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "鬼畜",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            20,
+            1625,
+            330,
+            1853
+          ]
+        }
+      },
+      "description": "点击音乐"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_game__n_32853ff4",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "游戏",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            330,
+            1625,
+            640,
+            1853
+          ]
+        }
+      },
+      "description": "点击舞蹈"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_info__n_5a0f5f33",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "资讯",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            640,
+            1625,
+            950,
+            1853
+          ]
+        }
+      },
+      "description": "点击动画"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_knowledge__n_8bd032d6",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "知识",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            950,
+            1625,
+            1260,
+            1853
+          ]
+        }
+      },
+      "description": "点击绘画"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_ai__n_3a72d165",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "人工智能",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            20,
+            1893,
+            330,
+            2121
+          ]
+        }
+      },
+      "description": "点击鬼畜"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "car_partition__n_c728ffb0",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "汽车",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            640,
+            1893,
+            950,
+            2121
+          ]
+        }
+      },
+      "description": "点击资讯"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_fashion_beauty__n_6957ad0f",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "时尚美妆",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            950,
+            1893,
+            1260,
+            2121
+          ]
+        }
+      },
+      "description": "点击知识"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_home_real_estate__n_dede7d52",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "家装房产",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            20,
+            2161,
+            330,
+            2389
+          ]
+        }
+      },
+      "description": "点击人工智能"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_outdoor__n_017a6bdf",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "户外潮流",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            330,
+            2161,
+            640,
+            2389
+          ]
+        }
+      },
+      "description": "点击科技数码"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "fitness_partition__n_6984e911",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "健身",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            640,
+            2161,
+            950,
+            2389
+          ]
+        }
+      },
+      "description": "点击汽车"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_sports__n_f3464baf",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "体育运动",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            950,
+            2161,
+            1260,
+            2389
+          ]
+        }
+      },
+      "description": "点击时尚美妆"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_handicraft__n_6172cf09",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "手工",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            20,
+            2429,
+            330,
+            2657
+          ]
+        }
+      },
+      "description": "点击家装房产"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_outdoor__n_620fc31c",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "美食",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            330,
+            2429,
+            640,
+            2657
+          ]
+        }
+      },
+      "description": "点击户外潮流"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "mini_theater__n_b597fe95",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "小剧场",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            640,
+            2429,
+            950,
+            2657
+          ]
+        }
+      },
+      "description": "点击健身"
+    },
+    {
+      "from": "all_partitions__n_1349ca97",
+      "to": "partition_travel__n_cd9e10fe",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "旅游出行",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            950,
+            2429,
+            1260,
+            2657
+          ]
+        }
+      },
+      "description": "点击体育运动"
+    },
+    {
+      "from": "following__n_19e5c402",
+      "to": "create_dynamic__n_1267975d",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "fo_publish_menu",
+          "text": "",
+          "content_desc": "",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            1130,
+            168,
+            1280,
+            318
+          ]
+        }
+      },
+      "description": "点击投稿"
+    },
+    {
+      "from": "following__n_19e5c402",
+      "to": "following_video__n_67d1e45b",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "视频",
+          "content_desc": "",
+          "class": "LinearLayout",
+          "bounds_hint": [
+            640,
+            321,
+            1280,
+            406
+          ]
+        }
+      },
+      "description": "点击视频动态"
+    },
+    {
+      "from": "following__n_19e5c402",
+      "to": "home_recommend__n_28fdaebc",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "dy_avatar",
+          "text": "",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "dy_list",
+          "locator_index": 1,
+          "locator_count": 2,
+          "bounds_hint": [
+            39,
+            2438,
+            169,
+            2568
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "user_center__n_60b55a15",
+      "to": "scan__n_83391a45",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "mine_scan",
+          "text": "",
+          "content_desc": "",
+          "class": "ImageView",
+          "bounds_hint": [
+            869,
+            155,
+            1006,
+            292
+          ]
+        }
+      },
+      "description": "点击扫一扫"
+    },
+    {
+      "from": "user_center__n_60b55a15",
+      "to": "user_center__n_c746e472",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "mine_day_night_setting",
+          "text": "",
+          "content_desc": "",
+          "class": "ImageView",
+          "bounds_hint": [
+            1143,
+            155,
+            1280,
+            292
+          ]
+        }
+      },
+      "description": "点击设置"
+    },
+    {
+      "from": "user_center__n_60b55a15",
+      "to": "offline_cache__n_f906eee3",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "离线缓存",
+          "content_desc": "",
+          "class": "ViewGroup",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            0,
+            1011,
+            320,
+            1203
+          ]
+        }
+      },
+      "description": "点击离线缓存"
+    },
+    {
+      "from": "user_center__n_60b55a15",
+      "to": "history_records__n_d0efb585",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "历史记录",
+          "content_desc": "",
+          "class": "ViewGroup",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            320,
+            1011,
+            640,
+            1203
+          ]
+        }
+      },
+      "description": "点击历史记录"
+    },
+    {
+      "from": "user_center__n_60b55a15",
+      "to": "favorites_updates__n_5fbc24f0",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "我的收藏",
+          "content_desc": "",
+          "class": "ViewGroup",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            640,
+            1011,
+            960,
+            1203
+          ]
+        }
+      },
+      "description": "点击我的收藏"
+    },
+    {
+      "from": "user_center__n_60b55a15",
+      "to": "watch_later__n_116ab08e",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "稍后再看",
+          "content_desc": "",
+          "class": "ViewGroup",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            960,
+            1011,
+            1280,
+            1203
+          ]
+        }
+      },
+      "description": "点击稍后再看"
+    },
+    {
+      "from": "user_center__n_60b55a15",
+      "to": "upload_selection__n_0e890a13",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "button_layout",
+          "text": "发布",
+          "content_desc": "",
+          "class": "ViewGroup",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            994,
+            1262,
+            1241,
+            1360
+          ]
+        }
+      },
+      "description": "点击发布入口"
+    },
+    {
+      "from": "user_center__n_60b55a15",
+      "to": "creative_center__n_be286ced",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "创作中心",
+          "content_desc": "",
+          "class": "ViewGroup",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            0,
+            1380,
+            320,
+            1572
+          ]
+        }
+      },
+      "description": "点击创作中心"
+    },
+    {
+      "from": "user_center__n_60b55a15",
+      "to": "home_recommend__n_da6f14f9",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "首页,5之1,标签",
+          "content_desc": "首页,5之1,标签",
+          "class": "FrameLayout",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            0,
+            2503,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "user_center__n_60b55a15",
+      "to": "following__n_703b7cf4",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "关注,5之2,标签",
+          "content_desc": "关注,5之2,标签",
+          "class": "FrameLayout",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            256,
+            2503,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击关注"
+    },
+    {
+      "from": "user_center__n_60b55a15",
+      "to": "upload_media_picker__n_e55d0df8",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "发布内容,5之3,标签",
+          "content_desc": "发布内容,5之3,标签",
+          "class": "FrameLayout",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            512,
+            2503,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "user_center__n_60b55a15",
+      "to": "user_center__n_c0733626",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "我的,5之5,标签",
+          "content_desc": "我的,5之5,标签",
+          "class": "FrameLayout",
+          "parent_rid": "mine_recycle",
+          "bounds_hint": [
+            1024,
+            2503,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "avatar_entrance_settings__n_c69599b6",
+      "to": "listen_mode__n_9218e1ab",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "",
+          "content_desc": "",
+          "class": "View",
+          "locator_index": 0,
+          "locator_count": 3,
+          "bounds_hint": [
+            13,
+            165,
+            169,
+            321
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "avatar_entrance_settings__n_c69599b6",
+      "to": "shortcut_settings__n_3b1ce237",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "离线缓存",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            39,
+            1687,
+            327,
+            1843
+          ]
+        }
+      },
+      "description": "点击离线缓存"
+    },
+    {
+      "from": "avatar_entrance_settings__n_c69599b6",
+      "to": "shortcut_settings__n_6b40a47d",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "历史记录",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            344,
+            1687,
+            632,
+            1843
+          ]
+        }
+      },
+      "description": "点击历史记录"
+    },
+    {
+      "from": "avatar_entrance_settings__n_c69599b6",
+      "to": "recent_shortcut_settings__n_afd52d5b",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "我的收藏",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            648,
+            1687,
+            936,
+            1843
+          ]
+        }
+      },
+      "description": "点击我的收藏"
+    },
+    {
+      "from": "avatar_entrance_settings__n_c69599b6",
+      "to": "shortcut_settings__n_6ae2dd49",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "稍后再看",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            953,
+            1687,
+            1241,
+            1843
+          ]
+        }
+      },
+      "description": "点击稍后再看"
+    },
+    {
+      "from": "bilibili_audio_mode__n_ada08663",
+      "to": "history_recent__n_4098ef7e",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "最近听过",
+          "content_desc": "",
+          "class": "FrameLayout",
+          "parent_rid": "sidecenter_viewpager",
+          "bounds_hint": [
+            78,
+            321,
+            429,
+            649
+          ]
+        }
+      },
+      "description": "点击最近听过"
+    },
+    {
+      "from": "search_suggest__n_6510f689",
+      "to": "search_result__n_ee81ad36",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "JDG vs AL LPL第一赛段",
+          "content_desc": "",
+          "class": "ViewGroup",
+          "parent_rid": "search_discover_list",
+          "bounds_hint": [
+            0,
+            425,
+            640,
+            538
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "search_suggest__n_6510f689",
+      "to": "search_result__n_b4e9bf8f",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "中方正密切关注伊朗局势发展",
+          "content_desc": "",
+          "class": "ViewGroup",
+          "parent_rid": "search_discover_list",
+          "bounds_hint": [
+            640,
+            425,
+            1280,
+            538
+          ]
+        }
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "search_suggest__n_6510f689",
+      "to": "search_result__n_93d905db",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "考研成绩2月28日起陆续公布",
+          "content_desc": "",
+          "class": "ViewGroup",
+          "parent_rid": "search_discover_list",
+          "bounds_hint": [
+            640,
+            651,
+            1280,
+            764
+          ]
+        }
+      },
+      "description": "点击完整榜单"
+    },
+    {
+      "from": "message_reply_at__n_b3b6eaa2",
+      "to": "message_reply_at__n_efeb9873",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "全部",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            29,
+            339,
+            185,
+            495
+          ]
+        }
+      },
+      "description": "点击全部"
+    },
+    {
+      "from": "message_reply_at__n_b3b6eaa2",
+      "to": "at_me_messages__n_c88015cd",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "@我",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            188,
+            339,
+            344,
+            495
+          ]
+        }
+      },
+      "description": "点击@我"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "game_center_home__n_d193f200",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "游戏中心,按钮",
+          "content_desc": "游戏中心,按钮",
+          "class": "FrameLayout",
+          "parent_rid": "coordinatorLayout",
+          "bounds_hint": [
+            980,
+            168,
+            1130,
+            318
+          ]
+        }
+      },
+      "description": "点击创作中心"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "anime_index__n_74b53992",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "找番看",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            39,
+            1535,
+            243,
+            1691
+          ]
+        }
+      },
+      "description": "点击找番看"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "anime_timeline__n_d63de36e",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "时间表",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            269,
+            1535,
+            473,
+            1691
+          ]
+        }
+      },
+      "description": "点击时间表"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "anime_home__n_c49f0cc2",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "番剧",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            499,
+            1535,
+            661,
+            1691
+          ]
+        }
+      },
+      "description": "点击番剧"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "guochuang_home__n_a362a7fb",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "国创",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            687,
+            1535,
+            849,
+            1691
+          ]
+        }
+      },
+      "description": "点击国创"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "kids_section__n_e191e17d",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "少儿",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            875,
+            1535,
+            1037,
+            1691
+          ]
+        }
+      },
+      "description": "点击少儿"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "anime_incentive_campaign__n_e4914c97",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "动画种草",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            1063,
+            1535,
+            1280,
+            1691
+          ]
+        }
+      },
+      "description": "点击动画种草"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "rankings_list__n_839978a3",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "更多榜单",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            1021,
+            1667,
+            1241,
+            1812
+          ]
+        }
+      },
+      "description": "点击更多榜单"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "rank_anime__n_dc08cda7",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "番剧榜",
+          "content_desc": "",
+          "class": "TextView",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            39,
+            1780,
+            269,
+            1936
+          ]
+        }
+      },
+      "description": "点击番剧榜"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "home_animation__n_411dba76",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "国创榜",
+          "content_desc": "",
+          "class": "TextView",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            269,
+            1780,
+            499,
+            1936
+          ]
+        }
+      },
+      "description": "点击国创榜"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "home_anime__n_59aefff7",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "资讯榜",
+          "content_desc": "",
+          "class": "TextView",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            499,
+            1780,
+            729,
+            1936
+          ]
+        }
+      },
+      "description": "点击资讯榜"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "home_anime_rank__n_a431cb63",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "热搜榜",
+          "content_desc": "",
+          "class": "TextView",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            729,
+            1780,
+            959,
+            1936
+          ]
+        }
+      },
+      "description": "点击热搜榜"
+    },
+    {
+      "from": "home_anime__n_687afc50",
+      "to": "profile__n_0e85a93d",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "我的追番",
+          "content_desc": "",
+          "class": "View",
+          "bounds_hint": [
+            1021,
+            2594,
+            1241,
+            2732
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "home_cinema__n_bb8136e8",
+      "to": "media_library__n_673b9116",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "找片看",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            39,
+            1535,
+            243,
+            1691
+          ]
+        }
+      },
+      "description": "点击找片看"
+    },
+    {
+      "from": "home_cinema__n_bb8136e8",
+      "to": "movie_list_square__n_5adacf41",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "片单",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            269,
+            1535,
+            431,
+            1691
+          ]
+        }
+      },
+      "description": "点击片单"
+    },
+    {
+      "from": "home_cinema__n_bb8136e8",
+      "to": "movie_channel__n_08facca7",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "电影",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            457,
+            1535,
+            619,
+            1691
+          ]
+        }
+      },
+      "description": "点击电影"
+    },
+    {
+      "from": "home_cinema__n_bb8136e8",
+      "to": "tv_series_channel__n_8aab0e13",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "电视剧",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            645,
+            1535,
+            849,
+            1691
+          ]
+        }
+      },
+      "description": "点击电视剧"
+    },
+    {
+      "from": "home_cinema__n_bb8136e8",
+      "to": "documentary_channel__n_77076a11",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "",
+          "text": "纪录片",
+          "content_desc": "",
+          "class": "View",
+          "parent_rid": "pager",
+          "bounds_hint": [
+            875,
+            1535,
+            1079,
+            1691
+          ]
+        }
+      },
+      "description": "点击纪录片"
+    }
+  ],
+  "popups": [
+    {
+      "id": "popup_432_1557",
+      "type": "dialog",
+      "description": "取消删除搜索历史",
+      "close_locator": {
+        "resource_id": "common_dialog_nagetive_btn",
+        "text": "取消",
+        "content_desc": "",
+        "class": "TextView",
+        "bounds_hint": [
+          237,
+          1488,
+          614,
+          1631
+        ]
+      },
+      "first_seen_page": "search_main__n_48c7db25"
+    },
+    {
+      "id": "popup_640_1843",
+      "type": "dialog",
+      "description": "新版里程碑上线弹窗-关闭按钮",
+      "close_locator": {
+        "bounds_hint": [
+          640,
+          1843,
+          640,
+          1843
+        ]
+      },
+      "first_seen_page": "user_center__n_60b55a15"
+    }
+  ],
+  "blocks": []
+}

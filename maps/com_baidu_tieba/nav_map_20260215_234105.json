@@ -1,0 +1,620 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览推荐帖子内容、关注的吧动态及功能入口",
+      "features": [
+        "搜索",
+        "顶部频道导航",
+        "吧列表",
+        "帖子信息流",
+        "底部底部导航栏"
+      ]
+    },
+    "home_featured": {
+      "name": "首页-有料",
+      "description": "展示当前的热门讨论、热点话题排行榜以及推荐贴吧，提供全局搜索和各功能版块的入口",
+      "features": [
+        "动态推选",
+        "热点榜单",
+        "贴吧推荐",
+        "导航切换"
+      ]
+    },
+    "event_page": {
+      "name": "春节活动页",
+      "description": "展示春节相关晚会评分、年味资讯及活动内容",
+      "features": [
+        "晚会评分列表",
+        "年味聚焦资讯",
+        "频道切换",
+        "底部导航"
+      ]
+    },
+    "forums": {
+      "name": "进吧",
+      "description": "提供搜索贴吧、管理关注、查看足迹及发现吧单的功能",
+      "features": [
+        "搜索贴吧",
+        "一键签到",
+        "查看足迹",
+        "管理关注列表",
+        "浏览吧单"
+      ]
+    },
+    "shop_home": {
+      "name": "小卖部",
+      "description": "展示商品、推荐店铺及活动内容的商城聚合页",
+      "features": [
+        "搜索商品",
+        "轮播活动广告",
+        "进店跳转",
+        "商品推荐列表"
+      ]
+    },
+    "message": {
+      "name": "消息",
+      "description": "管理聊天记录、官方通知和互动信息",
+      "features": [
+        "消息列表",
+        "AI智能体广场",
+        "贴吧官方",
+        "会员中心"
+      ]
+    },
+    "profile": {
+      "name": "个人中心",
+      "description": "展示用户个人信息、互动统计、常用工具入口及增值服务",
+      "features": [
+        "互动数据统计",
+        "常用功能入口",
+        "成长任务",
+        "会员特权",
+        "钱包工具"
+      ]
+    },
+    "live_home": {
+      "name": "直播首页",
+      "description": "展示贴吧内的直播内容及分类导航",
+      "features": [
+        "浏览直播列表",
+        "切换分类",
+        "搜索直播",
+        "底部导航切换"
+      ]
+    },
+    "bars": {
+      "name": "进吧",
+      "description": "浏览用户关注的贴吧和最近访问的足迹",
+      "features": [
+        "搜索框",
+        "一键签到",
+        "我的足迹列表",
+        "我关注的吧列表",
+        "底部导航栏"
+      ]
+    },
+    "mall": {
+      "name": "小麦部步行街",
+      "description": "展示贴吧特色商品、特产及相关营销活动的商城页面",
+      "features": [
+        "商品搜索",
+        "营销活动轮播图",
+        "小卖部入口",
+        "商品列表",
+        "底部导航"
+      ]
+    },
+    "message_select": {
+      "name": "发私信-联系人选择",
+      "description": "从关注列表中选择用户以发起私信对话",
+      "features": [
+        "搜索联系人",
+        "浏览关注列表"
+      ]
+    },
+    "chat_channel_selection": {
+      "name": "选择聊天频道",
+      "description": "允许用户浏览并选择已关注贴吧的聊天频道，将其添加到常用频道列表中进行快速访问。",
+      "features": [
+        "左侧常用频道侧边栏",
+        "右侧可添加的聊天频道列表",
+        "频道热度排行显示",
+        "频道添加功能"
+      ]
+    },
+    "avatar_editor": {
+      "name": "个人装扮",
+      "description": "编辑个人虚拟形象，可自定义发型、面部特征、服装、背景及心情等。",
+      "features": [
+        "角色预览",
+        "发型分类切换",
+        "捏脸编辑",
+        "背景设置",
+        "心情表达",
+        "保存修改"
+      ]
+    },
+    "search": {
+      "name": "搜索页面",
+      "description": "用户可以在该页面通过输入关键字搜索用户，并查看已关注的用户列表",
+      "features": [
+        "搜索输入框",
+        "取消搜索",
+        "查看关注列表",
+        "软键盘输入"
+      ]
+    },
+    "vip_center": {
+      "name": "会员开通页",
+      "description": "用户在此页面可以选择不同的会员套餐（如自动续费、12个月、3个月）以及支付方式（如支付宝、度小满），并确认协议进行支付以开通或续费会员服务。",
+      "features": [
+        "会员套餐选择",
+        "支付方式选择",
+        "协议确认",
+        "会员特权展示",
+        "SVIP切换"
+      ]
+    },
+    "membership": {
+      "name": "会员中心",
+      "description": "展示会员套餐详情并提供开通/续费功能",
+      "features": [
+        "切换VIP/SVIP页签",
+        "选择订阅套餐",
+        "选择支付方式",
+        "确认协议并支付",
+        "查看会员特权"
+      ]
+    },
+    "message_contact": {
+      "name": "发私信",
+      "description": "从关注列表中选择用户发送私信",
+      "features": [
+        "查看关注列表",
+        "搜索联系人"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home_featured",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "有料",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            344,
+            177,
+            492,
+            239
+          ]
+        }
+      },
+      "description": "点击有料"
+    },
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "推荐",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            492,
+            177,
+            640,
+            239
+          ]
+        }
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "home",
+      "to": "event_page",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "春节",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            640,
+            177,
+            788,
+            239
+          ]
+        }
+      },
+      "description": "点击春节"
+    },
+    {
+      "from": "home",
+      "to": "forums",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "进吧",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            256,
+            2555,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "shop_home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "小卖部",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            512,
+            2555,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            768,
+            2555,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            1024,
+            2555,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "home_featured",
+      "to": "live_home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "直播",
+          "class": "FrameLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            788,
+            177,
+            936,
+            239
+          ]
+        }
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "home_featured",
+      "to": "bars",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "进吧",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            256,
+            2555,
+            512,
+            2720
+          ]
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home_featured",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "首页",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            0,
+            2555,
+            256,
+            2720
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home_featured",
+      "to": "mall",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "小卖部",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            512,
+            2555,
+            768,
+            2720
+          ]
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home_featured",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "消息",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            768,
+            2555,
+            1024,
+            2720
+          ]
+        }
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "message",
+      "to": "message_select",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "发私信",
+          "class": "LinearLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            1052,
+            211,
+            1248,
+            276
+          ]
+        }
+      },
+      "description": "点击发私信"
+    },
+    {
+      "from": "home_featured",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "我的",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            1024,
+            2555,
+            1280,
+            2720
+          ]
+        }
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "message",
+      "to": "chat_channel_selection",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "管理",
+          "class": "LinearLayout",
+          "bounds_hint": [
+            0,
+            2352,
+            197,
+            2544
+          ]
+        }
+      },
+      "description": "点击管理"
+    },
+    {
+      "from": "message",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "class": "ImageView",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            357,
+            213,
+            424,
+            280
+          ]
+        }
+      },
+      "description": "点击AI智能体广场"
+    },
+    {
+      "from": "profile",
+      "to": "avatar_editor",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "设置形象",
+          "class": "LinearLayout",
+          "bounds_hint": [
+            1054,
+            347,
+            1243,
+            396
+          ]
+        }
+      },
+      "description": "点击设置"
+    },
+    {
+      "from": "message_select",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "返回",
+          "class": "LinearLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            0,
+            167,
+            130,
+            280
+          ]
+        }
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "message_select",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "搜索",
+          "class": "LinearLayout",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            1063,
+            152,
+            1280,
+            295
+          ]
+        }
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "profile",
+      "to": "vip_center",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "class": "FrameLayout",
+          "bounds_hint": [
+            459,
+            312,
+            501,
+            354
+          ]
+        }
+      },
+      "description": "点击浏览历史"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "搜索用户",
+          "class": "EditText",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            139,
+            178,
+            1101,
+            268
+          ]
+        }
+      },
+      "description": "点击搜索输入框"
+    },
+    {
+      "from": "vip_center",
+      "to": "membership",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "text": "全部权益",
+          "content_desc": "全部权益",
+          "class": "View",
+          "bounds_hint": [
+            1020,
+            2249,
+            1222,
+            2392
+          ]
+        }
+      },
+      "description": "点击全部权益"
+    },
+    {
+      "from": "search",
+      "to": "message_contact",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "obfuscated",
+          "text": "取消",
+          "class": "TextView",
+          "parent_rid": "obfuscated",
+          "bounds_hint": [
+            1147,
+            191,
+            1243,
+            256
+          ]
+        }
+      },
+      "description": "点击取消"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

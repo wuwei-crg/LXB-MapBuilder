@@ -1,0 +1,606 @@
+{
+  "package": "com.taobao.taobao",
+  "pages": {
+    "home": {
+      "name": "淘宝首页",
+      "description": "浏览商品推荐、使用搜索功能、访问各类功能入口",
+      "features": [
+        "搜索框",
+        "分类入口(百亿补贴、淘宝秒杀等)",
+        "底部导航栏",
+        "推荐商品流"
+      ]
+    },
+    "promotion_detail": {
+      "name": "年货礼遇周",
+      "description": "展示促销活动优惠、领券及限时秒杀内容",
+      "features": [
+        "领券中心",
+        "限时秒杀",
+        "88VIP权益",
+        "分期免息入口"
+      ]
+    },
+    "home_video": {
+      "name": "视频推荐页",
+      "description": "浏览和搜索推荐的视频内容",
+      "features": [
+        "切换频道",
+        "观看视频",
+        "搜索内容",
+        "侧边栏菜单",
+        "互动"
+      ]
+    },
+    "message": {
+      "name": "消息",
+      "description": "展示各类系统通知、店铺消息和互动信息的列表页面",
+      "features": [
+        "消息分类",
+        "搜索",
+        "通讯录",
+        "清除未读",
+        "底部导航"
+      ]
+    },
+    "cart": {
+      "name": "购物车",
+      "description": "展示购物车内的商品、提供优惠信息及商品推荐",
+      "features": [
+        "商品管理",
+        "价格对比",
+        "88VIP权益领取",
+        "猜你喜欢商品推荐",
+        "底部导航"
+      ]
+    },
+    "promotion": {
+      "name": "年货礼遇周",
+      "description": "促销活动主页，提供优惠券领取、活动日程查看及品类折扣信息",
+      "features": [
+        "活动日程",
+        "消费券领取",
+        "88VIP权益",
+        "各类目爆款推荐"
+      ]
+    },
+    "promo_detail": {
+      "name": "年货礼遇周活动页",
+      "description": "展示年货节促销活动信息并提供优惠券领取入口，当前打开了更多功能菜单。",
+      "features": [
+        "返回",
+        "搜索",
+        "消息",
+        "回到首页",
+        "我的淘宝",
+        "购物车",
+        "我的订单"
+      ]
+    },
+    "follow": {
+      "name": "关注页",
+      "description": "浏览已关注店铺的动态和新品推荐",
+      "features": [
+        "店铺上新流",
+        "搜索功能",
+        "底部标签导航",
+        "顶部频道导航"
+      ]
+    },
+    "flash_sale": {
+      "name": "闪购首页",
+      "description": "提供本地外卖、超市、医药、生鲜等服务，包含新人优惠、热门商家推荐和多品类入口。",
+      "features": [
+        "搜索",
+        "分类导航(外卖/超市/医疗/水果/鲜花)",
+        "新人福利",
+        "商家列表",
+        "底部导航"
+      ]
+    },
+    "profile": {
+      "name": "个人中心",
+      "description": "显示用户信息、通知消息及常用功能入口",
+      "features": [
+        "查看个人主页",
+        "消息中心",
+        "观看记录",
+        "点赞收藏",
+        "创作中心",
+        "客服"
+      ]
+    },
+    "guangguang": {
+      "name": "逛逛",
+      "description": "展示并发现短视频、直播及各类推荐内容",
+      "features": [
+        "视频流、直播预览、频道切换、搜索入口、侧边菜单"
+      ]
+    },
+    "video_feed": {
+      "name": "淘宝视频-短剧",
+      "description": "短剧内容播放页面，支持视频观看、互动及查看完整剧集",
+      "features": [
+        "短剧播放",
+        "点赞收藏评论",
+        "关注作者",
+        "查看剧集目录",
+        "频道切换",
+        "底部导航"
+      ]
+    },
+    "video": {
+      "name": "视频页",
+      "description": "浏览商品短视频内容，支持点赞、评论及购买关联商品",
+      "features": [
+        "浏览视频",
+        "点赞",
+        "评论",
+        "分享",
+        "查看商品详情",
+        "切换频道"
+      ]
+    },
+    "discovery_feed": {
+      "name": "发现推荐页",
+      "description": "浏览个性化推荐的短视频与商品内容",
+      "features": [
+        "内容分类切换",
+        "搜索",
+        "点赞互动",
+        "商品详情跳转"
+      ]
+    },
+    "search": {
+      "name": "搜索页",
+      "description": "展示搜索发现热词和直播内容排行榜",
+      "features": [
+        "搜索框",
+        "搜索发现词",
+        "直播种草榜"
+      ]
+    },
+    "promo_activity": {
+      "name": "年货礼遇周",
+      "description": "展示年货节促销活动、优惠券领取及商品推荐",
+      "features": [
+        "领券中心",
+        "爆款秒杀",
+        "88VIP特权",
+        "商品推荐",
+        "分期免息",
+        "会员挑战"
+      ]
+    },
+    "campaign_page": {
+      "name": "年货礼遇周",
+      "description": "展示年货节大促优惠券、限时秒杀及各类营销活动",
+      "features": [
+        "搜索商品",
+        "领取消费券",
+        "查看秒杀时段",
+        "开通88VIP",
+        "分期免息"
+      ]
+    },
+    "content_feed": {
+      "name": "逛逛/视频页面",
+      "description": "浏览短视频和图文内容，主要侧重穿搭和生活方式分享",
+      "features": [
+        "顶部频道导航",
+        "搜索",
+        "内容互动",
+        "底部主导航"
+      ]
+    },
+    "video_detail": {
+      "name": "短视频详情页",
+      "description": "播放商品演示视频并展示购买入口",
+      "features": [
+        "视频播放",
+        "商品信息展示",
+        "店铺关注",
+        "点赞",
+        "评论",
+        "分享",
+        "底部导航"
+      ]
+    },
+    "campaign_new_year": {
+      "name": "年货礼遇周",
+      "description": "展示年货节促销活动、优惠券领取及各品类入口",
+      "features": [
+        "领取优惠券",
+        "查看活动排期",
+        "搜索商品",
+        "跳转会员活动"
+      ]
+    },
+    "live_room": {
+      "name": "直播间",
+      "description": "观看直播演示及商品展示",
+      "features": [
+        "顶部导航",
+        "直播间切换",
+        "视频播放内容"
+      ]
+    },
+    "list": {
+      "name": "搜索结果页",
+      "description": "展示“好看的漫画书”的搜索结果列表，支持排序、筛选和商品浏览",
+      "features": [
+        "综合排序",
+        "销量排序",
+        "天猫/店铺筛选",
+        "商品详情跳转",
+        "店铺入口"
+      ]
+    },
+    "live": {
+      "name": "直播",
+      "description": "观看直播内容及分类切换",
+      "features": [
+        "分类切换、搜索、直播间入口"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "promotion_detail",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "home_video",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击视频"
+    },
+    {
+      "from": "home",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "cart",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击购物车"
+    },
+    {
+      "from": "promotion_detail",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "promotion_detail",
+      "to": "promotion",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击漫画书"
+    },
+    {
+      "from": "promotion_detail",
+      "to": "promo_detail",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击更多"
+    },
+    {
+      "from": "home",
+      "to": "follow",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击关注"
+    },
+    {
+      "from": "home",
+      "to": "flash_sale",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击闪购"
+    },
+    {
+      "from": "home_video",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "home_video",
+      "to": "guangguang",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击菜单"
+    },
+    {
+      "from": "home_video",
+      "to": "video_feed",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击短剧"
+    },
+    {
+      "from": "home_video",
+      "to": "video",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击关注"
+    },
+    {
+      "from": "home_video",
+      "to": "discovery_feed",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "home_video",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "message",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索"
+    },
+    {
+      "from": "message",
+      "to": "message",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击通讯录"
+    },
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击飞猪"
+    },
+    {
+      "from": "home",
+      "to": "promo_activity",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击穿搭"
+    },
+    {
+      "from": "promo_detail",
+      "to": "campaign_page",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "message",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "guangguang",
+      "to": "video_feed",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击逛逛"
+    },
+    {
+      "from": "video_feed",
+      "to": "video",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击短剧"
+    },
+    {
+      "from": "follow",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "video_feed",
+      "to": "video_feed",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击逛逛"
+    },
+    {
+      "from": "guangguang",
+      "to": "content_feed",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击穿搭"
+    },
+    {
+      "from": "video",
+      "to": "video_detail",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击关注"
+    },
+    {
+      "from": "search",
+      "to": "campaign_new_year",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击返回"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "promo_activity",
+      "to": "promotion_detail",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击畅享分期"
+    },
+    {
+      "from": "campaign_page",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击漫画书"
+    },
+    {
+      "from": "video_feed",
+      "to": "live_room",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击短剧"
+    },
+    {
+      "from": "search",
+      "to": "list",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击语音搜索"
+    },
+    {
+      "from": "promotion_detail",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击运动户外"
+    },
+    {
+      "from": "live_room",
+      "to": "live",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击混知旗舰店"
+    }
+  ],
+  "popups": [
+    {
+      "id": "popup_640_2614",
+      "type": "dialog",
+      "description": "更多功能底部弹窗-取消按钮",
+      "close_locator": {
+        "resource_id": "uik_menu_panel_view",
+        "text": "关闭浮层",
+        "content_desc": "关闭浮层"
+      },
+      "first_seen_page": "promotion_detail"
+    },
+    {
+      "id": "popup_640_2337",
+      "type": "permission",
+      "description": "麦克风录音权限请求弹窗-拒绝按钮",
+      "close_locator": {
+        "text": "拒绝"
+      },
+      "first_seen_page": "search"
+    },
+    {
+      "id": "popup_640_2126",
+      "type": "permission",
+      "description": "权限请求弹窗-拒绝按钮",
+      "close_locator": {
+        "resource_id": "parentPanel",
+        "text": "是否允许“淘宝”使用麦克风进行录音 仅在使用中允许 拒绝 本次使用允许"
+      },
+      "first_seen_page": "search"
+    }
+  ],
+  "blocks": []
+}

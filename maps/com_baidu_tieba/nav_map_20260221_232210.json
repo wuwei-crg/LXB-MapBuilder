@@ -1,0 +1,318 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览贴吧推荐内容、关注动态及帖子列表",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "频道切换"
+      ]
+    },
+    "home_00001": {
+      "name": "首页",
+      "description": "浏览推荐内容和热点话题",
+      "features": [
+        "投票互动",
+        "评论查看",
+        "热点列表"
+      ]
+    },
+    "home_00002": {
+      "name": "首页",
+      "description": "浏览贴吧推荐内容、关注动态及热门话题",
+      "features": [
+        "下拉刷新",
+        "内容卡片",
+        "顶部频道切换"
+      ]
+    },
+    "home_00003": {
+      "name": "首页",
+      "description": "春节主题活动页，包含新春打分、年味聚焦等板块",
+      "features": [
+        "评分互动",
+        "内容浏览"
+      ]
+    },
+    "search_00004": {
+      "name": "搜索页",
+      "description": "贴吧全局搜索及热点浏览",
+      "features": [
+        "搜索历史",
+        "快捷访问",
+        "贴吧热榜",
+        "实时热点列表"
+      ]
+    },
+    "home_00005": {
+      "name": "首页",
+      "description": "浏览推荐内容和热点话题",
+      "features": [
+        "投票互动",
+        "评论查看",
+        "热点列表"
+      ]
+    },
+    "home_00006": {
+      "name": "首页",
+      "description": "浏览关注的贴吧、足迹及推荐内容",
+      "features": [
+        "我的足迹",
+        "我关注的吧",
+        "吧单推荐"
+      ]
+    },
+    "shop_00007": {
+      "name": "小卖部步行街",
+      "description": "浏览和购买精选商品及工具",
+      "features": [
+        "商品列表",
+        "店铺入口",
+        "分类导航"
+      ]
+    },
+    "notification_00008": {
+      "name": "通知中心",
+      "description": "查看点赞、回复、@我的等互动消息及吧广播",
+      "features": [
+        "消息列表",
+        "侧边栏贴吧切换"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home_00001",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": null,
+              "class_name": "android.widget.TextView",
+              "text": "有料",
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "child_chain",
+          "match_fields": [
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击有料"
+    },
+    {
+      "from": "home",
+      "to": "home_00002",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": null,
+              "class_name": "android.widget.TextView",
+              "text": "推荐",
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "child_chain",
+          "match_fields": [
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "home",
+      "to": "home_00003",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": null,
+              "class_name": "android.widget.TextView",
+              "text": "春节",
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "child_chain",
+          "match_fields": [
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击春节"
+    },
+    {
+      "from": "home",
+      "to": "search_00004",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.ImageView",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": null,
+              "class_name": "android.widget.TextSwitcher",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "child_chain",
+          "match_fields": [
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home_00001",
+      "to": "home_00005",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "首页",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": "__IGNORE__",
+          "strategy": "text",
+          "match_fields": [
+            "text"
+          ]
+        }
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home_00001",
+      "to": "home_00006",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "进吧",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": "__IGNORE__",
+          "strategy": "text",
+          "match_fields": [
+            "text"
+          ]
+        }
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home_00001",
+      "to": "shop_00007",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "小卖部",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": "__IGNORE__",
+          "strategy": "text",
+          "match_fields": [
+            "text"
+          ]
+        }
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home_00001",
+      "to": "notification_00008",
+      "action": {
+        "type": "tap",
+        "locator": {
+          "resource_id": "__IGNORE__",
+          "text": "__IGNORE__",
+          "content_desc": "__IGNORE__",
+          "class_name": "__IGNORE__",
+          "parent_resource_id": "__IGNORE__",
+          "ancestor_chain": "__IGNORE__",
+          "child_chain": [
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.widget.LinearLayout",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": "com.baidu.tieba:id/obfuscated",
+              "class_name": "android.view.View",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            },
+            {
+              "resource_id": null,
+              "class_name": "android.view.View",
+              "text": null,
+              "content_desc": null,
+              "clickable": false
+            }
+          ],
+          "strategy": "child_chain",
+          "match_fields": [
+            "child_chain"
+          ]
+        }
+      },
+      "description": "点击消息"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

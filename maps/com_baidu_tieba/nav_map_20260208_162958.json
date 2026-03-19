@@ -1,0 +1,219 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览贴吧社区推荐贴子、直播和关注的频道",
+      "features": [
+        "推荐贴子列表",
+        "直播间推荐",
+        "贴吧快捷入口",
+        "底部导航"
+      ]
+    },
+    "shop": {
+      "name": "小卖部步行街",
+      "description": "浏览周边商品及积木推荐列表，进入特定店铺",
+      "features": [
+        "搜索商品",
+        "切换底部导航",
+        "跳转店铺详情",
+        "浏览商品卡片"
+      ]
+    },
+    "notifications": {
+      "name": "通知",
+      "description": "展示用户收到的社交互动通知（点赞、回复、@等）以及吧友互助和广播消息。",
+      "features": [
+        "通知分类列表",
+        "侧边栏关注社区切换",
+        "底部主导航"
+      ]
+    },
+    "profile": {
+      "name": "我的",
+      "description": "展示个人账户信息、贴吧等级、常用功能入口、会员中心及度小满钱包权益",
+      "features": [
+        "用户信息(头像/昵称/等级/经验值)",
+        "互动统计(发贴/回贴/关注)",
+        "常用功能(收藏/点赞/历史/装扮/创建智能体)",
+        "成长任务",
+        "商品上新",
+        "印记中心",
+        "度小满钱包(现金红包/借贷额度/会员卡)",
+        "底部导航栏"
+      ]
+    },
+    "communities": {
+      "name": "进吧",
+      "description": "浏览并管理已关注的贴吧、最近访问记录及吧单推荐",
+      "features": [
+        "搜索贴吧",
+        "一键签到",
+        "最近访问",
+        "关注列表",
+        "创建贴吧",
+        "吧单推荐",
+        "底部导航"
+      ]
+    },
+    "detail": {
+      "name": "图片详情页",
+      "description": "浏览图片帖子内容，支持查看大图、发表评论及点赞互动",
+      "features": [
+        "查看大图",
+        "切换查看模式",
+        "发表回复",
+        "点赞",
+        "下载图片"
+      ]
+    },
+    "trending": {
+      "name": "有料",
+      "description": "浏览热点话题、每日PK投票及社区热点排行榜",
+      "features": [
+        "顶部导航切换、每日PK投票展示、热门话题榜单、底部主导航栏"
+      ]
+    },
+    "likes_list": {
+      "name": "点赞列表",
+      "description": "展示并记录用户回复或贴子收到的点赞通知",
+      "features": [
+        "查看点赞人详情",
+        "查看被点赞内容预览",
+        "返回上一级"
+      ]
+    },
+    "search": {
+      "name": "搜索页",
+      "description": "提供搜索功能、展示搜索历史、快捷访问入口以及实时热点排行",
+      "features": [
+        "搜索框输入",
+        "清除历史记录",
+        "热榜分类切换",
+        "快捷访问贴吧"
+      ]
+    },
+    "live": {
+      "name": "直播",
+      "description": "浏览并观看不同分类的直播内容",
+      "features": [
+        "直播间列表",
+        "分类切换",
+        "优质主播推荐"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "shop",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "notifications",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击我的"
+    },
+    {
+      "from": "home",
+      "to": "communities",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "detail",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home",
+      "to": "trending",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击有料"
+    },
+    {
+      "from": "notifications",
+      "to": "likes_list",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击@我的"
+    },
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击大家都在搜"
+    },
+    {
+      "from": "profile",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击我的收藏"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home",
+      "to": "live",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击发布"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}

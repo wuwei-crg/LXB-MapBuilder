@@ -1,0 +1,369 @@
+{
+  "package": "com.baidu.tieba",
+  "pages": {
+    "home": {
+      "name": "首页",
+      "description": "浏览推荐帖子、关注的贴吧动态以及热门话题",
+      "features": [
+        "搜索框",
+        "顶部导航",
+        "关注吧列表",
+        "推荐帖子流",
+        "底部导航"
+      ]
+    },
+    "profile": {
+      "name": "我的",
+      "description": "贴吧个人中心页面，包含连续签到奖励、活动任务、历史足迹以及关注的吧管理功能。",
+      "features": [
+        "连续签到",
+        "任务中心",
+        "我的足迹",
+        "关注的吧列表",
+        "一键签到",
+        "会员开通"
+      ]
+    },
+    "material": {
+      "name": "有料",
+      "description": "展示每日PK话题和全网热榜资讯内容",
+      "features": [
+        "查看话题投票、浏览热门榜单、顶部导航切换、搜索、发布内容"
+      ]
+    },
+    "followed_forums": {
+      "name": "进吧",
+      "description": "查看最近访问和关注的贴吧列表，包括一键签到和吧单推荐",
+      "features": [
+        "搜索贴吧",
+        "一键签到",
+        "足迹列表",
+        "关注列表",
+        "推荐吧单"
+      ]
+    },
+    "shop": {
+      "name": "小卖部",
+      "description": "浏览推荐商品及进入特定贴吧小卖部",
+      "features": [
+        "商品搜索",
+        "广告轮播",
+        "贴吧好物推荐",
+        "底部导航"
+      ]
+    },
+    "notifications": {
+      "name": "通知",
+      "description": "查看和管理应用内的消息通知，包括互动通知和广播信息",
+      "features": [
+        "互动通知列表(点赞、回复、@我的、粉丝)",
+        "吧友互助",
+        "吧广播",
+        "左侧贴吧切换栏",
+        "底部导航栏"
+      ]
+    },
+    "search": {
+      "name": "搜索页",
+      "description": "提供内容搜索、历史搜索管理、快速访问入口及实时热点榜单展示",
+      "features": [
+        "搜索框输入",
+        "历史记录查看与清理",
+        "快速访问贴吧",
+        "榜单切换（热榜/直播榜）",
+        "热点内容跳转"
+      ]
+    },
+    "live": {
+      "name": "直播页",
+      "description": "展示各类直播间推荐和分类导航",
+      "features": [
+        "分类导航",
+        "直播内容展示",
+        "搜索",
+        "底部导航"
+      ]
+    },
+    "media_picker": {
+      "name": "发布内容选择页",
+      "description": "用户可以选择发布视频、文章、贴子或求助，并支持从相册选择或直接拍摄。",
+      "features": [
+        "切换发布类型",
+        "开启相机拍摄",
+        "媒体库预览"
+      ]
+    },
+    "enter_forum": {
+      "name": "进吧",
+      "description": "管理和查看关注的贴吧及浏览足迹",
+      "features": [
+        "足迹查看",
+        "一键签到",
+        "搜索贴吧",
+        "关注列表",
+        "贴吧单推荐",
+        "底部导航"
+      ]
+    },
+    "likes_list": {
+      "name": "点赞消息页面",
+      "description": "展示用户收到的点赞通知列表",
+      "features": [
+        "查看点赞人详情",
+        "查看被点赞的回复内容"
+      ]
+    },
+    "live_event": {
+      "name": "心动告白",
+      "description": "参与心动告白活动，浏览推荐直播间并可跳转至房间",
+      "features": [
+        "查看规则",
+        "查看历史记录",
+        "切换推荐/榜单列表",
+        "直播间展示"
+      ]
+    },
+    "publish": {
+      "name": "发布页面",
+      "description": "编辑并发布文章、帖子、视频或求助内容",
+      "features": [
+        "输入标题",
+        "输入正文",
+        "选择贴吧",
+        "添加话题",
+        "设置展示范围",
+        "内容声明"
+      ]
+    },
+    "upload_selection": {
+      "name": "发布内容选择页",
+      "description": "用户可以选择发布文章、帖子、视频或求助内容。当前处于视频选择/上传界面。",
+      "features": [
+        "切换内容分类",
+        "进入拍摄/录制界面"
+      ]
+    },
+    "post_help": {
+      "name": "求助发布页",
+      "description": "用户在此页面填写求助问题的标题和描述，设置悬赏金额，选择发布的贴吧，并设置相关标签和展示范围。",
+      "features": [
+        "输入标题",
+        "输入描述",
+        "上传图片",
+        "选择悬赏金额",
+        "选择吧",
+        "添加标签",
+        "设置展示范围"
+      ]
+    },
+    "post_edit": {
+      "name": "发布贴子",
+      "description": "编辑并发布贴子内容",
+      "features": [
+        "标题输入",
+        "正文编辑",
+        "媒体附件",
+        "版块选择",
+        "话题添加",
+        "可见性设置"
+      ]
+    },
+    "video_capture": {
+      "name": "视频拍摄页",
+      "description": "提供视频拍摄、道具滤镜应用及相册导入功能",
+      "features": [
+        "拍摄按钮",
+        "时长切换(5分钟/60秒/15秒)",
+        "镜头翻转",
+        "滤镜设置",
+        "音乐添加",
+        "道具应用",
+        "相册访问"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "home",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击菜单"
+    },
+    {
+      "from": "home",
+      "to": "material",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "home",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击首页"
+    },
+    {
+      "from": "home",
+      "to": "followed_forums",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击进吧"
+    },
+    {
+      "from": "home",
+      "to": "shop",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击小卖部"
+    },
+    {
+      "from": "home",
+      "to": "notifications",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击消息"
+    },
+    {
+      "from": "home",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击大家都在搜"
+    },
+    {
+      "from": "home",
+      "to": "live",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "material",
+      "to": "home",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击推荐"
+    },
+    {
+      "from": "material",
+      "to": "media_picker",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击发布"
+    },
+    {
+      "from": "followed_forums",
+      "to": "enter_forum",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "notifications",
+      "to": "likes_list",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击@我的"
+    },
+    {
+      "from": "profile",
+      "to": "profile",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击设置形象"
+    },
+    {
+      "from": "search",
+      "to": "search",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击搜索框"
+    },
+    {
+      "from": "live",
+      "to": "live_event",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击推荐分类"
+    },
+    {
+      "from": "media_picker",
+      "to": "publish",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击文章"
+    },
+    {
+      "from": "media_picker",
+      "to": "upload_selection",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击视频"
+    },
+    {
+      "from": "media_picker",
+      "to": "post_help",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击求助"
+    },
+    {
+      "from": "upload_selection",
+      "to": "post_edit",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击贴子"
+    },
+    {
+      "from": "upload_selection",
+      "to": "video_capture",
+      "action": {
+        "type": "tap",
+        "locator": {}
+      },
+      "description": "点击拍摄"
+    }
+  ],
+  "popups": [],
+  "blocks": []
+}
