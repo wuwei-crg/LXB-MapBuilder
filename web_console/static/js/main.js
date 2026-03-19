@@ -194,14 +194,14 @@ function handleCommand(cmd) {
             break;
 
         // =============================================================
-        // Cortex / Map Debug Layer
+        // Map Debug Layer
         // =============================================================
         case 'map_get_info': {
-            const pkgInput = document.getElementById('cortex-package');
+            const pkgInput = document.getElementById('map-package');
             const fallbackPkg = document.getElementById('app-package');
             const pkg = (pkgInput && pkgInput.value.trim()) || (fallbackPkg && fallbackPkg.value.trim());
             if (!pkg) {
-                addLog('error', '请先填写包名 (cortex-package 或 app-package)');
+                addLog('error', '请先填写包名 (map-package 或 app-package)');
                 return;
             }
             sendCommand('/api/command/map_get_info', { package: pkg }, `MAP_GET_INFO ${pkg}`);
@@ -209,14 +209,14 @@ function handleCommand(cmd) {
         }
 
         case 'map_set_gz': {
-            const pkgInput = document.getElementById('cortex-package');
+            const pkgInput = document.getElementById('map-package');
             const fallbackPkg = document.getElementById('app-package');
             const pkg = (pkgInput && pkgInput.value.trim()) || (fallbackPkg && fallbackPkg.value.trim());
             const mapTextEl = document.getElementById('map-json');
             const mapJson = mapTextEl ? mapTextEl.value : '';
 
             if (!pkg) {
-                addLog('error', 'MAP_SET_GZ: 需要包名 (cortex-package 或 app-package)');
+                addLog('error', 'MAP_SET_GZ: 需要包名 (map-package 或 app-package)');
                 return;
             }
             if (!mapJson || !mapJson.trim()) {
@@ -228,119 +228,6 @@ function handleCommand(cmd) {
             sendCommand('/api/command/map_set_gz', payload, `MAP_SET_GZ ${pkg}`);
             break;
         }
-
-        case 'cortex_resolve_locator':
-        case 'cortex_tap_locator': {
-            const locator = buildLocatorPayload();
-            if (!locator) {
-                addLog('error', '请至少填写 locator 的一个字段 (resource_id/text/content_desc/class/bounds)');
-                return;
-            }
-            const endpoint = cmd === 'cortex_resolve_locator'
-                ? '/api/command/cortex_resolve_locator'
-                : '/api/command/cortex_tap_locator';
-            const label = cmd === 'cortex_resolve_locator'
-                ? 'CORTEX_RESOLVE_LOCATOR'
-                : 'CORTEX_TAP_LOCATOR';
-            sendCommand(endpoint, { locator }, label);
-            break;
-        }
-
-        case 'cortex_trace_pull': {
-            const maxLines = 200;
-            sendCommand('/api/command/cortex_trace_pull', { max_lines: maxLines }, `CORTEX_TRACE_PULL (${maxLines})`);
-            break;
-        }
-
-        case 'cortex_route_run': {
-            const pkgInput = document.getElementById('cortex-package');
-            const fallbackPkg = document.getElementById('app-package');
-            const pkg = (pkgInput && pkgInput.value.trim()) || (fallbackPkg && fallbackPkg.value.trim());
-
-            const targetPage = (document.getElementById('route-target-page')?.value || '').trim();
-            const startPage = (document.getElementById('route-start-page')?.value || '').trim();
-            const maxStepsRaw = document.getElementById('route-max-steps')?.value;
-            let maxSteps = parseInt(maxStepsRaw, 10);
-            if (Number.isNaN(maxSteps) || maxSteps <= 0) {
-                maxSteps = 16;
-            }
-
-            if (!pkg) {
-                addLog('error', 'CORTEX_ROUTE_RUN: 需要包名 (cortex-package 或 app-package)');
-                return;
-            }
-            if (!targetPage) {
-                addLog('error', 'CORTEX_ROUTE_RUN: 请填写 target_page');
-                return;
-            }
-
-            const payload = {
-                package: pkg,
-                target_page: targetPage,
-                max_steps: maxSteps,
-            };
-            if (startPage) {
-                payload.start_page = startPage;
-            }
-
-            const label = `CORTEX_ROUTE_RUN ${pkg}: home/start -> ${targetPage} (max_steps=${maxSteps})`;
-            sendCommand('/api/command/cortex_route_run', payload, label);
-            break;
-        }
-
-        case 'cortex_fsm_run': {
-            const userTask = (document.getElementById('fsm-user-task')?.value || '').trim();
-            const pkgInput = document.getElementById('fsm-package') || document.getElementById('cortex-package');
-            const pkg = (pkgInput && pkgInput.value.trim()) || '';
-            const mapPath = (document.getElementById('fsm-map-path')?.value || '').trim();
-            const startPage = (document.getElementById('fsm-start-page')?.value || '').trim();
-
-            if (!userTask) {
-                addLog('error', 'CORTEX_FSM_RUN: 请填写 user_task');
-                break;
-            }
-
-            const payload = { user_task: userTask };
-            if (pkg) payload.package = pkg;
-            if (mapPath) payload.map_path = mapPath;
-            if (startPage) payload.start_page = startPage;
-
-            const label = `CORTEX_FSM_RUN task="${userTask.slice(0, 40)}"${pkg ? ` package=${pkg}` : ''}`;
-            sendCommand('/api/command/cortex_fsm_run', payload, label);
-            break;
-        }
-
-        case 'demo_route_run':
-            if (typeof runCortexRouteDemo === 'function') {
-                runCortexRouteDemo();
-            } else {
-                addLog('error', 'Demo(Route) 脚本未加载 (cortex_route_demo.js)');
-            }
-            break;
-
-        case 'demo_fill_bili_locator':
-            if (typeof fillBiliPresetLocator === 'function') {
-                fillBiliPresetLocator();
-            } else {
-                addLog('error', 'demo_fill_bili_locator 函数未定义');
-            }
-            break;
-
-        case 'demo_run_protocol':
-            if (typeof runCortexPresetDemo === 'function') {
-                runCortexPresetDemo(false);
-            } else {
-                addLog('error', 'demo_run_protocol 函数未定义');
-            }
-            break;
-
-        case 'demo_run_tap':
-            if (typeof runCortexPresetDemo === 'function') {
-                runCortexPresetDemo(true);
-            } else {
-                addLog('error', 'demo_run_tap 函数未定义');
-            }
-            break;
     }
 }
 
@@ -1709,103 +1596,4 @@ function showAppsViewer(apps, filter) {
     };
 }
 
-/**
- * 从表单构建 locator payload（只包含非空字段）
- */
-function buildLocatorPayload() {
-    const rid = (document.getElementById('locator-resource-id')?.value || '').trim();
-    const text = (document.getElementById('locator-text')?.value || '').trim();
-    const desc = (document.getElementById('locator-content-desc')?.value || '').trim();
-    const cls = (document.getElementById('locator-class')?.value || '').trim();
-    const parentRid = (document.getElementById('locator-parent-rid')?.value || '').trim();
-
-    const lVal = document.getElementById('locator-bounds-left')?.value;
-    const tVal = document.getElementById('locator-bounds-top')?.value;
-    const rVal = document.getElementById('locator-bounds-right')?.value;
-    const bVal = document.getElementById('locator-bounds-bottom')?.value;
-
-    const locator = {};
-    if (rid) locator.resource_id = rid;
-    if (text) locator.text = text;
-    if (desc) locator.content_desc = desc;
-    if (cls) locator.class = cls;
-    if (parentRid) locator.parent_rid = parentRid;
-
-    const l = parseInt(lVal, 10);
-    const t = parseInt(tVal, 10);
-    const r = parseInt(rVal, 10);
-    const b = parseInt(bVal, 10);
-    if (!Number.isNaN(l) && !Number.isNaN(t) && !Number.isNaN(r) && !Number.isNaN(b)) {
-        locator.bounds_hint = [l, t, r, b];
-    }
-
-    return Object.keys(locator).length > 0 ? locator : null;
-}
-
-/**
- * 预制：填充 B 站示例 locator（首页搜索框 expand_search）
- */
-function fillBiliPresetLocator() {
-    const pkgInput = document.getElementById('cortex-package');
-    const appPkg = document.getElementById('app-package');
-    const defaultPkg = 'tv.danmaku.bili';
-
-    if (pkgInput && !pkgInput.value) pkgInput.value = defaultPkg;
-    if (appPkg && !appPkg.value) appPkg.value = defaultPkg;
-
-    const rid = document.getElementById('locator-resource-id');
-    const text = document.getElementById('locator-text');
-    const desc = document.getElementById('locator-content-desc');
-    const cls = document.getElementById('locator-class');
-    const parent = document.getElementById('locator-parent-rid');
-    const l = document.getElementById('locator-bounds-left');
-    const t = document.getElementById('locator-bounds-top');
-    const r = document.getElementById('locator-bounds-right');
-    const b = document.getElementById('locator-bounds-bottom');
-
-    if (rid) rid.value = 'tv.danmaku.bili:id/expand_search';
-    if (text) text.value = '';
-    if (desc) desc.value = '';
-    if (cls) cls.value = 'LinearLayout';
-    if (parent) parent.value = 'tv.danmaku.bili:id/expand_search_container';
-    if (l) l.value = '';
-    if (t) t.value = '';
-    if (r) r.value = '';
-    if (b) b.value = '';
-
-    addLog('info', '已填充 B 站示例 locator（首页搜索框 expand_search）');
-}
-
-/**
- * Cortex 协议 Demo：先 resolve，再可选 tap，最后拉取 trace
- */
-async function runCortexPresetDemo(includeTap) {
-    if (!state.connected) {
-        addLog('error', '未连接设备，无法运行 Demo');
-        return;
-    }
-
-    const pkgInput = document.getElementById('cortex-package');
-    const appPkg = document.getElementById('app-package');
-    let pkg = (pkgInput && pkgInput.value.trim()) || (appPkg && appPkg.value.trim());
-    if (!pkg) {
-        pkg = 'tv.danmaku.bili';
-    }
-    if (pkgInput && !pkgInput.value) pkgInput.value = pkg;
-    if (appPkg && !appPkg.value) appPkg.value = pkg;
-
-    const locator = buildLocatorPayload();
-    if (!locator) {
-        addLog('error', 'Demo locator 构建失败');
-        return;
-    }
-
-    await sendCommand('/api/command/cortex_resolve_locator', { locator }, 'DEMO CORTEX_RESOLVE_LOCATOR');
-
-    if (includeTap) {
-        await sendCommand('/api/command/cortex_tap_locator', { locator }, 'DEMO CORTEX_TAP_LOCATOR');
-    }
-
-    await sendCommand('/api/command/cortex_trace_pull', { max_lines: 200 }, 'DEMO CORTEX_TRACE_PULL');
-}
 

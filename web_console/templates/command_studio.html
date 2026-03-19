@@ -293,14 +293,9 @@
                 </div>
 
                 <div class="card" style="margin-top:10px;">
-                    <h3>Cortex / Map Debug</h3>
+                    <h3>Map Debug</h3>
                     <div class="row">
-                        <button class="btn btn-cmd btn-small" data-cmd="demo_fill_bili_locator">填充B站示例Locator</button>
-                        <button class="btn btn-cmd btn-small btn-highlight" data-cmd="demo_run_protocol">Demo(不点击)</button>
-                        <button class="btn btn-cmd btn-small btn-danger" data-cmd="demo_run_tap">Demo(含点击)</button>
-                    </div>
-                    <div class="row">
-                        <input type="text" id="cortex-package" placeholder="包名 (map_set/map_info 用)" class="mono">
+                        <input type="text" id="map-package" placeholder="包名 (map_set/map_info 用)" class="mono">
                         <button class="btn btn-cmd btn-small" data-cmd="map_get_info" style="max-width:130px;">MAP_GET_INFO</button>
                     </div>
                     <div class="row" style="margin-top:8px;">
@@ -308,64 +303,6 @@
                     </div>
                     <div class="row" style="margin-top:6px;">
                         <button class="btn btn-cmd btn-small btn-highlight" data-cmd="map_set_gz">MAP_SET_GZ (burn)</button>
-                    </div>
-                    <hr style="margin:10px 0; border-color:#1f2937;">
-                    <h4>Locator 测试（端侧严格匹配 / 点击）</h4>
-                    <div class="row">
-                        <input type="text" id="locator-resource-id" placeholder="resource_id (可选)" class="mono">
-                    </div>
-                    <div class="row" style="margin-top:6px;">
-                        <input type="text" id="locator-text" placeholder="text (可选)" class="mono">
-                    </div>
-                    <div class="row" style="margin-top:6px;">
-                        <input type="text" id="locator-content-desc" placeholder="content_desc (可选)" class="mono">
-                    </div>
-                    <div class="row" style="margin-top:6px;">
-                        <input type="text" id="locator-class" placeholder="class (可选, 例如 LinearLayout)" class="mono">
-                    </div>
-                    <div class="row" style="margin-top:6px;">
-                        <input type="text" id="locator-parent-rid" placeholder="parent_rid (仅用于加严, 可选)" class="mono">
-                    </div>
-                    <div class="grid4" style="margin-top:6px; display:grid; grid-template-columns:repeat(4,1fr); gap:6px;">
-                        <input type="number" id="locator-bounds-left" placeholder="L" class="mono">
-                        <input type="number" id="locator-bounds-top" placeholder="T" class="mono">
-                        <input type="number" id="locator-bounds-right" placeholder="R" class="mono">
-                        <input type="number" id="locator-bounds-bottom" placeholder="B" class="mono">
-                    </div>
-                    <div class="row" style="margin-top:8px;">
-                        <button class="btn btn-cmd btn-small btn-highlight" data-cmd="cortex_resolve_locator">RESOLVE_LOCATOR</button>
-                        <button class="btn btn-cmd btn-small" data-cmd="cortex_tap_locator">TAP_LOCATOR</button>
-                        <button class="btn btn-cmd btn-small" data-cmd="cortex_trace_pull">TRACE_PULL</button>
-                    </div>
-                    <hr style="margin:10px 0; border-color:#1f2937;">
-                    <h4>Route 测试（端侧 route_run）</h4>
-                    <div class="row">
-                        <input type="text" id="route-target-page" placeholder="target_page (例如 search_page__n_480927d2)" class="mono">
-                    </div>
-                    <div class="row" style="margin-top:6px;">
-                        <input type="text" id="route-start-page" placeholder="start_page (可选，默认按 map 推断 home)" class="mono">
-                    </div>
-                    <div class="row" style="margin-top:6px;">
-                        <input type="number" id="route-max-steps" value="6" placeholder="max_steps (默认 16)" class="mono" style="max-width:120px;">
-                        <button class="btn btn-cmd btn-small btn-highlight" data-cmd="cortex_route_run" style="max-width:150px;">CORTEX_ROUTE_RUN</button>
-                        <button class="btn btn-cmd btn-small" data-cmd="demo_route_run">Demo(Route)</button>
-                    </div>
-                    <hr style="margin:10px 0; border-color:#1f2937;">
-                    <h4>FSM 测试（端侧 INIT → APP_RESOLVE → ROUTE → VISION_ACT）</h4>
-                    <div class="row">
-                        <input type="text" id="fsm-user-task" placeholder="user_task (例如: 打开B站搜索页)" class="mono">
-                    </div>
-                    <div class="row" style="margin-top:6px;">
-                        <input type="text" id="fsm-package" placeholder="可选: 固定包名 (留空则端侧 LLM 自动选 App)" class="mono">
-                    </div>
-                    <div class="row" style="margin-top:6px;">
-                        <input type="text" id="fsm-map-path" placeholder="可选: 端侧 map 路径覆盖 (默认使用当前包 map)" class="mono">
-                    </div>
-                    <div class="row" style="margin-top:6px;">
-                        <input type="text" id="fsm-start-page" placeholder="可选: start_page (默认由 map 推断首页)" class="mono">
-                    </div>
-                    <div class="row" style="margin-top:6px;">
-                        <button class="btn btn-cmd btn-small btn-highlight" data-cmd="cortex_fsm_run" style="max-width:170px;">CORTEX_FSM_RUN</button>
                     </div>
                 </div>
             </div>
@@ -430,28 +367,6 @@
         </div>
     </div>
 
-    <div id="trace-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-container">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <span class="modal-icon">📊</span>
-                    <h2>Cortex Trace</h2>
-                </div>
-                <div class="modal-stats" id="trace-stats"></div>
-                <button id="btn-close-trace" class="modal-close">&times;</button>
-            </div>
-            <div class="modal-toolbar">
-                <input type="text" id="trace-search" class="search-input" placeholder="过滤 event / 字段 (例如 route_)">
-                <div class="toolbar-actions">
-                    <button id="btn-trace-filter-all" class="toolbar-btn active">全部</button>
-                    <button id="btn-trace-filter-route" class="toolbar-btn">Route</button>
-                    <button id="btn-trace-filter-locator" class="toolbar-btn">Locator</button>
-                </div>
-            </div>
-            <div id="trace-table" class="modal-tree"></div>
-        </div>
-    </div>
-
     <footer class="footer">
         <div class="stats">
             <span>已发送: <strong id="stats-sent">0</strong></span>
@@ -463,6 +378,5 @@
 </div>
 
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-<script src="{{ url_for('static', filename='js/cortex_route_demo.js') }}"></script>
 </body>
 </html>

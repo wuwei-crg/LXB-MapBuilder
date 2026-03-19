@@ -881,12 +881,6 @@ def map_viewer():
     return render_template('map_viewer.html')
 
 
-@app.route('/cortex_route')
-def cortex_route():
-    """Cortex Route 调试页面"""
-    return render_template('cortex_route.html')
-
-
 @app.route('/api/connect', methods=['POST'])
 def connect():
     """兼容旧接口：创建连接并选为当前连接。"""
@@ -1501,7 +1495,6 @@ def cmd_map_set_gz():
         return jsonify({'success': False, 'message': str(e)}), 500
 
 
-@app.route('/api/command/cortex_resolve_locator', methods=['POST'])
 def cmd_cortex_resolve_locator():
     error_response = _require_client_response()
     if error_response:
@@ -1525,7 +1518,6 @@ def cmd_cortex_resolve_locator():
         return jsonify({'success': False, 'message': str(e)}), 500
 
 
-@app.route('/api/command/cortex_tap_locator', methods=['POST'])
 def cmd_cortex_tap_locator():
     error_response = _require_client_response()
     if error_response:
@@ -1549,7 +1541,6 @@ def cmd_cortex_tap_locator():
         return jsonify({'success': False, 'message': str(e)}), 500
 
 
-@app.route('/api/command/cortex_trace_pull', methods=['POST'])
 def cmd_cortex_trace_pull():
     error_response = _require_client_response()
     if error_response:
@@ -1575,7 +1566,6 @@ def cmd_cortex_trace_pull():
         return jsonify({'success': False, 'message': str(e)}), 500
 
 
-@app.route('/api/command/cortex_route_run', methods=['POST'])
 def cmd_cortex_route_run():
     """端侧 route_run：根据 map 从 home/start_page 路由到 target_page。"""
     error_response = _require_client_response()
@@ -2800,7 +2790,6 @@ def maps_load():
         }), 500
 
 
-@app.route('/api/cortex/llm/config', methods=['GET'])
 def cortex_llm_config_get():
     """Get Cortex Route Planner LLM config."""
     try:
@@ -2847,7 +2836,6 @@ def cortex_llm_config_get():
         }), 500
 
 
-@app.route('/api/cortex/llm/config', methods=['POST'])
 def cortex_llm_config_set():
     """Save Cortex Route Planner LLM config."""
     try:
@@ -2899,7 +2887,6 @@ def cortex_llm_config_set():
         }), 500
 
 
-@app.route('/api/cortex/llm/test', methods=['POST'])
 def cortex_llm_test():
     """Test Cortex Route Planner LLM connectivity."""
     try:
@@ -2922,8 +2909,6 @@ def cortex_llm_test():
         }), 500
 
 
-@app.route('/api/cortex/route/run', methods=['POST'])
-@app.route('/api/cortex/route_then_act/run', methods=['POST'])
 def cortex_route_then_act_run():
     """Run route stage: resolve app -> target_page -> BFS -> device routing."""
     try:
@@ -3265,7 +3250,6 @@ def _run_cortex_fsm_logic(data: dict, log_callback, run_client):
     }
 
 
-@app.route('/api/cortex/fsm/run', methods=['POST'])
 def cortex_fsm_run():
     data = request.json or {}
     try:
@@ -3279,7 +3263,6 @@ def cortex_fsm_run():
         return jsonify({'success': False, 'message': str(e), 'traceback': traceback.format_exc()}), 500
 
 
-@app.route('/api/cortex/fsm/start', methods=['POST'])
 def cortex_fsm_start():
     data = request.json or {}
     try:
@@ -3320,7 +3303,6 @@ def cortex_fsm_start():
     return jsonify({'success': True, 'task_id': task_id, 'connection_id': conn.connection_id})
 
 
-@app.route('/api/cortex/task/<task_id>/poll', methods=['GET'])
 def cortex_task_poll(task_id):
     cursor = int(request.args.get('cursor', '0'))
     with TASKS_LOCK:
@@ -3348,7 +3330,6 @@ def cortex_task_poll(task_id):
         })
 
 
-@app.route('/api/cortex/task/<task_id>/cancel', methods=['POST'])
 def cortex_task_cancel(task_id):
     with TASKS_LOCK:
         t = TASKS.get(task_id)
@@ -4043,7 +4024,6 @@ def debug_analyze_page():
         }), 500
 
 
-@app.route('/api/command/cortex_fsm_run', methods=['POST'])
 def cmd_cortex_fsm_run():
     """端侧 Cortex FSM：INIT -> APP_RESOLVE -> ROUTE_PLAN -> ROUTING -> VISION_ACT。"""
     error_response = _require_client_response()
