@@ -1,8 +1,8 @@
 """
-LXB-Link: Reliable UDP Protocol for Android Device Control
+LXB-Link: Reliable TCP Protocol for Android Device Control
 
 A high-performance, reliable communication library for controlling Android devices
-over UDP using Stop-and-Wait ARQ protocol with automatic retry mechanism.
+over TCP using Stop-and-Wait style command semantics with automatic retry.
 
 Features:
 - Binary protocol with CRC32 checksum validation

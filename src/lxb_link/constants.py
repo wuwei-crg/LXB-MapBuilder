@@ -585,7 +585,7 @@ FEATURE_QOS = 0x0020                # Supports QoS scheduling
 
 DEFAULT_TIMEOUT = 1.0           # Default socket timeout in seconds
 MAX_RETRIES = 3                 # Maximum retry attempts for reliable delivery
-DEFAULT_PORT = 12345            # Default UDP port for communication
+DEFAULT_PORT = 12345            # Default control port for communication
 SOCKET_BUFFER_SIZE = 65536      # Socket receive buffer size
 
 # Fragmented Transfer Configuration

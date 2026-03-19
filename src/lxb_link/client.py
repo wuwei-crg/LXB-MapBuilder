@@ -2,7 +2,7 @@
 LXB-Link Client API
 
 This module provides the user-facing API for controlling Android devices using
-the LXB-Link reliable UDP protocol. It abstracts low-level socket operations
+the LXB-Link reliable protocol. It abstracts low-level socket operations
 and binary frame manipulation behind a simple, intuitive interface.
 
 Example:
@@ -108,7 +108,7 @@ class LXBLinkClient:
     High-level client for LXB-Link protocol communication.
 
     This class provides a simple API for controlling Android devices through
-    the LXB-Link protocol, hiding the complexity of UDP socket management,
+    the LXB-Link protocol, hiding the complexity of socket management,
     frame packing/unpacking, and retry logic.
     """
 
@@ -124,7 +124,7 @@ class LXBLinkClient:
 
         Args:
             host: Target device IP address or hostname
-            port: Target device UDP port (default: 12345)
+            port: Target device control port (default: 12345)
             timeout: Command timeout in seconds (default: 1.0)
             max_retries: Maximum retry attempts (default: 3)
         """
@@ -209,12 +209,9 @@ class LXBLinkClient:
         Hard-reset the channel after a command timeout.
 
         Steps:
-        1. Drain any stale UDP frames still sitting in the receive buffer.
-        2. Disconnect and reconnect (new ephemeral socket → old late-arriving ACKs
-           go to the now-closed port and are silently discarded by the OS).
-        3. Re-handshake so the server learns the new client port.  Any command
-           the server was still executing will send its ACK to the old port
-           (dead), and the server is now ready to process fresh commands.
+        1. Reset local runtime state.
+        2. Disconnect and reconnect.
+        3. Re-handshake to restore a clean command channel.
 
         Called automatically by _cmd() on LXBTimeoutError.
         """
@@ -438,8 +435,8 @@ class LXBLinkClient:
         Capture a screenshot from the device.
 
         Note:
-            This API now always uses fragmented transfer internally to avoid
-            UDP EMSGSIZE on large frames.
+            This API delegates to request_screenshot(), which is
+            transport-managed.
 
         Returns:
             Screenshot image data (format depends on device implementation,
@@ -451,22 +448,12 @@ class LXBLinkClient:
         """
         self._ensure_connected()
 
-        logger.info("screenshot() delegates to fragmented request_screenshot()")
+        logger.info("screenshot() delegates to request_screenshot()")
         return self.request_screenshot()
 
     def request_screenshot(self) -> bytes:
         """
-        Request screenshot using fragmented transfer with selective repeat.
-
-        This method implements an efficient fragmented transfer protocol for
-        large screenshots (50KB-200KB). It uses application-layer fragmentation
-        with selective repeat instead of relying on IP-layer fragmentation.
-
-        Features:
-        - Chunked transfer (1KB chunks by default)
-        - Burst transmission (server sends all chunks without waiting)
-        - Selective repeat (only missing chunks are retransmitted)
-        - Handles UDP packet loss and reordering efficiently
+        Request screenshot via transport layer.
 
         Returns:
             Screenshot image data (format depends on device implementation,
@@ -478,20 +465,20 @@ class LXBLinkClient:
         """
         self._ensure_connected()
 
-        logger.info("Requesting screenshot (fragmented mode only)")
+        logger.info("Requesting screenshot")
         last_err: Optional[Exception] = None
         for attempt in range(3):
             try:
                 response = self._transport.request_screenshot_fragmented() # type: ignore
                 logger.info(
-                    f"Screenshot transfer successful: {len(response)} bytes "
+                    f"Screenshot successful: {len(response)} bytes "
                     f"({len(response) / 1024:.1f} KB)"
                 )
                 return response
             except Exception as e:
                 last_err = e
                 logger.warning(
-                    f"Fragmented screenshot failed (attempt={attempt + 1}/3): {e}"
+                    f"Screenshot request failed (attempt={attempt + 1}/3): {e}"
                 )
                 if attempt == 0:
                     # First failure: drain stale frames, keep seq continuity.
@@ -508,11 +495,11 @@ class LXBLinkClient:
 
         if last_err:
             raise last_err
-        raise RuntimeError("fragmented screenshot failed")
+        raise RuntimeError("screenshot request failed")
 
     def reset_runtime_state(self, reset_seq: bool = True) -> int:
         """
-        Reset client transport runtime state and drain stale UDP frames.
+        Reset client transport runtime state.
         """
         self._ensure_connected()
         return self._transport.reset_runtime_state(reset_seq=reset_seq) # type: ignore
@@ -1144,7 +1131,7 @@ class LXBLinkClient:
 
         Notes:
         - This is a bootstrap/debug feature. It is not a full map streaming protocol.
-        - gzip typically makes maps small enough to fit a single UDP payload.
+        - gzip significantly reduces payload size for map transport.
 
         Payload:
             package_len[2B] + package[UTF-8] + gzipped_map_json[...]
