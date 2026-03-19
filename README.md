@@ -6,6 +6,16 @@ This repository is the standalone home for map construction assets:
 - `map_builder/`: builder code migrated from `LXB-Framework/src/auto_map_builder`
 - `maps/`: map data snapshots for development and publishing
 - `docs/`: map builder documentation
+- `web_console/`: map builder web UI (migrated from `LXB-Framework/web_console`)
+
+## Run Web Console
+
+```bash
+cd web_console
+python app.py
+```
+
+Main page: `http://localhost:5000/`
 
 ## Migration Note
 
