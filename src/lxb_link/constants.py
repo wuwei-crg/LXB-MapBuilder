@@ -591,7 +591,7 @@ SOCKET_BUFFER_SIZE = 65536      # Socket receive buffer size
 # Fragmented Transfer Configuration
 CHUNK_SIZE = 1024               # Default chunk size for fragmented transfer (1KB)
 CHUNK_RECV_TIMEOUT = 0.3        # Timeout for receiving chunks (300ms)
-MAX_MISSING_RETRIES = 3         # Maximum retries for requesting missing chunks
+MAX_MISSING_RETRIES = 5         # Maximum retries for requesting missing chunks
 
 # =============================================================================
 # Exception Classes
