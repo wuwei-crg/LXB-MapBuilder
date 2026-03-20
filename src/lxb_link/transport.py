@@ -16,9 +16,10 @@ from .constants import (
     CMD_SCREENSHOT,
     CRC_SIZE,
     DEFAULT_TIMEOUT,
-    HEADER_SIZE,
     MAX_RETRIES,
     SOCKET_BUFFER_SIZE,
+    VERSION_V1,
+    VERSION_V2,
     LXBChecksumError,
     LXBProtocolError,
     LXBTimeoutError,
@@ -100,6 +101,14 @@ class Transport:
         self._sock.sendall(frame)
         logger.debug(f"Sent frame: {len(frame)} bytes")
 
+    def _apply_socket_timeout(self) -> None:
+        """
+        Synchronize socket timeout with current transport timeout.
+        """
+        if not self._connected or not self._sock:
+            raise LXBProtocolError("Transport not connected", 0)
+        self._sock.settimeout(self.timeout)
+
     def _recv_exact(self, size: int) -> bytes:
         if not self._connected or not self._sock:
             raise LXBProtocolError("Transport not connected", 0)
@@ -117,8 +126,25 @@ class Transport:
         return b"".join(chunks)
 
     def _recv_frame(self) -> bytes:
-        header = self._recv_exact(HEADER_SIZE)
-        payload_len = struct.unpack(">H", header[8:10])[0]
+        # Read magic(2)+version(1) first, then version-specific header.
+        prefix = self._recv_exact(3)
+        version = prefix[2]
+
+        if version == VERSION_V2:
+            header_size = ProtocolFrame.HEADER_SIZE_V2
+        elif version == VERSION_V1:
+            header_size = ProtocolFrame.HEADER_SIZE_V1
+        else:
+            raise LXBProtocolError(f"Unsupported frame version: 0x{version:02X}", 0)
+
+        header_rest = self._recv_exact(header_size - 3)
+        header = prefix + header_rest
+
+        if version == VERSION_V2:
+            payload_len = struct.unpack(">I", header[8:12])[0]
+        else:
+            payload_len = struct.unpack(">H", header[8:10])[0]
+
         body = self._recv_exact(payload_len + CRC_SIZE)
         frame = header + body
         logger.debug(f"Received frame: {len(frame)} bytes")
@@ -137,6 +163,8 @@ class Transport:
 
         while retry_count <= self.max_retries:
             try:
+                # timeout can be adjusted dynamically by caller (e.g. timeout_factor).
+                self._apply_socket_timeout()
                 self._send_frame(frame)
                 send_time = time.time()
 

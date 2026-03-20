@@ -17,7 +17,9 @@ Version: 1.0-dev (Binary First Architecture)
 # =============================================================================
 
 MAGIC = 0xAA55  # Protocol magic number (2 bytes)
-VERSION = 0x01  # Protocol version (1 byte) - v1.0-dev
+VERSION = 0x02  # Protocol version (1 byte) - v2 (len32)
+VERSION_V1 = 0x01
+VERSION_V2 = 0x02
 
 # Protocol version constants for future negotiation
 PROTOCOL_VERSION_1_0 = 0x0100  # Current version (LE: 0x00 0x01)
@@ -31,7 +33,7 @@ MAGIC_SIZE = 2      # Magic field size in bytes
 VERSION_SIZE = 1    # Version field size in bytes
 SEQ_SIZE = 4        # Sequence number field size in bytes
 CMD_SIZE = 1        # Command field size in bytes
-LEN_SIZE = 2        # Payload length field size in bytes
+LEN_SIZE = 4        # Payload length field size in bytes (v2)
 CRC_SIZE = 4        # CRC32 checksum field size in bytes
 
 # Calculate header size (excluding payload and CRC)
@@ -40,8 +42,8 @@ HEADER_SIZE = MAGIC_SIZE + VERSION_SIZE + SEQ_SIZE + CMD_SIZE + LEN_SIZE
 # Minimum frame size (header + CRC, no payload)
 MIN_FRAME_SIZE = HEADER_SIZE + CRC_SIZE
 
-# Maximum payload size (64KB - header - CRC)
-MAX_PAYLOAD_SIZE = 65535 - HEADER_SIZE - CRC_SIZE
+# Maximum payload size (bounded for safety)
+MAX_PAYLOAD_SIZE = 16 * 1024 * 1024
 
 # =============================================================================
 # Layered ISA Command Set (Binary First Architecture)

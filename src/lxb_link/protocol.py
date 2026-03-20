@@ -25,6 +25,8 @@ from typing import Tuple, Optional, Dict, List
 from .constants import (
     MAGIC,
     VERSION,
+    VERSION_V1,
+    VERSION_V2,
     HEADER_SIZE,
     MIN_FRAME_SIZE,
     MAX_PAYLOAD_SIZE,
@@ -263,17 +265,27 @@ class ProtocolFrame:
     and parse received frames with comprehensive validation.
     """
 
-    # Struct format for frame header (Big Endian)
-    # H: unsigned short (2 bytes) - Magic
-    # B: unsigned char (1 byte) - Version
-    # I: unsigned int (4 bytes) - Sequence
-    # B: unsigned char (1 byte) - Command
-    # H: unsigned short (2 bytes) - Payload Length
-    HEADER_FORMAT = '>HBIBH'
+    # v1: len is uint16
+    HEADER_FORMAT_V1 = '>HBIBH'
+    HEADER_SIZE_V1 = struct.calcsize(HEADER_FORMAT_V1)
+    # v2: len is uint32
+    HEADER_FORMAT_V2 = '>HBIBI'
+    HEADER_SIZE_V2 = struct.calcsize(HEADER_FORMAT_V2)
 
     # Struct format for CRC32 (Big Endian)
     # I: unsigned int (4 bytes) - CRC32
     CRC_FORMAT = '>I'
+
+    @staticmethod
+    def header_size_for_version(version: int) -> int:
+        if version == VERSION_V1:
+            return ProtocolFrame.HEADER_SIZE_V1
+        if version == VERSION_V2:
+            return ProtocolFrame.HEADER_SIZE_V2
+        raise LXBProtocolError(
+            f"Invalid protocol version: 0x{version:02X}",
+            ERR_INVALID_VERSION
+        )
 
     @staticmethod
     def pack(seq: int, cmd: int, payload: bytes = b'') -> bytes:
@@ -299,11 +311,11 @@ class ProtocolFrame:
                 ERR_INVALID_PAYLOAD_SIZE
             )
 
-        # Construct header
+        # Construct header (always v2 for outbound frames)
         header = struct.pack(
-            ProtocolFrame.HEADER_FORMAT,
+            ProtocolFrame.HEADER_FORMAT_V2,
             MAGIC,           # Magic number (0xAA55)
-            VERSION,         # Protocol version (0x01)
+            VERSION,         # Protocol version
             seq,             # Sequence number
             cmd,             # Command ID
             payload_len      # Payload length
@@ -336,10 +348,10 @@ class ProtocolFrame:
             LXBProtocolError: If frame validation fails (magic/version mismatch)
             LXBChecksumError: If CRC32 checksum validation fails
         """
-        # Validate minimum frame size
-        if len(frame) < MIN_FRAME_SIZE:
+        # Validate minimum frame size for v1 header.
+        if len(frame) < (ProtocolFrame.HEADER_SIZE_V1 + CRC_SIZE):
             raise LXBProtocolError(
-                f"Frame too short: {len(frame)} bytes (minimum {MIN_FRAME_SIZE})",
+                f"Frame too short: {len(frame)} bytes",
                 ERR_INVALID_MAGIC
             )
 
@@ -357,11 +369,14 @@ class ProtocolFrame:
                 f"received 0x{received_crc:08X}"
             )
 
-        # Unpack header
-        magic, version, seq, cmd, payload_len = struct.unpack(
-            ProtocolFrame.HEADER_FORMAT,
-            frame_without_crc[:HEADER_SIZE]
-        )
+        # Parse version-dependent header.
+        if len(frame_without_crc) < 3:
+            raise LXBProtocolError(
+                "Frame too short for magic/version fields",
+                ERR_INVALID_MAGIC
+            )
+        magic = struct.unpack('>H', frame_without_crc[:2])[0]
+        version = frame_without_crc[2]
 
         # Validate magic number
         if magic != MAGIC:
@@ -370,15 +385,36 @@ class ProtocolFrame:
                 ERR_INVALID_MAGIC
             )
 
-        # Validate protocol version
-        if version != VERSION:
+        if version == VERSION_V2:
+            header_size = ProtocolFrame.HEADER_SIZE_V2
+            if len(frame_without_crc) < header_size:
+                raise LXBProtocolError(
+                    f"Frame too short for v2 header: {len(frame_without_crc)}",
+                    ERR_INVALID_PAYLOAD_SIZE
+                )
+            _, _, seq, cmd, payload_len = struct.unpack(
+                ProtocolFrame.HEADER_FORMAT_V2,
+                frame_without_crc[:header_size]
+            )
+        elif version == VERSION_V1:
+            header_size = ProtocolFrame.HEADER_SIZE_V1
+            if len(frame_without_crc) < header_size:
+                raise LXBProtocolError(
+                    f"Frame too short for v1 header: {len(frame_without_crc)}",
+                    ERR_INVALID_PAYLOAD_SIZE
+                )
+            _, _, seq, cmd, payload_len = struct.unpack(
+                ProtocolFrame.HEADER_FORMAT_V1,
+                frame_without_crc[:header_size]
+            )
+        else:
             raise LXBProtocolError(
-                f"Invalid protocol version: 0x{version:02X} (expected 0x{VERSION:02X})",
+                f"Invalid protocol version: 0x{version:02X}",
                 ERR_INVALID_VERSION
             )
 
-        # Extract payload
-        payload = frame_without_crc[HEADER_SIZE:]
+        # Extract payload.
+        payload = frame_without_crc[header_size:]
 
         # Validate payload length matches header declaration
         if len(payload) != payload_len:
@@ -1360,4 +1396,3 @@ class ProtocolFrame:
             payload += struct.pack('>BBH', field, op, len(val_bytes)) + val_bytes
 
         return ProtocolFrame.pack(seq, CMD_FIND_NODE_COMPOUND, payload)
-

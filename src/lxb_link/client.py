@@ -466,36 +466,25 @@ class LXBLinkClient:
         self._ensure_connected()
 
         logger.info("Requesting screenshot")
-        last_err: Optional[Exception] = None
-        for attempt in range(3):
-            try:
-                response = self._transport.request_screenshot_fragmented() # type: ignore
-                logger.info(
-                    f"Screenshot successful: {len(response)} bytes "
-                    f"({len(response) / 1024:.1f} KB)"
-                )
-                return response
-            except Exception as e:
-                last_err = e
-                logger.warning(
-                    f"Screenshot request failed (attempt={attempt + 1}/3): {e}"
-                )
-                if attempt == 0:
-                    # First failure: drain stale frames, keep seq continuity.
-                    try:
-                        self.reset_runtime_state(reset_seq=False)
-                    except Exception:
-                        pass
-                else:
-                    # Subsequent failures: full recover (drain + reconnect + handshake).
-                    try:
-                        self._recover()
-                    except Exception:
-                        pass
+        # Screenshot is usually slower than tap/key commands.
+        payload = self._cmd(CMD_SCREENSHOT, b"", timeout_factor=8.0)
 
-        if last_err:
-            raise last_err
-        raise RuntimeError("screenshot request failed")
+        if not payload:
+            raise RuntimeError("screenshot response is empty")
+
+        status = payload[0]
+        if status != 0x01:
+            raise RuntimeError(f"screenshot failed with status=0x{status:02X}")
+
+        image_data = payload[1:]
+        if not image_data:
+            raise RuntimeError("screenshot payload has no image bytes")
+
+        logger.info(
+            f"Screenshot successful: {len(image_data)} bytes "
+            f"({len(image_data) / 1024:.1f} KB)"
+        )
+        return image_data
 
     def reset_runtime_state(self, reset_seq: bool = True) -> int:
         """
