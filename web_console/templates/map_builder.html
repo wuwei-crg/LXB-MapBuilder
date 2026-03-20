@@ -1034,18 +1034,28 @@
                 if (data.success && data.response.apps) {
                     appList = data.response.apps;
 
-                    // 按包名排序
-                    appList.sort((a, b) => a.package.localeCompare(b.package));
+                    // 优先按可读名称排序，再按包名排序
+                    appList.sort((a, b) => {
+                        const an = (a.name || a.label || a.package || '').toLowerCase();
+                        const bn = (b.name || b.label || b.package || '').toLowerCase();
+                        if (an !== bn) return an.localeCompare(bn);
+                        return (a.package || '').localeCompare(b.package || '');
+                    });
 
                     // 构建选项
                     select.innerHTML = '<option value="">-- 选择应用 (' + appList.length + ' 个) --</option>';
                     appList.forEach(app => {
                         const option = document.createElement('option');
                         option.value = app.package;
-                        // 显示格式：应用名 (包名简写)
-                        const shortPkg = app.package.split('.').slice(-2).join('.');
-                        option.textContent = `${app.name} (${shortPkg})`;
-                        option.title = app.package;  // 完整包名作为 tooltip
+                        const label = (app.label || app.name || '').trim();
+                        const hasLabel = !!label && (app.name_source !== 'inferred');
+                        if (hasLabel) {
+                            option.textContent = `${label} (${app.package})`;
+                            option.title = `${label}\n${app.package}`;
+                        } else {
+                            option.textContent = `${app.package} [no-label]`;
+                            option.title = app.package;
+                        }
                         select.appendChild(option);
                     });
 

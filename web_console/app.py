@@ -691,19 +691,25 @@ def _normalize_installed_apps(raw_apps) -> list:
             package_name = str(item.get('package') or '').strip()
             if not package_name:
                 continue
-            name = str(item.get('name') or item.get('label') or '').strip()
+            label = str(item.get('name') or item.get('label') or '').strip()
+            inferred = _infer_app_name_from_package(package_name)
             out.append({
                 'package': package_name,
-                'name': name or _infer_app_name_from_package(package_name),
+                'name': label or inferred,
+                'label': label,
+                'name_source': 'label' if label else 'inferred',
             })
             continue
 
         package_name = str(item or '').strip()
         if not package_name:
             continue
+        inferred = _infer_app_name_from_package(package_name)
         out.append({
             'package': package_name,
-            'name': _infer_app_name_from_package(package_name),
+            'name': inferred,
+            'label': '',
+            'name_source': 'inferred',
         })
     return out
 

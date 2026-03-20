@@ -1226,9 +1226,91 @@ NAV|100|950|首页|tab|home
         try:
             self.log("debug", f"launch_app: {package}")
             self.client.launch_app(package, clear_task=True)
-            time.sleep(2)
+            # Splash ads usually appear right after launch; do a fast local skip scan.
+            time.sleep(0.6)
+            self._dismiss_startup_skip_buttons(max_rounds=4)
+            time.sleep(1.0)
         except Exception as e:
             self.log("error", f"启动应用异常: {e}")
+
+    @staticmethod
+    def _normalize_ui_text(v: str) -> str:
+        return (v or "").strip().lower()
+
+    def _is_skip_like_node(self, node: Dict) -> Tuple[bool, int]:
+        """Detect startup-ad skip controls by text/content-desc/resource-id."""
+        if not node.get("clickable", False):
+            return False, 0
+
+        b = self._node_bounds(node)
+        if b is None:
+            return False, 0
+        cx, cy = self._bounds_center(b)
+        area = self._bounds_area(b)
+
+        text = self._normalize_ui_text(node.get("text") or "")
+        desc = self._normalize_ui_text(node.get("content_desc") or "")
+        rid = self._normalize_ui_text((node.get("resource_id") or "").split("/")[-1])
+        merged = f"{text} {desc} {rid}".strip()
+        if not merged:
+            return False, 0
+
+        score = 0
+        if "跳过" in merged or "skip" in merged:
+            score += 100
+        if re.search(r"\d+\s*(秒|s).{0,6}(跳过|skip)", merged):
+            score += 80
+
+        ad_close_tokens = ("close_ad", "ad_close", "splash_skip", "skip_btn", "tt_splash_skip")
+        if any(tok in rid for tok in ad_close_tokens):
+            score += 60
+
+        if score <= 0:
+            return False, 0
+
+        # Startup skip controls are usually near top-right and small.
+        if self._screen_width > 0 and self._screen_height > 0:
+            if cx >= int(self._screen_width * 0.55):
+                score += 20
+            if cy <= int(self._screen_height * 0.35):
+                score += 20
+        if area > 0:
+            score += max(0, 20 - min(20, area // 12000))
+
+        return True, score
+
+    def _dismiss_startup_skip_buttons(self, max_rounds: int = 4):
+        """Fast local skip handling right after launch (before VLM)."""
+        tapped = 0
+        for _ in range(max(1, max_rounds)):
+            xml_nodes = self._dump_actions()
+            if not xml_nodes:
+                break
+
+            candidates: List[Tuple[int, int, Tuple[int, int, int, int], Dict]] = []
+            for node in xml_nodes:
+                matched, score = self._is_skip_like_node(node)
+                if not matched:
+                    continue
+                b = self._node_bounds(node)
+                if b is None:
+                    continue
+                candidates.append((score, self._bounds_area(b), b, node))
+
+            if not candidates:
+                break
+
+            candidates.sort(key=lambda it: (-it[0], it[1]))
+            score, _, b, node = candidates[0]
+            x, y = self._bounds_center(b)
+            label = (node.get("text") or node.get("content_desc") or node.get("resource_id") or "")[:32]
+            self.log("info", f"    [startup-skip] tap: ({x}, {y}) score={score} text='{label}'")
+            self._tap(x, y)
+            tapped += 1
+            time.sleep(0.35)
+
+        if tapped > 0:
+            self.log("info", f"  startup skip dismissed: {tapped} tap(s)")
 
     def _go_home(self, package: str):
         """
@@ -1257,6 +1339,8 @@ NAV|100|950|首页|tab|home
             # 3) START package
             started = self.client.launch_app(package, clear_task=True)
             self.log("debug", f"go_home: launch_app({package})={started}")
+            time.sleep(0.6)
+            self._dismiss_startup_skip_buttons(max_rounds=4)
             time.sleep(step_delay)
         except Exception as e:
             self.log("error", f"go_home 异常: {e}")

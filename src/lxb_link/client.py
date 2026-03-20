@@ -1556,7 +1556,9 @@ class LXBLinkClient:
         import json
         payload = struct.pack('>B', filter_code)
 
-        response = self._cmd(CMD_LIST_APPS, payload)
+        # LIST_APPS may involve device-side label resolution and can be slower
+        # on some ROMs. Give it a larger timeout budget.
+        response = self._cmd(CMD_LIST_APPS, payload, timeout_factor=6.0)
 
         # Parse response: status[1B] + json_len[2B] + json_data
         if len(response) >= 3:
