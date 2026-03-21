@@ -6,3 +6,5 @@
 .pytest_cache/
 .DS_Store
 Thumbs.db
+map/
+map_repo/

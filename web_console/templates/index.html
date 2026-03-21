@@ -148,6 +148,7 @@
             <button data-page="command_studio" class="active">Command Studio</button>
             <button data-page="map_builder">LXB-MapBuilder</button>
             <button data-page="map_viewer">Map Viewer</button>
+            <button data-page="map_publish">Map Publish</button>
         </nav>
         <div class="right">
             <div class="conn-pill" id="global-conn-status">未连接</div>
@@ -182,7 +183,8 @@
     const pageMap = {
         command_studio: { path: '/command_studio', title: 'Command Studio' },
         map_builder: { path: '/map_builder', title: 'LXB-MapBuilder' },
-        map_viewer: { path: '/map_viewer', title: 'Map Viewer' }
+        map_viewer: { path: '/map_viewer', title: 'Map Viewer' },
+        map_publish: { path: '/map_publish', title: 'Map Publish' }
     };
 
     const nav = document.getElementById('top-nav');

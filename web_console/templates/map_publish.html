@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Publish</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 16px; font-family: "Segoe UI", sans-serif; background: #0f172a; color: #e2e8f0; }
+        .wrap { display: grid; gap: 14px; max-width: 1200px; margin: 0 auto; }
+        .card { border: 1px solid #334155; border-radius: 12px; background: #111827; padding: 14px; }
+        .title { font-size: 14px; font-weight: 600; color: #93c5fd; margin-bottom: 10px; }
+        .muted { color: #94a3b8; font-size: 12px; }
+        .row { display: grid; grid-template-columns: 170px 1fr; gap: 10px; align-items: center; margin-bottom: 8px; }
+        .row label { font-size: 12px; color: #cbd5e1; }
+        input, select, textarea {
+            width: 100%;
+            border: 1px solid #334155;
+            background: #0b1220;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 12px;
+        }
+        textarea { min-height: 70px; resize: vertical; }
+        .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        button {
+            border: 1px solid #334155;
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        button.primary { background: #2563eb; border-color: #2563eb; color: #fff; }
+        button:disabled { opacity: 0.6; cursor: not-allowed; }
+        .pill { display: inline-block; font-size: 11px; border: 1px solid #334155; border-radius: 999px; padding: 2px 8px; margin-left: 6px; }
+        .ok { color: #86efac; border-color: #14532d; background: #052e16; }
+        .warn { color: #fbbf24; border-color: #78350f; background: #451a03; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th, td { border-bottom: 1px solid #1f2937; text-align: left; padding: 8px; }
+        th { color: #cbd5e1; }
+        tr:hover { background: #0b1220; }
+        .mono { font-family: Consolas, Menlo, monospace; font-size: 11px; }
+        .result { white-space: pre-wrap; font-size: 12px; color: #cbd5e1; background: #0b1220; border: 1px solid #334155; border-radius: 8px; padding: 10px; min-height: 60px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="card">
+        <div class="title">Publish Map To Registry PR</div>
+        <div class="muted">
+            Upload a map file (json/json.gz) or pick an existing local map, then submit a PR to the registry repository.
+            Files are normalized to <span class="mono">nav_map.json.gz + meta.json + &lt;lane&gt;/index.json</span>.
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="title">Target Repository</div>
+        <div class="row">
+            <label>Publish Mode</label>
+            <select id="publish_mode">
+                <option value="local_git">local_git (no token)</option>
+                <option value="github_api">github_api (token required)</option>
+            </select>
+        </div>
+        <div class="row">
+            <label>GitHub Repo</label>
+            <input id="repo" placeholder="owner/repo">
+        </div>
+        <div class="row">
+            <label>Base Branch</label>
+            <input id="base_branch" placeholder="main">
+        </div>
+        <div class="row">
+            <label>Local Git Repo Path</label>
+            <input id="local_repo_path" placeholder="map_repo">
+        </div>
+        <div class="row">
+            <label>Lane</label>
+            <select id="lane">
+                <option value="candidates">candidates</option>
+                <option value="stable">stable</option>
+            </select>
+        </div>
+        <div class="row">
+            <label>Index Path</label>
+            <input id="index_path" placeholder="candidates/index.json">
+        </div>
+        <div class="row">
+            <label>Maps Root</label>
+            <input id="maps_root" placeholder="candidates/maps">
+        </div>
+        <div class="row" id="token_row">
+            <label>GitHub Token</label>
+            <input id="github_token" type="password" placeholder="Optional per-request token override">
+        </div>
+        <div class="muted" id="token_hint">
+            Token status:
+            <span id="token_badge" class="pill warn">loading...</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="title">Map Source</div>
+        <div class="row">
+            <label>Source Type</label>
+            <select id="source">
+                <option value="saved">Use local saved map</option>
+                <option value="upload">Upload from browser</option>
+            </select>
+        </div>
+        <div id="saved_block">
+            <div class="actions" style="margin-bottom:8px;">
+                <button id="btn_refresh_maps">Refresh Local Maps</button>
+            </div>
+            <div style="max-height:240px; overflow:auto; border:1px solid #334155; border-radius:8px;">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Package</th>
+                        <th>Map ID</th>
+                        <th>Modified</th>
+                    </tr>
+                    </thead>
+                    <tbody id="local_maps_tbody">
+                    <tr><td colspan="4" class="muted">No data</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" style="margin-top:8px;">
+                <label>Selected File</label>
+                <input id="filepath" readonly>
+            </div>
+        </div>
+        <div id="upload_block" class="hidden">
+            <div class="row">
+                <label>Map File</label>
+                <input id="map_file" type="file" accept=".json,.gz,.json.gz,application/json,application/gzip">
+            </div>
+            <div class="row">
+                <label>Meta File (optional)</label>
+                <input id="meta_file" type="file" accept=".json,.gz,.json.gz,application/json,application/gzip">
+            </div>
+        </div>
+        <div class="muted">In saved mode, sidecar <span class="mono">meta.json</span> in the same folder will be auto-loaded when available.</div>
+    </div>
+
+    <div class="card">
+        <div class="title">Publish</div>
+        <div class="muted">
+            Publish metadata is sourced from <span class="mono">meta.json</span> (saved sidecar or uploaded meta file).
+            Frontend metadata fields are disabled to avoid divergence.
+        </div>
+        <div class="actions" style="margin-top:8px;">
+            <button id="btn_submit" class="primary">Submit PR</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="title">Result</div>
+        <div id="result" class="result">Idle.</div>
+    </div>
+</div>
+
+<script>
+    const el = (id) => document.getElementById(id);
+
+    async function jfetch(url, method = 'GET', body = null) {
+        const opts = { method };
+        if (body !== null) {
+            opts.headers = { 'Content-Type': 'application/json' };
+            opts.body = JSON.stringify(body);
+        }
+        const r = await fetch(url, opts);
+        const data = await r.json();
+        if (!r.ok || !data.success) {
+            throw new Error(data.message || `HTTP ${r.status}`);
+        }
+        return data;
+    }
+
+    function setResult(msg, obj = null) {
+        const result = el('result');
+        if (!obj) {
+            result.textContent = msg;
+            return;
+        }
+        result.textContent = `${msg}\n\n${JSON.stringify(obj, null, 2)}`;
+    }
+
+    function setLoading(loading) {
+        el('btn_submit').disabled = loading;
+        el('btn_refresh_maps').disabled = loading;
+    }
+
+    function updateSourceUI() {
+        const source = el('source').value;
+        el('saved_block').classList.toggle('hidden', source !== 'saved');
+        el('upload_block').classList.toggle('hidden', source !== 'upload');
+    }
+
+    function updatePublishModeUI() {
+        const mode = el('publish_mode').value || 'local_git';
+        const tokenHidden = mode !== 'github_api';
+        el('token_row').classList.toggle('hidden', tokenHidden);
+        el('token_hint').classList.toggle('hidden', tokenHidden);
+    }
+
+    function renderLocalMaps(rows) {
+        const tbody = el('local_maps_tbody');
+        if (!rows || !rows.length) {
+            tbody.innerHTML = `<tr><td colspan="4" class="muted">No local maps.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = rows.map((row, idx) => `
+            <tr>
+                <td><button data-idx="${idx}" class="pick-map">Pick</button></td>
+                <td>${row.package || ''}</td>
+                <td class="mono">${row.map_id || ''}</td>
+                <td class="mono">${row.modified || ''}</td>
+            </tr>
+        `).join('');
+        tbody.querySelectorAll('.pick-map').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const i = Number(btn.dataset.idx || '-1');
+                const row = rows[i];
+                if (!row) return;
+                el('filepath').value = row.filepath || '';
+            });
+        });
+    }
+
+    async function loadConfig() {
+        try {
+            const res = await jfetch('/api/map_publish/config');
+            const cfg = res.data || {};
+            el('repo').value = cfg.default_repo || '';
+            el('base_branch').value = cfg.default_base_branch || 'main';
+            el('lane').value = cfg.default_lane || 'candidates';
+            el('publish_mode').value = cfg.default_publish_mode || 'local_git';
+            el('index_path').value = cfg.default_index_path || `${el('lane').value}/index.json`;
+            el('maps_root').value = cfg.default_maps_root || `${el('lane').value}/maps`;
+            el('local_repo_path').value = cfg.local_map_repo_root || '';
+            const badge = el('token_badge');
+            if (cfg.token_configured) {
+                badge.textContent = 'server token configured';
+                badge.className = 'pill ok';
+            } else {
+                badge.textContent = 'server token missing';
+                badge.className = 'pill warn';
+            }
+            updatePublishModeUI();
+        } catch (e) {
+            setResult(`Config load failed: ${e.message}`);
+        }
+    }
+
+    async function refreshLocalMaps() {
+        try {
+            const res = await jfetch('/api/maps/list');
+            renderLocalMaps(res.data || []);
+        } catch (e) {
+            setResult(`Local maps refresh failed: ${e.message}`);
+            renderLocalMaps([]);
+        }
+    }
+
+    async function submitPublish() {
+        try {
+            setLoading(true);
+            setResult('Submitting PR...');
+
+            const source = el('source').value;
+            const fd = new FormData();
+            fd.append('source', source);
+            fd.append('publish_mode', el('publish_mode').value.trim());
+            fd.append('repo', el('repo').value.trim());
+            fd.append('base_branch', el('base_branch').value.trim());
+            fd.append('local_repo_path', el('local_repo_path').value.trim());
+            fd.append('lane', el('lane').value.trim());
+            fd.append('index_path', el('index_path').value.trim());
+            fd.append('maps_root', el('maps_root').value.trim());
+            fd.append('github_token', el('github_token').value.trim());
+
+            if (source === 'saved') {
+                fd.append('filepath', el('filepath').value.trim());
+            } else {
+                const file = el('map_file').files[0];
+                if (!file) throw new Error('Please choose a map file first.');
+                fd.append('map_file', file);
+                const metaFile = el('meta_file').files[0];
+                if (metaFile) {
+                    fd.append('meta_file', metaFile);
+                }
+            }
+
+            const resp = await fetch('/api/map_publish/submit', { method: 'POST', body: fd });
+            const data = await resp.json();
+            if (!resp.ok || !data.success) {
+                throw new Error(data.message || `HTTP ${resp.status}`);
+            }
+            const out = data.data || {};
+            const prUrl = out.pr_url || '';
+            const prefix = prUrl ? `PR created: ${prUrl}` : 'PR created.';
+            setResult(prefix, out);
+        } catch (e) {
+            setResult(`Submit failed: ${e.message}`);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    el('source').addEventListener('change', updateSourceUI);
+    el('publish_mode').addEventListener('change', updatePublishModeUI);
+    el('lane').addEventListener('change', () => {
+        const lane = el('lane').value || 'candidates';
+        if (!el('index_path').value.trim() || el('index_path').value.includes('/index.json')) {
+            el('index_path').value = `${lane}/index.json`;
+        }
+        if (!el('maps_root').value.trim() || el('maps_root').value.includes('/maps')) {
+            el('maps_root').value = `${lane}/maps`;
+        }
+    });
+    el('btn_refresh_maps').addEventListener('click', refreshLocalMaps);
+    el('btn_submit').addEventListener('click', submitPublish);
+
+    updateSourceUI();
+    updatePublishModeUI();
+    loadConfig();
+    refreshLocalMaps();
+</script>
+</body>
+</html>

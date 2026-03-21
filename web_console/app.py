@@ -9,10 +9,15 @@ import os
 import base64
 import json
 import io
+import re
 import threading
 import uuid
 import gzip
 import hashlib
+import urllib.request
+import urllib.error
+import urllib.parse
+import subprocess
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Dict, Optional
@@ -889,6 +894,12 @@ def map_viewer():
     return render_template('map_viewer.html')
 
 
+@app.route('/map_publish')
+def map_publish():
+    """Map Publish page."""
+    return render_template('map_publish.html')
+
+
 @app.route('/api/connect', methods=['POST'])
 def connect():
     """Legacy connect endpoint: create/select active connection."""
@@ -1396,6 +1407,7 @@ def _is_safe_map_path(abs_path: str) -> bool:
     roots = [
         os.path.abspath(os.path.join(_project_root(), 'maps')),
         os.path.abspath(os.path.join(_project_root(), 'sample_maps')),
+        os.path.abspath(os.path.join(_project_root(), 'map_repo')),
     ]
     for root in roots:
         if abs_path == root or abs_path.startswith(root + os.sep):
@@ -1407,6 +1419,7 @@ def _find_latest_map_for_package(package_name: str) -> Optional[str]:
     import glob
 
     pkg_dir = _pkg_dir_name(package_name)
+    pkg_raw = str(package_name or '').strip()
     candidates = []
     search_roots = [
         os.path.join(_project_root(), 'maps'),
@@ -1419,6 +1432,22 @@ def _find_latest_map_for_package(package_name: str) -> Optional[str]:
                 candidates.append((os.path.getmtime(fp), fp))
             except Exception:
                 pass
+    # New local map_repo layout:
+    #   map_repo/maps/<package>/<map_id>/nav_map.json.gz
+    if pkg_raw:
+        map_repo_root = os.path.join(_project_root(), 'map_repo', 'maps')
+        patterns = [
+            os.path.join(map_repo_root, pkg_raw, '*', 'nav_map.json.gz'),
+            os.path.join(map_repo_root, pkg_raw, '*', 'nav_map.json'),
+            os.path.join(map_repo_root, pkg_dir, '*', 'nav_map.json.gz'),
+            os.path.join(map_repo_root, pkg_dir, '*', 'nav_map.json'),
+        ]
+        for pat in patterns:
+            for fp in glob.glob(pat):
+                try:
+                    candidates.append((os.path.getmtime(fp), fp))
+                except Exception:
+                    pass
     if not candidates:
         return None
     candidates.sort(key=lambda x: x[0], reverse=True)
@@ -1437,22 +1466,18 @@ def _load_map_json_text(package_name: str, data: dict) -> str:
     if map_filepath:
         abs_filepath = os.path.abspath(map_filepath)
         if not _is_safe_map_path(abs_filepath):
-            raise RuntimeError('闈炴硶 map_filepath锛氫粎鍏佽 maps/ 鎴?sample_maps/ 鐩綍')
+            raise RuntimeError('illegal map_filepath: only maps/, sample_maps/, map_repo/ are allowed')
         if not os.path.exists(abs_filepath):
-            raise RuntimeError(f'map 鏂囦欢涓嶅瓨鍦? {abs_filepath}')
-        with open(abs_filepath, 'r', encoding='utf-8') as f:
-            obj = json.load(f)
+            raise RuntimeError(f'map file not found: {abs_filepath}')
+        obj = _load_json_or_gz(abs_filepath)
         return json.dumps(obj, ensure_ascii=False)
 
     latest = _find_latest_map_for_package(package_name)
     if latest:
-        with open(latest, 'r', encoding='utf-8') as f:
-            obj = json.load(f)
+        obj = _load_json_or_gz(latest)
         return json.dumps(obj, ensure_ascii=False)
 
-    raise RuntimeError(
-        f'鏈壘鍒板彲鐢?map锛歱ackage={package_name}锛屽彲浼?map_json 鎴?map_filepath'
-    )
+    raise RuntimeError(f'no usable map found for package={package_name}, provide map_json or map_filepath')
 
 
 @app.route('/api/command/map_get_info', methods=['POST'])
@@ -1804,6 +1829,13 @@ except ImportError as e:
 exploration_result = None
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__))))
 MAP_REPO_DEFAULT_ROOT = os.path.join(PROJECT_ROOT, 'map_repo')
+MAP_PUBLISH_DEFAULT_REPO = os.getenv('MAP_PUBLISH_REPO', 'wuwei-crg/LXB-MapRepo').strip()
+MAP_PUBLISH_DEFAULT_BASE_BRANCH = os.getenv('MAP_PUBLISH_BASE_BRANCH', 'main').strip() or 'main'
+MAP_PUBLISH_DEFAULT_LANE = os.getenv('MAP_PUBLISH_DEFAULT_LANE', 'candidates').strip() or 'candidates'
+MAP_PUBLISH_DEFAULT_INDEX_PATH = os.getenv('MAP_PUBLISH_INDEX_PATH', f'{MAP_PUBLISH_DEFAULT_LANE}/index.json').strip() or f'{MAP_PUBLISH_DEFAULT_LANE}/index.json'
+MAP_PUBLISH_DEFAULT_MAPS_ROOT = os.getenv('MAP_PUBLISH_MAPS_ROOT', f'{MAP_PUBLISH_DEFAULT_LANE}/maps').strip() or f'{MAP_PUBLISH_DEFAULT_LANE}/maps'
+MAP_PUBLISH_GITHUB_TOKEN = os.getenv('MAP_PUBLISH_GITHUB_TOKEN', '').strip()
+MAP_PUBLISH_DEFAULT_MODE = os.getenv('MAP_PUBLISH_MODE', 'local_git').strip().lower() or 'local_git'
 EXPLORATION_LOCK = threading.RLock()
 QUEUE_LOCK = threading.RLock()
 QUEUE_THREAD = None
@@ -2024,6 +2056,346 @@ def _safe_path_under_root(root: str, candidate_path: str) -> str:
     if not candidate_abs.startswith(root_abs):
         raise RuntimeError('illegal_path')
     return candidate_abs
+
+
+def _new_map_publish_index(lane: str) -> dict:
+    lane_norm = _normalize_publish_lane(lane)
+    if lane_norm == 'stable':
+        return {
+            'schema_version': 'lxb.maps.stable.index.v1',
+            'maps': [],
+        }
+    return {
+        'schema_version': 'lxb.maps.candidates.index.v1',
+        'candidates': [],
+    }
+
+
+def _normalize_repo_full_name(repo: str) -> str:
+    value = str(repo or '').strip().strip('/')
+    if not value:
+        raise RuntimeError('repo is required')
+    if not re.match(r'^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$', value):
+        raise RuntimeError('invalid repo format, expected owner/repo')
+    return value
+
+
+def _safe_branch_part(value: str) -> str:
+    raw = str(value or '').strip().lower()
+    if not raw:
+        return 'unknown'
+    raw = re.sub(r'[^a-z0-9._-]+', '-', raw)
+    raw = raw.strip('-.')
+    return raw or 'unknown'
+
+
+def _normalize_publish_lane(value: str) -> str:
+    lane = str(value or '').strip().lower()
+    if lane in ('stable', 'candidates'):
+        return lane
+    return MAP_PUBLISH_DEFAULT_LANE
+
+
+def _normalize_publish_mode(value: str) -> str:
+    mode = str(value or '').strip().lower()
+    if mode in ('github_api', 'local_git'):
+        return mode
+    return MAP_PUBLISH_DEFAULT_MODE if MAP_PUBLISH_DEFAULT_MODE in ('github_api', 'local_git') else 'local_git'
+
+
+def _lane_default_index_path(lane: str) -> str:
+    return f'{lane}/index.json'
+
+
+def _lane_default_maps_root(lane: str) -> str:
+    return f'{lane}/maps'
+
+
+def _run_git(repo_root: str, args: list, timeout_sec: int = 40) -> str:
+    cmd = ['git', '-C', repo_root] + [str(a) for a in (args or [])]
+    proc = subprocess.run(
+        cmd,
+        capture_output=True,
+        text=True,
+        encoding='utf-8',
+        errors='replace',
+        timeout=timeout_sec
+    )
+    if proc.returncode != 0:
+        stderr = (proc.stderr or '').strip()
+        stdout = (proc.stdout or '').strip()
+        raise RuntimeError(f"git {' '.join(args)} failed: {stderr or stdout or f'code={proc.returncode}'}")
+    return (proc.stdout or '').strip()
+
+
+def _resolve_local_git_repo_root(value: str) -> str:
+    root = str(value or '').strip()
+    if not root:
+        root = _resolve_map_repo_root()
+    elif not os.path.isabs(root):
+        root = os.path.abspath(os.path.join(PROJECT_ROOT, root))
+    if not os.path.isdir(root):
+        raise RuntimeError(f'local git repo not found: {root}')
+    git_dir = os.path.join(root, '.git')
+    if not os.path.isdir(git_dir):
+        raise RuntimeError(f'not a git repo: {root}')
+    return root
+
+
+def _extract_repo_from_remote(remote_url: str) -> str:
+    v = str(remote_url or '').strip()
+    if not v:
+        return ''
+    # git@github.com:owner/repo.git
+    m = re.match(r'^git@github\.com:([^/]+)/([^/]+?)(?:\.git)?$', v)
+    if m:
+        return f"{m.group(1)}/{m.group(2)}"
+    # https://github.com/owner/repo.git
+    m = re.match(r'^https?://github\.com/([^/]+)/([^/]+?)(?:\.git)?/?$', v)
+    if m:
+        return f"{m.group(1)}/{m.group(2)}"
+    return ''
+
+
+def _is_gzip_bytes(data: bytes) -> bool:
+    return bool(data and len(data) >= 2 and data[0] == 0x1F and data[1] == 0x8B)
+
+
+def _load_nav_map_obj_from_bytes(raw_bytes: bytes, filename_hint: str = '') -> dict:
+    if raw_bytes is None:
+        raise RuntimeError('empty map bytes')
+    use_gzip = _is_gzip_bytes(raw_bytes) or str(filename_hint or '').lower().endswith('.gz')
+    try:
+        if use_gzip:
+            text = gzip.decompress(raw_bytes).decode('utf-8')
+        else:
+            text = raw_bytes.decode('utf-8')
+        obj = json.loads(text)
+    except Exception as e:
+        raise RuntimeError(f'invalid map json/json.gz: {e}')
+    if not isinstance(obj, dict):
+        raise RuntimeError('map content must be a JSON object')
+    return obj
+
+
+def _load_meta_obj_from_bytes(raw_bytes: bytes, filename_hint: str = '') -> dict:
+    if raw_bytes is None:
+        raise RuntimeError('empty meta bytes')
+    use_gzip = _is_gzip_bytes(raw_bytes) or str(filename_hint or '').lower().endswith('.gz')
+    try:
+        if use_gzip:
+            text = gzip.decompress(raw_bytes).decode('utf-8')
+        else:
+            text = raw_bytes.decode('utf-8')
+        obj = json.loads(text)
+    except Exception as e:
+        raise RuntimeError(f'invalid meta json/json.gz: {e}')
+    if not isinstance(obj, dict):
+        raise RuntimeError('meta content must be a JSON object')
+    return obj
+
+
+def _extract_package_from_nav_map(nav_obj: dict) -> str:
+    if not isinstance(nav_obj, dict):
+        return ''
+    for key in ('package', 'package_name', 'app_package'):
+        value = str(nav_obj.get(key) or '').strip()
+        if value:
+            return value
+    meta = nav_obj.get('meta')
+    if isinstance(meta, dict):
+        for key in ('package', 'package_name', 'app_package'):
+            value = str(meta.get(key) or '').strip()
+            if value:
+                return value
+    return ''
+
+
+def _github_api_request(method: str, api_path: str, token: str, payload: Optional[dict] = None):
+    if not token:
+        raise RuntimeError('github token is required')
+    path = str(api_path or '').strip()
+    if not path:
+        raise RuntimeError('empty github api path')
+    url = path if path.startswith('http://') or path.startswith('https://') else f'https://api.github.com{path}'
+    body = None
+    if payload is not None:
+        body = json.dumps(payload, ensure_ascii=False).encode('utf-8')
+    req = urllib.request.Request(url=url, data=body, method=str(method or 'GET').upper())
+    req.add_header('Accept', 'application/vnd.github+json')
+    req.add_header('Authorization', f'Bearer {token}')
+    req.add_header('X-GitHub-Api-Version', '2022-11-28')
+    if payload is not None:
+        req.add_header('Content-Type', 'application/json')
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            content = resp.read()
+            if not content:
+                return {}
+            return json.loads(content.decode('utf-8'))
+    except urllib.error.HTTPError as e:
+        body_text = ''
+        try:
+            body_text = (e.read() or b'').decode('utf-8', errors='replace')
+        except Exception:
+            body_text = ''
+        message = body_text
+        try:
+            body_obj = json.loads(body_text) if body_text else {}
+            message = str((body_obj or {}).get('message') or body_text or f'HTTP {e.code}')
+        except Exception:
+            message = body_text or f'HTTP {e.code}'
+        raise RuntimeError(f'github_api_http_{e.code}:{message}')
+    except Exception as e:
+        raise RuntimeError(f'github_api_error:{e}')
+
+
+def _github_get_repo(repo: str, token: str) -> dict:
+    return _github_api_request('GET', f'/repos/{repo}', token)
+
+
+def _github_get_branch_sha(repo: str, branch: str, token: str) -> str:
+    ref = _github_api_request('GET', f'/repos/{repo}/git/ref/heads/{urllib.parse.quote(branch, safe="")}', token)
+    obj = ref.get('object') if isinstance(ref, dict) else {}
+    sha = str((obj or {}).get('sha') or '').strip()
+    if not sha:
+        raise RuntimeError(f'cannot read sha for branch {branch}')
+    return sha
+
+
+def _github_create_branch(repo: str, branch: str, from_sha: str, token: str) -> None:
+    _github_api_request('POST', f'/repos/{repo}/git/refs', token, {
+        'ref': f'refs/heads/{branch}',
+        'sha': from_sha,
+    })
+
+
+def _github_get_file_json_and_sha(repo: str, path: str, ref: str, token: str):
+    encoded = urllib.parse.quote(path, safe='/')
+    query = f'/repos/{repo}/contents/{encoded}?ref={urllib.parse.quote(ref, safe="")}'
+    try:
+        data = _github_api_request('GET', query, token)
+    except RuntimeError as e:
+        msg = str(e)
+        if 'github_api_http_404' in msg:
+            return None, None
+        raise
+    if not isinstance(data, dict):
+        return None, None
+    content_b64 = str(data.get('content') or '').replace('\n', '')
+    sha = str(data.get('sha') or '').strip() or None
+    if not content_b64:
+        return None, sha
+    try:
+        decoded = base64.b64decode(content_b64).decode('utf-8')
+        obj = json.loads(decoded)
+        return obj, sha
+    except Exception:
+        return None, sha
+
+
+def _github_put_file(repo: str, path: str, branch: str, token: str, content_bytes: bytes, message: str, sha: Optional[str] = None):
+    encoded = urllib.parse.quote(path, safe='/')
+    payload = {
+        'message': message,
+        'branch': branch,
+        'content': base64.b64encode(content_bytes).decode('ascii'),
+    }
+    if sha:
+        payload['sha'] = sha
+    return _github_api_request('PUT', f'/repos/{repo}/contents/{encoded}', token, payload)
+
+
+def _github_create_pr(repo: str, title: str, head: str, base: str, body: str, token: str) -> dict:
+    return _github_api_request('POST', f'/repos/{repo}/pulls', token, {
+        'title': title,
+        'head': head,
+        'base': base,
+        'body': body,
+    })
+
+
+def _upsert_map_index(index_obj: dict, row: dict, lane: str) -> dict:
+    lane_norm = _normalize_publish_lane(lane)
+    out = dict(index_obj or {})
+    out['schema_version'] = out.get('schema_version') or (
+        'lxb.maps.stable.index.v1' if lane_norm == 'stable' else 'lxb.maps.candidates.index.v1'
+    )
+    out.pop('updated_at', None)
+    rows = list(out.get('candidates') or out.get('maps') or [])
+    pkg = str(row.get('package') or '')
+    map_id = str(row.get('map_id') or '')
+    rows = [x for x in rows if not (str(x.get('package') or '') == pkg and str(x.get('map_id') or '') == map_id)]
+    rows.append(row)
+    if lane_norm == 'stable':
+        rows.sort(key=lambda x: str(x.get('stable_at') or x.get('submitted_at') or x.get('generated_at') or ''), reverse=True)
+        out.pop('candidates', None)
+        out['maps'] = rows
+    else:
+        rows.sort(key=lambda x: str(x.get('submitted_at') or x.get('generated_at') or ''), reverse=True)
+        out.pop('maps', None)
+        out['candidates'] = rows
+    return out
+
+
+def _publish_to_repo_via_local_git(
+        local_repo_root: str,
+        base_branch: str,
+        branch_name: str,
+        map_rel_path: str,
+        meta_rel_path: str,
+        index_path: str,
+        nav_gz_bytes: bytes,
+        meta_obj: dict,
+        index_row: dict,
+        lane: str,
+        commit_prefix: str
+) -> dict:
+    status = _run_git(local_repo_root, ['status', '--porcelain'])
+    if status.strip():
+        raise RuntimeError('local git repo has uncommitted changes, please clean it first')
+
+    _run_git(local_repo_root, ['fetch', 'origin', base_branch], timeout_sec=80)
+    _run_git(local_repo_root, ['checkout', '-B', branch_name, f'origin/{base_branch}'])
+
+    map_abs = _safe_path_under_root(local_repo_root, os.path.join(local_repo_root, map_rel_path.replace('/', os.sep)))
+    meta_abs = _safe_path_under_root(local_repo_root, os.path.join(local_repo_root, meta_rel_path.replace('/', os.sep)))
+    index_abs = _safe_path_under_root(local_repo_root, os.path.join(local_repo_root, index_path.replace('/', os.sep)))
+
+    os.makedirs(os.path.dirname(map_abs), exist_ok=True)
+    os.makedirs(os.path.dirname(meta_abs), exist_ok=True)
+    os.makedirs(os.path.dirname(index_abs), exist_ok=True)
+
+    with open(map_abs, 'wb') as f:
+        f.write(nav_gz_bytes)
+
+    with open(meta_abs, 'w', encoding='utf-8') as f:
+        json.dump(meta_obj, f, ensure_ascii=False, indent=2)
+
+    if os.path.exists(index_abs):
+        try:
+            with open(index_abs, 'r', encoding='utf-8') as f:
+                index_obj = json.load(f)
+            if not isinstance(index_obj, dict):
+                index_obj = _new_map_publish_index(lane)
+        except Exception:
+            index_obj = _new_map_publish_index(lane)
+    else:
+        index_obj = _new_map_publish_index(lane)
+    next_index_obj = _upsert_map_index(index_obj, index_row, lane)
+    with open(index_abs, 'w', encoding='utf-8') as f:
+        json.dump(next_index_obj, f, ensure_ascii=False, indent=2)
+
+    _run_git(local_repo_root, ['add', '--', map_rel_path, meta_rel_path, index_path])
+    _run_git(local_repo_root, ['commit', '-m', f'{commit_prefix} local git publish'])
+    _run_git(local_repo_root, ['push', '-u', 'origin', branch_name], timeout_sec=120)
+
+    remote_url = _run_git(local_repo_root, ['remote', 'get-url', 'origin'])
+    inferred_repo = _extract_repo_from_remote(remote_url)
+    return {
+        'remote_url': remote_url,
+        'inferred_repo': inferred_repo,
+    }
 
 
 def _legacy_map_builder_disabled_response():
@@ -3149,6 +3521,333 @@ def maps_load():
     except Exception as e:
         import traceback
         return jsonify({'success': False, 'message': str(e), 'traceback': traceback.format_exc()}), 500
+
+
+@app.route('/api/map_publish/config', methods=['GET'])
+def map_publish_config():
+    try:
+        return jsonify({
+            'success': True,
+            'data': {
+                'default_repo': MAP_PUBLISH_DEFAULT_REPO,
+                'default_base_branch': MAP_PUBLISH_DEFAULT_BASE_BRANCH,
+                'default_lane': MAP_PUBLISH_DEFAULT_LANE,
+                'default_publish_mode': _normalize_publish_mode(MAP_PUBLISH_DEFAULT_MODE),
+                'default_index_path': MAP_PUBLISH_DEFAULT_INDEX_PATH,
+                'default_maps_root': MAP_PUBLISH_DEFAULT_MAPS_ROOT,
+                'token_configured': bool(MAP_PUBLISH_GITHUB_TOKEN),
+                'local_map_repo_root': _resolve_map_repo_root(),
+            }
+        })
+    except Exception as e:
+        import traceback
+        return jsonify({'success': False, 'message': str(e), 'traceback': traceback.format_exc()}), 500
+
+
+@app.route('/api/map_publish/submit', methods=['POST'])
+def map_publish_submit():
+    try:
+        is_multipart = (request.content_type or '').lower().startswith('multipart/form-data')
+        if is_multipart:
+            payload = dict(request.form or {})
+            upload_file = request.files.get('map_file')
+            upload_meta_file = request.files.get('meta_file')
+        else:
+            payload = dict(request.json or {})
+            upload_file = None
+            upload_meta_file = None
+
+        source = str(payload.get('source') or '').strip().lower()
+        if not source:
+            source = 'upload' if upload_file is not None else 'saved'
+        if source not in ('upload', 'saved'):
+            return jsonify({'success': False, 'message': 'source must be upload or saved'}), 400
+
+        publish_mode = _normalize_publish_mode(payload.get('publish_mode') or '')
+        repo = _normalize_repo_full_name(payload.get('repo') or MAP_PUBLISH_DEFAULT_REPO)
+        token = str(payload.get('github_token') or MAP_PUBLISH_GITHUB_TOKEN or '').strip()
+        if publish_mode == 'github_api' and not token:
+            return jsonify({'success': False, 'message': 'github token is required in github_api mode'}), 400
+
+        lane = _normalize_publish_lane(payload.get('lane') or MAP_PUBLISH_DEFAULT_LANE)
+        index_path = str(payload.get('index_path') or _lane_default_index_path(lane)).strip().strip('/')
+        maps_root = str(payload.get('maps_root') or _lane_default_maps_root(lane)).strip().strip('/')
+        if not index_path:
+            return jsonify({'success': False, 'message': 'index_path is required'}), 400
+        if not maps_root:
+            return jsonify({'success': False, 'message': 'maps_root is required'}), 400
+
+        base_branch = str(payload.get('base_branch') or MAP_PUBLISH_DEFAULT_BASE_BRANCH).strip() or MAP_PUBLISH_DEFAULT_BASE_BRANCH
+        if publish_mode == 'github_api':
+            repo_info = _github_get_repo(repo, token)
+            repo_default_branch = str((repo_info or {}).get('default_branch') or '').strip() or 'main'
+            base_branch = str(payload.get('base_branch') or repo_default_branch or MAP_PUBLISH_DEFAULT_BASE_BRANCH).strip()
+
+        raw_bytes = b''
+        filename_hint = ''
+        base_meta_obj = {}
+        base_meta_hint = ''
+        if source == 'upload':
+            if upload_file is None:
+                return jsonify({'success': False, 'message': 'map_file is required for upload source'}), 400
+            raw_bytes = upload_file.read() or b''
+            filename_hint = str(upload_file.filename or '')
+            if not raw_bytes:
+                return jsonify({'success': False, 'message': 'uploaded file is empty'}), 400
+            if upload_meta_file is not None:
+                meta_bytes = upload_meta_file.read() or b''
+                if meta_bytes:
+                    base_meta_obj = _load_meta_obj_from_bytes(meta_bytes, str(upload_meta_file.filename or ''))
+                    base_meta_hint = str(upload_meta_file.filename or '')
+        else:
+            filepath = str(payload.get('filepath') or '').strip()
+            if not filepath:
+                return jsonify({'success': False, 'message': 'filepath is required for saved source'}), 400
+            repo_root = _resolve_map_repo_root()
+            candidate = filepath if os.path.isabs(filepath) else os.path.join(repo_root, filepath)
+            try:
+                abs_path = _safe_path_under_root(repo_root, candidate)
+            except RuntimeError:
+                return jsonify({'success': False, 'message': 'illegal filepath'}), 403
+            if not os.path.exists(abs_path):
+                return jsonify({'success': False, 'message': 'saved map file not found'}), 404
+            with open(abs_path, 'rb') as f:
+                raw_bytes = f.read()
+            filename_hint = abs_path
+            sidecar_meta_path = os.path.join(os.path.dirname(abs_path), 'meta.json')
+            if os.path.exists(sidecar_meta_path):
+                with open(sidecar_meta_path, 'rb') as f:
+                    meta_bytes = f.read() or b''
+                if meta_bytes:
+                    base_meta_obj = _load_meta_obj_from_bytes(meta_bytes, sidecar_meta_path)
+                    base_meta_hint = sidecar_meta_path
+
+        nav_map_obj = _load_nav_map_obj_from_bytes(raw_bytes, filename_hint)
+        package_name = str(base_meta_obj.get('package') or '').strip()
+        if not package_name:
+            package_name = _extract_package_from_nav_map(nav_map_obj)
+        if not package_name:
+            return jsonify({'success': False, 'message': 'package is missing in both meta.json and map content'}), 400
+
+        package_dir = _safe_package_dir_name(package_name)
+        submitted_at = datetime.now(timezone.utc).isoformat()
+        stable_at = submitted_at if lane == 'stable' else ''
+        nav_json_text = json.dumps(nav_map_obj, ensure_ascii=False, indent=2)
+        nav_json_bytes = nav_json_text.encode('utf-8')
+        nav_gz_bytes = gzip.compress(nav_json_bytes, compresslevel=6)
+        sha256_hex = hashlib.sha256(nav_gz_bytes).hexdigest()
+        map_id = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{sha256_hex[:8]}"
+
+        map_rel_path = f"{maps_root}/{package_dir}/{map_id}/nav_map.json.gz".replace('\\', '/')
+        meta_rel_path = f"{maps_root}/{package_dir}/{map_id}/meta.json".replace('\\', '/')
+        description = str(base_meta_obj.get('description') or '').strip()
+        source_candidate_map_id = str(base_meta_obj.get('source_candidate_map_id') or '').strip()
+        generated_at = str(base_meta_obj.get('generated_at') or '').strip()
+
+        builder_obj = base_meta_obj.get('builder')
+        if not isinstance(builder_obj, dict):
+            builder_obj = {}
+        builder_obj = dict(builder_obj)
+        if not builder_obj.get('name'):
+            builder_obj['name'] = 'LXB-MapBuilder'
+        builder_obj['source_file'] = filename_hint
+        if base_meta_hint:
+            builder_obj['source_meta_file'] = base_meta_hint
+
+        config_obj = base_meta_obj.get('config')
+        if not isinstance(config_obj, dict):
+            config_obj = {}
+        stats_obj = base_meta_obj.get('stats')
+        if not isinstance(stats_obj, dict):
+            stats_obj = {}
+
+        meta_obj = {
+            'schema_version': 'lxb.map.stable.meta.v1' if lane == 'stable' else 'lxb.map.candidate.meta.v1',
+            'package': package_name,
+            'map_id': map_id,
+            'generated_at': generated_at,
+            'submitted_at': submitted_at,
+            'stable_at': stable_at,
+            'lane': lane,
+            'source': source,
+            'description': description,
+            'source_candidate_map_id': source_candidate_map_id,
+            'builder': builder_obj,
+            'config': config_obj,
+            'stats': stats_obj,
+            'artifacts': {
+                'map_path': map_rel_path,
+                'sha256': sha256_hex,
+                'bytes_gzip': len(nav_gz_bytes),
+                'bytes_json': len(nav_json_bytes),
+            },
+        }
+        index_row = {
+            'package': package_name,
+            'map_id': map_id,
+            'generated_at': generated_at,
+            'submitted_at': submitted_at,
+            'stable_at': stable_at,
+            'lane': lane,
+            'status': 'stable' if lane == 'stable' else 'pending',
+            'map_path': map_rel_path,
+            'meta_path': meta_rel_path,
+            'sha256': sha256_hex,
+            'bytes': len(nav_gz_bytes),
+            'source': source,
+            'description': description,
+            'source_candidate_map_id': source_candidate_map_id,
+        }
+
+        branch_seed = f"map-publish/{_safe_branch_part(package_name)}/{datetime.now().strftime('%Y%m%d-%H%M%S')}-{sha256_hex[:8]}"
+        branch_name = branch_seed
+        commit_prefix = f"publish(map): {package_name} {map_id}"
+
+        pr_title = ''
+        if not pr_title:
+            if lane == 'stable':
+                pr_title = f"map: add stable {package_name} ({map_id})"
+            else:
+                pr_title = f"map: add candidate {package_name} ({map_id})"
+        pr_body = (
+            f"Auto-submitted by LXB-MapBuilder publish page.\n\n"
+            f"- package: `{package_name}`\n"
+            f"- map_id: `{map_id}`\n"
+            f"- lane: `{lane}`\n"
+            f"- stable_at: `{stable_at or '-'}`\n"
+            f"- source: `{source}`\n"
+            f"- sha256: `{sha256_hex}`\n"
+            f"- map_path: `{map_rel_path}`\n"
+            f"- meta_path: `{meta_rel_path}`\n"
+            f"- index_path: `{index_path}`\n\n"
+            f"- source_candidate_map_id: `{source_candidate_map_id or '-'}`\n\n"
+            f"description:\n{description or '(none)'}\n"
+        )
+        if publish_mode == 'github_api':
+            index_obj, index_sha = _github_get_file_json_and_sha(repo, index_path, base_branch, token)
+            if not isinstance(index_obj, dict):
+                index_obj = _new_map_publish_index(lane)
+                index_sha = None
+            next_index_obj = _upsert_map_index(index_obj, index_row, lane)
+            next_index_bytes = json.dumps(next_index_obj, ensure_ascii=False, indent=2).encode('utf-8')
+            meta_bytes = json.dumps(meta_obj, ensure_ascii=False, indent=2).encode('utf-8')
+
+            base_sha = _github_get_branch_sha(repo, base_branch, token)
+            create_ok = False
+            for i in range(0, 4):
+                try_branch = branch_seed if i == 0 else f"{branch_seed}-{i}"
+                try:
+                    _github_create_branch(repo, try_branch, base_sha, token)
+                    branch_name = try_branch
+                    create_ok = True
+                    break
+                except RuntimeError as e:
+                    if 'github_api_http_422' in str(e):
+                        continue
+                    raise
+            if not create_ok:
+                raise RuntimeError('failed to create branch for publish')
+
+            _github_put_file(
+                repo=repo,
+                path=map_rel_path,
+                branch=branch_name,
+                token=token,
+                content_bytes=nav_gz_bytes,
+                message=f"{commit_prefix} add nav_map",
+                sha=None,
+            )
+            _github_put_file(
+                repo=repo,
+                path=meta_rel_path,
+                branch=branch_name,
+                token=token,
+                content_bytes=meta_bytes,
+                message=f"{commit_prefix} add meta",
+                sha=None,
+            )
+            _github_put_file(
+                repo=repo,
+                path=index_path,
+                branch=branch_name,
+                token=token,
+                content_bytes=next_index_bytes,
+                message=f"{commit_prefix} update index",
+                sha=index_sha,
+            )
+
+            pr = _github_create_pr(
+                repo=repo,
+                title=pr_title,
+                head=branch_name,
+                base=base_branch,
+                body=pr_body,
+                token=token,
+            )
+            return jsonify({
+                'success': True,
+                'message': 'publish PR created',
+                'data': {
+                    'mode': publish_mode,
+                    'repo': repo,
+                    'base_branch': base_branch,
+                    'branch': branch_name,
+                    'package': package_name,
+                    'map_id': map_id,
+                    'lane': lane,
+                    'sha256': sha256_hex,
+                    'map_path': map_rel_path,
+                    'meta_path': meta_rel_path,
+                    'index_path': index_path,
+                    'pr_number': (pr or {}).get('number'),
+                    'pr_url': (pr or {}).get('html_url'),
+                }
+            })
+
+        local_repo_root = _resolve_local_git_repo_root(payload.get('local_repo_path') or '')
+        local_out = _publish_to_repo_via_local_git(
+            local_repo_root=local_repo_root,
+            base_branch=base_branch,
+            branch_name=branch_name,
+            map_rel_path=map_rel_path,
+            meta_rel_path=meta_rel_path,
+            index_path=index_path,
+            nav_gz_bytes=nav_gz_bytes,
+            meta_obj=meta_obj,
+            index_row=index_row,
+            lane=lane,
+            commit_prefix=commit_prefix
+        )
+        resolved_repo = local_out.get('inferred_repo') or repo
+        pr_url = ''
+        if resolved_repo:
+            pr_url = f"https://github.com/{resolved_repo}/compare/{urllib.parse.quote(base_branch, safe='')}...{urllib.parse.quote(branch_name, safe='')}?expand=1"
+        return jsonify({
+            'success': True,
+            'message': 'publish branch pushed via local git',
+            'data': {
+                'mode': publish_mode,
+                'repo': resolved_repo,
+                'base_branch': base_branch,
+                'branch': branch_name,
+                'package': package_name,
+                'map_id': map_id,
+                'lane': lane,
+                'sha256': sha256_hex,
+                'map_path': map_rel_path,
+                'meta_path': meta_rel_path,
+                'index_path': index_path,
+                'local_repo_root': local_repo_root,
+                'remote_url': local_out.get('remote_url', ''),
+                'pr_url': pr_url,
+                'pr_hint': 'Open pr_url to create pull request, or run gh pr create manually.',
+            }
+        })
+    except Exception as e:
+        import traceback
+        return jsonify({'success': False, 'message': str(e), 'traceback': traceback.format_exc()}), 500
+
+
 @app.route('/api/cortex/llm_config', methods=['GET'])
 @app.route('/api/cortex/llm/config', methods=['GET'])
 def cortex_llm_config_get():
