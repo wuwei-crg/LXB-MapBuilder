@@ -1,0 +1,31 @@
+{
+  "schema_version": "lxb.map.meta.v1",
+  "package": "com.lucky.luckyclient",
+  "map_id": "20260321_031921_350b54b3",
+  "generated_at": "2026-03-20T19:19:21.909164+00:00",
+  "source": "queue_auto",
+  "builder": {
+    "name": "LXB-MapBuilder",
+    "track": "node_v5"
+  },
+  "config": {
+    "max_pages": 100,
+    "max_depth": 4,
+    "max_time_seconds": 1800,
+    "action_delay_ms": 800,
+    "explore_mode": "parallel",
+    "click_delay": 3.0
+  },
+  "stats": {
+    "total_pages": 1,
+    "total_transitions": 0,
+    "total_actions": 0,
+    "exploration_time_seconds": 49.79870629310608
+  },
+  "artifacts": {
+    "map_path": "maps/com.lucky.luckyclient/20260321_031921_350b54b3/nav_map.json.gz",
+    "sha256": "350b54b3898f2e3aebc2e747921856dba07256ed24764baf78cc5b694d170694",
+    "bytes_gzip": 479,
+    "bytes_json": 1001
+  }
+}

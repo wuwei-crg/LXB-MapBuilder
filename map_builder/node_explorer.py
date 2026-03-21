@@ -532,7 +532,7 @@ class NodeExplorer:
 
 ## 任务
 1. **异常检测**：判断当前页面是否为异常页面（人机验证、风控拦截、强制登录）。
-2. **弹窗处理**：判断是否有**遮挡型弹窗**（POPUP）需要关闭。
+2. **弹窗处理**：判断是否有**阻塞型大弹窗**（POPUP）需要关闭。
 3. **页面识别**：识别当前页面类型，给出页面ID。
 4. **导航提取**：找出页面中的**功能性跳转入口**。
    - **核心要求**：严格区分“功能结构”与“内容实例”，**只保留前者，剔除后者**。
@@ -552,6 +552,11 @@ POPUP|x|y|类型|描述
 PAGE|页面ID|页面名称|功能描述|页面内功能列表
 NAV|x|y|节点名称|类型|目标页面ID
 ```
+规则补充：
+- 如果输出了 `POPUP`，则**只能输出 POPUP 行**，**不要输出 PAGE 和 NAV**。
+- 如果没有阻塞型大弹窗，不要输出 `POPUP`。
+- `PAGE` 行通常应输出 1 条；`NAV` 行允许为 0 条。
+- 当当前页没有“有价值的功能跳转节点”时，**只输出 PAGE，不要强行输出 NAV**。
 
 ---
 
@@ -563,14 +568,31 @@ NAV|x|y|节点名称|类型|目标页面ID
 - `network_error`: 网络错误/服务器崩溃
 - `crash`: 应用崩溃/ANR
 
-## 2. POPUP 类型（遮挡型弹窗）
-**只识别**屏幕中央、遮挡主要内容、必须处理的弹窗。
-- **包括**：开屏广告(`splash_ad`)、版本更新(`update`)、青少年模式(`teen_mode`)、中央广告(`dialog`)、权限申请(`permission`)。
-- **忽略**：不影响操作的顶部/底部小横幅广告、悬浮球、小红点。
-- **坐标**：必须是**关闭/跳过/取消按钮**的位置。
+## 2. POPUP 类型（阻塞型大弹窗）
+仅在满足以下条件时输出 `POPUP`：
+- 弹窗覆盖屏幕主要区域（通常为中心大卡片或全屏遮罩）。
+- 不先关闭弹窗就无法继续执行主要交互。
+- 你能定位到明确的“关闭/跳过/取消/稍后”按钮。
+
+应输出为 `POPUP` 的典型场景：
+- 开屏广告(`splash_ad`)
+- 版本更新强提示(`update`)
+- 青少年模式/合规提示(`teen_mode`)
+- 权限阻塞弹窗(`permission`)
+- 中央模态弹窗(`dialog`)
+
+必须忽略，不要输出 `POPUP` 的场景：
+- 顶部/底部小横幅广告
+- 列表中混入的广告卡片（例如商品流中的广告卡片）
+- 小悬浮窗、悬浮球、角标、小红点、Toast
+- 不影响主流程继续执行的小提示
+
+输出坐标要求：
+- `POPUP|x|y|...` 中的 `x,y` 必须是**关闭/跳过/取消按钮**的位置，而不是弹窗中心。
 
 ## 3. NAV 类型（严格筛选逻辑）
 仅保留**APP骨架结构**，严格剔除**内容血肉**。
+如果筛选后没有满足条件的节点，输出 0 条 NAV 是正确行为。
 
 **保留 (KEEP) - 输出为 NAV**：
 - `tab`: 底部/顶部导航栏（首页、逛逛、消息、我的）。
@@ -635,12 +657,23 @@ NAV|900|950|我的|tab|profile
 候选: 更新弹窗-以后再说, 底部Tab
 </候选UI>
 <反思>
-检测到中央弹窗遮挡，优先输出POPUP，保留主要Tab作为备选。
+检测到中央阻塞弹窗；按规则只输出 POPUP，不输出 PAGE/NAV。
 </反思>
 <最终输出>
 POPUP|500|600|update|更新弹窗-以后再说
-PAGE|home|首页|首页内容|无
-NAV|100|950|首页|tab|home
+```
+
+## 示例4：无有效导航节点（允许 0 NAV）
+```
+<候选UI>
+候选: 商品卡片A, 商品卡片B, 商品卡片C, 点赞, 收藏, 分享
+</候选UI>
+<反思>
+可点击项都是内容实例或内容操作按钮，不是稳定功能入口；应全部剔除。
+</反思>
+<最终输出>
+PAGE|feed_content|内容流页面|内容浏览页|浏览内容
+</最终输出>
 ```
 
 现在开始分析。'''
@@ -1104,24 +1137,41 @@ NAV|100|950|首页|tab|home
             self.log("warn", f"    [locator] fail: dump_actions empty: {desc}")
             return False
 
-        self_hits = self._locator_self_candidates(locator, xml_nodes)
-        if len(self_hits) == 1:
-            b = self._node_bounds(self_hits[0])
+        # L1: self attributes without text (rid/desc/class)
+        self_hits_l1 = self._locator_self_candidates(locator, xml_nodes, include_text=False)
+        if len(self_hits_l1) == 1:
+            b = self._node_bounds(self_hits_l1[0])
             if b:
                 x, y = self._bounds_center(b)
-                self.log("info", f"    [locator] L1(self) hit: {desc} -> ({x}, {y})")
+                self.log("info", f"    [locator] L1(self-no-text) hit: {desc} -> ({x}, {y})")
                 self._tap(x, y)
                 return True
 
-        parent_hits = self_hits
+        # L2: add text exact-match on top of L1 candidates when text exists.
+        self_hits_l2 = self_hits_l1
+        if locator.text:
+            base_hits = self_hits_l1 if self_hits_l1 else xml_nodes
+            text_hits = self._locator_self_candidates(locator, base_hits, include_text=True)
+            if len(text_hits) == 1:
+                b = self._node_bounds(text_hits[0])
+                if b:
+                    x, y = self._bounds_center(b)
+                    self.log("info", f"    [locator] L2(self+text) hit: {desc} -> ({x}, {y})")
+                    self._tap(x, y)
+                    return True
+            # text miss: keep L1 hits for downstream parent/index stages
+            if len(text_hits) > 0:
+                self_hits_l2 = text_hits
+
+        parent_hits = self_hits_l2
         parent_rid = (locator.parent_resource_id or "").strip()
-        if len(self_hits) > 1 and parent_rid:
-            parent_hits = self._filter_by_parent_rid(self_hits, xml_nodes, parent_rid)
+        if len(parent_hits) > 1 and parent_rid:
+            parent_hits = self._filter_by_parent_rid(parent_hits, xml_nodes, parent_rid)
             if len(parent_hits) == 1:
                 b = self._node_bounds(parent_hits[0])
                 if b:
                     x, y = self._bounds_center(b)
-                    self.log("info", f"    [locator] L2(parent) hit: {desc} -> ({x}, {y})")
+                    self.log("info", f"    [locator] L3(parent) hit: {desc} -> ({x}, {y})")
                     self._tap(x, y)
                     return True
 
@@ -1146,15 +1196,15 @@ NAV|100|950|首页|tab|home
                 b = self._node_bounds(ordered[idx])
                 if b:
                     x, y = self._bounds_center(b)
-                    self.log("info", f"    [locator] L3(index) hit: {desc} -> ({x}, {y})")
+                    self.log("info", f"    [locator] L4(index) hit: {desc} -> ({x}, {y})")
                     self._tap(x, y)
                     return True
 
         self.log(
             "warn",
             f"    [locator] fail: not unique/absent: {desc}; "
-            f"l1={len(self_hits)} l2={len(parent_hits)} "
-            f"l3={locator.locator_index}/{locator.locator_count}",
+            f"l1={len(self_hits_l1)} l2={len(self_hits_l2)} l3={len(parent_hits)} "
+            f"l4={locator.locator_index}/{locator.locator_count}",
         )
         return False
 
@@ -1171,7 +1221,11 @@ NAV|100|950|首页|tab|home
             return None
         return x1, y1, x2, y2
 
-    def _locator_self_candidates(self, locator: NodeLocator, xml_nodes: List[Dict]) -> List[Dict]:
+    def _locator_self_candidates(
+            self,
+            locator: NodeLocator,
+            xml_nodes: List[Dict],
+            include_text: bool = True) -> List[Dict]:
         def norm(v: str) -> str:
             return (v or "").strip().lower()
 
@@ -1179,7 +1233,7 @@ NAV|100|950|首页|tab|home
         txt = norm(locator.text or "")
         desc = norm(locator.content_desc or "")
         cls = norm((locator.class_name or "").split(".")[-1])
-        has_identity = bool(rid or txt or desc or cls)
+        has_identity = bool(rid or desc or cls or (include_text and txt))
         if not has_identity:
             return []
 
@@ -1195,7 +1249,7 @@ NAV|100|950|首页|tab|home
             ncls = norm((node.get("class_name") or node.get("class") or "").split(".")[-1])
             if rid and nrid != rid:
                 continue
-            if txt and ntxt != txt:
+            if include_text and txt and ntxt != txt:
                 continue
             if desc and ndesc != desc:
                 continue
@@ -1226,9 +1280,9 @@ NAV|100|950|首页|tab|home
         try:
             self.log("debug", f"launch_app: {package}")
             self.client.launch_app(package, clear_task=True)
-            # Splash ads usually appear right after launch; do a fast local skip scan.
+            # Splash ads can be delayed; keep scanning in a short watch window.
             time.sleep(0.6)
-            self._dismiss_startup_skip_buttons(max_rounds=4)
+            self._dismiss_startup_skip_buttons(max_rounds=6, watch_seconds=4.0, poll_interval=0.35)
             time.sleep(1.0)
         except Exception as e:
             self.log("error", f"启动应用异常: {e}")
@@ -1279,13 +1333,27 @@ NAV|100|950|首页|tab|home
 
         return True, score
 
-    def _dismiss_startup_skip_buttons(self, max_rounds: int = 4):
-        """Fast local skip handling right after launch (before VLM)."""
+    def _dismiss_startup_skip_buttons(
+            self,
+            max_rounds: int = 4,
+            watch_seconds: float = 0.0,
+            poll_interval: float = 0.35):
+        """Startup skip handling right after launch with optional watch window."""
         tapped = 0
-        for _ in range(max(1, max_rounds)):
+        rounds = 0
+        max_rounds = max(1, int(max_rounds))
+        watch_seconds = max(0.0, float(watch_seconds))
+        poll_interval = max(0.15, float(poll_interval))
+        deadline = time.time() + watch_seconds
+
+        while True:
+            rounds += 1
             xml_nodes = self._dump_actions()
             if not xml_nodes:
-                break
+                if rounds >= max_rounds and time.time() >= deadline:
+                    break
+                time.sleep(poll_interval)
+                continue
 
             candidates: List[Tuple[int, int, Tuple[int, int, int, int], Dict]] = []
             for node in xml_nodes:
@@ -1298,7 +1366,10 @@ NAV|100|950|首页|tab|home
                 candidates.append((score, self._bounds_area(b), b, node))
 
             if not candidates:
-                break
+                if rounds >= max_rounds and time.time() >= deadline:
+                    break
+                time.sleep(poll_interval)
+                continue
 
             candidates.sort(key=lambda it: (-it[0], it[1]))
             score, _, b, node = candidates[0]
@@ -1307,7 +1378,9 @@ NAV|100|950|首页|tab|home
             self.log("info", f"    [startup-skip] tap: ({x}, {y}) score={score} text='{label}'")
             self._tap(x, y)
             tapped += 1
-            time.sleep(0.35)
+            if rounds >= max_rounds and time.time() >= deadline:
+                break
+            time.sleep(poll_interval)
 
         if tapped > 0:
             self.log("info", f"  startup skip dismissed: {tapped} tap(s)")
@@ -1340,7 +1413,7 @@ NAV|100|950|首页|tab|home
             started = self.client.launch_app(package, clear_task=True)
             self.log("debug", f"go_home: launch_app({package})={started}")
             time.sleep(0.6)
-            self._dismiss_startup_skip_buttons(max_rounds=4)
+            self._dismiss_startup_skip_buttons(max_rounds=6, watch_seconds=4.0, poll_interval=0.35)
             time.sleep(step_delay)
         except Exception as e:
             self.log("error", f"go_home 异常: {e}")
@@ -1590,6 +1663,12 @@ NAV|100|950|首页|tab|home
 
         self.log("info", f"  并发结果: {len(results)}/{num_requests} 成功, {len(all_nodes)} 个节点候选, {len(aggregated_popups)} 弹窗")
 
+        # popup 与页面导航互斥：出现 popup 时仅返回 popup，等待先消除遮挡
+        if aggregated_popups:
+            if final_page is not None or all_nodes:
+                self.log("warn", "  并发聚合中 popup 与 page/nav 同时出现，按策略仅保留 popup")
+            return None, [], aggregated_popups, None
+
         return final_page, all_nodes, aggregated_popups, None
 
     def _aggregate_popups(self, popups: List[PopupInfo], threshold: int) -> List[PopupInfo]:
@@ -1734,7 +1813,52 @@ NAV|100|950|首页|tab|home
                     except ValueError:
                         continue
 
+        popups = [p for p in popups if self._is_blocking_popup_candidate(p)]
+
+        if block_info:
+            return None, [], [], block_info
+
+        # Strong guard: popup pages are treated as blocking context.
+        # Do not keep PAGE/NAV when popup is detected.
+        if popups:
+            if page_info is not None or nav_nodes:
+                self.log("warn", f"VLM returned POPUP with PAGE/NAV; dropping PAGE/NAV and keeping POPUP only ({len(popups)})")
+            return None, [], popups, None
+
         return page_info, nav_nodes, popups, block_info
+
+    def _is_blocking_popup_candidate(self, popup: PopupInfo) -> bool:
+        popup_type = (popup.popup_type or "").strip().lower()
+        description = (popup.description or "").strip().lower()
+
+        blocking_types = {
+            "splash_ad", "update", "teen_mode", "permission", "dialog",
+            "login_gate", "force_login", "risk_control", "captcha",
+            "network_error", "privacy", "agreement",
+        }
+        non_blocking_types = {
+            "banner", "embedded_ad", "card_ad", "floating_ad",
+            "toast", "snackbar", "tooltip",
+        }
+        non_blocking_keywords = (
+            "banner", "embedded", "feed ad", "card ad", "floating", "tooltip",
+            "small ad", "tiny ad", "toast", "snackbar", "red dot",
+            "小广告", "卡片广告", "嵌入广告", "悬浮", "红点", "气泡提示",
+        )
+        blocking_keywords = (
+            "popup", "modal", "blocking", "dismiss", "close", "skip", "cancel",
+            "update", "permission", "teen", "captcha", "risk", "login",
+            "弹窗", "遮挡", "阻塞", "关闭", "跳过", "取消", "同意", "允许",
+            "更新", "青少年", "验证", "风控", "登录",
+        )
+
+        if popup_type in non_blocking_types:
+            return False
+        if any(k in description for k in non_blocking_keywords):
+            return False
+        if popup_type in blocking_types:
+            return True
+        return any(k in description for k in blocking_keywords)
 
     def _match_xml_node_with_reason(self, vlm_x: int, vlm_y: int, vlm_desc: str, xml_nodes: List[Dict]) -> Tuple[Optional[Dict], str]:
         """
@@ -1796,25 +1920,54 @@ NAV|100|950|首页|tab|home
             bounds = xml_node.get("bounds", [0, 0, 0, 0])
             if len(bounds) >= 4 and any(b > 0 for b in bounds):
                 parent_rid = self._find_parent_resource_id(xml_node, xml_nodes)
-                self_peers = self._find_locator_peers(xml_node, xml_nodes, parent_rid=None, include_parent=False)
+                # L1: identity without text (rid/desc/class)
+                self_peers = self._find_locator_peers(
+                    xml_node, xml_nodes, parent_rid=None, include_parent=False, include_text=False
+                )
                 peer_count = len(self_peers)
                 if peer_count == 0:
                     locator_reason = "self_no_peer"
                 elif peer_count == 1:
-                    locator_reason = "l1_self_unique"
+                    locator_reason = "l1_self_no_text_unique"
                 else:
-                    parent_peers: List[Dict] = []
-                    if parent_rid:
-                        parent_peers = self._find_locator_peers(
-                            xml_node, xml_nodes, parent_rid=parent_rid, include_parent=True
+                    # L2: text refinement (optional). If no text-hit, keep L1 peers.
+                    base_peers = self_peers
+                    use_text_identity = False
+                    text_val = self._norm_str(xml_node.get("text") or "")
+                    if text_val:
+                        text_peers = self._find_locator_peers(
+                            xml_node, xml_nodes, parent_rid=None, include_parent=False, include_text=True
                         )
+                        if len(text_peers) == 1:
+                            base_peers = text_peers
+                            use_text_identity = True
+                            peer_count = 1
+                            locator_reason = "l2_text_unique"
+                        elif len(text_peers) > 0:
+                            base_peers = text_peers
+                            use_text_identity = True
+                            peer_count = len(base_peers)
+                            locator_reason = f"l2_text_refined({peer_count})"
+                        else:
+                            locator_reason = "l2_text_miss_keep_l1"
+
+                    # L3: parent refinement on current peer set.
+                    parent_peers: List[Dict] = []
+                    if parent_rid and len(base_peers) > 1:
+                        target_pid = self._norm_str((parent_rid or "").split("/")[-1])
+                        for n in base_peers:
+                            pr = self._find_parent_resource_id(n, xml_nodes)
+                            if self._norm_str((pr or "").split("/")[-1]) == target_pid:
+                                parent_peers.append(n)
                     if len(parent_peers) == 1:
                         use_parent = True
+                        base_peers = parent_peers
                         peer_count = 1
-                        locator_reason = "l2_parent_unique"
+                        locator_reason = "l3_parent_unique"
                     else:
-                        base_peers = parent_peers if parent_peers else self_peers
-                        use_parent = bool(parent_peers)
+                        if len(parent_peers) > 0:
+                            base_peers = parent_peers
+                            use_parent = True
                         peer_count = len(base_peers)
                         locator_index, locator_count = self._find_locator_peer_index(
                             xml_node,
@@ -1822,13 +1975,14 @@ NAV|100|950|首页|tab|home
                             parent_rid=parent_rid if use_parent else None,
                             peers=base_peers,
                             include_parent=use_parent,
+                            include_text=use_text_identity,
                         )
                         if peer_count > 3:
                             locator_reason = f"peer_gt3({peer_count})"
                         elif locator_index is None:
                             locator_reason = f"peer_{peer_count}_index_unresolved"
                         else:
-                            locator_reason = f"l3_index_assigned({locator_index}/{locator_count})"
+                            locator_reason = f"l4_index_assigned({locator_index}/{locator_count})"
             else:
                 locator_reason = "invalid_bounds"
 
@@ -1866,15 +2020,21 @@ NAV|100|950|首页|tab|home
     def _norm_str(v: str) -> str:
         return (v or "").strip().lower()
 
-    def _locator_identity_tuple(self, node: Dict, parent_rid: Optional[str], include_parent: bool = False) -> Tuple[str, ...]:
+    def _locator_identity_tuple(
+            self,
+            node: Dict,
+            parent_rid: Optional[str],
+            include_parent: bool = False,
+            include_text: bool = True) -> Tuple[str, ...]:
         rid = self._norm_str((node.get("resource_id") or "").split("/")[-1])
         txt = self._norm_str(node.get("text") or "")
         desc = self._norm_str(node.get("content_desc") or "")
         cls = self._norm_str((node.get("class_name") or node.get("class") or "").split(".")[-1])
+        text_key = txt if include_text else "__text_ignored__"
         if not include_parent:
-            return rid, txt, desc, cls
+            return rid, text_key, desc, cls
         pid = self._norm_str((parent_rid or "").split("/")[-1])
-        return rid, txt, desc, cls, pid
+        return rid, text_key, desc, cls, pid
 
     def _find_locator_peers(
         self,
@@ -1882,8 +2042,11 @@ NAV|100|950|首页|tab|home
         xml_nodes: List[Dict],
         parent_rid: Optional[str],
         include_parent: bool = False,
+        include_text: bool = True,
     ) -> List[Dict]:
-        target = self._locator_identity_tuple(child_node, parent_rid, include_parent=include_parent)
+        target = self._locator_identity_tuple(
+            child_node, parent_rid, include_parent=include_parent, include_text=include_text
+        )
         peers: List[Dict] = []
         for node in xml_nodes:
             if not node.get("clickable", False):
@@ -1892,7 +2055,8 @@ NAV|100|950|首页|tab|home
             if len(b) < 4:
                 continue
             pr = self._find_parent_resource_id(node, xml_nodes)
-            if self._locator_identity_tuple(node, pr, include_parent=include_parent) == target:
+            if self._locator_identity_tuple(
+                    node, pr, include_parent=include_parent, include_text=include_text) == target:
                 peers.append(node)
         return peers
 
@@ -1903,13 +2067,14 @@ NAV|100|950|首页|tab|home
         parent_rid: Optional[str],
         peers: Optional[List[Dict]] = None,
         include_parent: bool = False,
+        include_text: bool = True,
     ) -> Tuple[Optional[int], Optional[int]]:
         """
         基于“共享同一 locator”的节点集合计算 index/count。
         仅在 2<=count<=3 时返回（index, count），否则返回 (None, None)。
         """
         peers = peers if peers is not None else self._find_locator_peers(
-            child_node, xml_nodes, parent_rid, include_parent=include_parent
+            child_node, xml_nodes, parent_rid, include_parent=include_parent, include_text=include_text
         )
 
         count = len(peers)
@@ -2383,6 +2548,26 @@ NAV|100|950|首页|tab|home
                     block_info.trigger_node = task.node_name
                     self.nav_map.add_block(block_info)
                     # 并行模式下无法重新探索，只记录
+                    continue
+
+                # 新弹窗优先：只处理弹窗，不记录页面/导航结果
+                if new_popups:
+                    self.log("info", f"  [VLM完成] {task.node_name} → 检测到 {len(new_popups)} 个新弹窗，记录后重试当前节点")
+                    self._handle_popups(new_popups, task.xml_nodes, task.from_page, dismiss=False)
+                    if task.locator:
+                        self.explored_keys.discard(task.node_key)
+                        retry_task = ExploreTask(
+                            locator=task.locator,
+                            path=task.path[:-1] if task.path else [],
+                            name=task.node_name,
+                            node_type=task.node_type or "jump",
+                            target_page=task.expected_target or "",
+                            from_page=task.from_page,
+                            from_activity=task.from_activity,
+                            depth=task.depth + 1,
+                        )
+                        if retry_task.depth < self.config.max_depth + 2:
+                            self._enqueue_task(retry_task, front=True)
                     continue
 
                 # 确定目标页面ID

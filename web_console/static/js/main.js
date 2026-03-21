@@ -161,6 +161,15 @@ function handleCommand(cmd) {
             dumpActions();
             break;
 
+        case 'trace_pull': {
+            const input = document.getElementById('trace-max-lines');
+            const parsed = parseInt((input && input.value) || '400', 10);
+            const maxLines = Number.isFinite(parsed) ? Math.max(1, Math.min(2000, parsed)) : 400;
+            if (input) input.value = String(maxLines);
+            sendCommand('/api/command/cortex_trace_pull', { max_lines: maxLines }, `TRACE_PULL max_lines=${maxLines}`);
+            break;
+        }
+
         // =============================================================
         // Lifecycle Layer
         // =============================================================

@@ -1,0 +1,31 @@
+{
+  "schema_version": "lxb.map.meta.v1",
+  "package": "com.jingdong.app.mall",
+  "map_id": "20260321_031721_fc49a075",
+  "generated_at": "2026-03-20T19:17:21.339232+00:00",
+  "source": "queue_auto",
+  "builder": {
+    "name": "LXB-MapBuilder",
+    "track": "node_v5"
+  },
+  "config": {
+    "max_pages": 100,
+    "max_depth": 4,
+    "max_time_seconds": 1800,
+    "action_delay_ms": 800,
+    "explore_mode": "parallel",
+    "click_delay": 3.0
+  },
+  "stats": {
+    "total_pages": 31,
+    "total_transitions": 33,
+    "total_actions": 155,
+    "exploration_time_seconds": 1816.008001089096
+  },
+  "artifacts": {
+    "map_path": "maps/com.jingdong.app.mall/20260321_031721_fc49a075/nav_map.json.gz",
+    "sha256": "fc49a075185af4b187d4758786f8bd9e2183c29d75df51fb8d06a39e1b27b2f4",
+    "bytes_gzip": 3907,
+    "bytes_json": 24888
+  }
+}

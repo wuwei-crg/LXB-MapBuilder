@@ -1,7 +1,6 @@
-"""
+﻿"""
 LXB Web Console - Flask Backend
-用于可视化调试 LXB-Link 协议的 Web 控制台
-"""
+鐢ㄤ簬鍙鍖栬皟璇?LXB-Link 鍗忚鐨?Web 鎺у埗鍙?"""
 
 from flask import Flask, render_template, request, jsonify, Response
 from flask_cors import CORS
@@ -12,25 +11,27 @@ import json
 import io
 import threading
 import uuid
+import gzip
+import hashlib
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Dict, Optional
 
-# 尝试加载 python-dotenv (如果存在)
+# 灏濊瘯鍔犺浇 python-dotenv (濡傛灉瀛樺湪)
 try:
     from dotenv import load_dotenv
-    # 加载 .env 文件
+    # 鍔犺浇 .env 鏂囦欢
     env_path = os.path.join(os.path.dirname(__file__), '..', '.env')
     load_dotenv(env_path)
 except ImportError:
     pass
 
-# 设置 HF_TOKEN 环境变量 (用于 Hugging Face 模型下载)
+# 璁剧疆 HF_TOKEN 鐜鍙橀噺 (鐢ㄤ簬 Hugging Face 妯″瀷涓嬭浇)
 if os.getenv('HF_TOKEN'):
     os.environ['HF_TOKEN'] = os.getenv('HF_TOKEN')
-    print("[app.py] HF_TOKEN 已设置")
+    print("[app.py] HF_TOKEN is configured")
 
-# 添加项目根目录到 Python 路径
+# 娣诲姞椤圭洰鏍圭洰褰曞埌 Python 璺緞
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.lxb_link.client import LXBLinkClient
@@ -43,9 +44,9 @@ from src.lxb_link.constants import (
 )
 
 app = Flask(__name__)
-CORS(app)  # 允许跨域请求
+CORS(app)  # 鍏佽璺ㄥ煙璇锋眰
 
-# 全局客户端实例
+# Global client instance
 client = None
 connection_info = {
     'connected': False,
@@ -399,7 +400,7 @@ def _build_llm_complete(config: dict):
     api_key = (config.get('api_key') or '').strip()
     model_name = (config.get('model_name') or '').strip()
     if not api_base_url or not api_key or not model_name:
-        raise ValueError('LLM 配置不完整：api_base_url / api_key / model_name 必填')
+        raise ValueError('LLM 閰嶇疆涓嶅畬鏁达細api_base_url / api_key / model_name 蹇呭～')
 
     client = OpenAI(
         base_url=api_base_url,
@@ -435,7 +436,7 @@ def _build_llm_complete_fsm(config: dict):
     api_key = (config.get('api_key') or '').strip()
     model_name = (config.get('model_name') or '').strip()
     if not api_base_url or not api_key or not model_name:
-        raise ValueError('LLM 配置不完整：api_base_url / api_key / model_name 必填')
+        raise ValueError('LLM 閰嶇疆涓嶅畬鏁达細api_base_url / api_key / model_name 蹇呭～')
 
     client = OpenAI(
         base_url=api_base_url,
@@ -508,7 +509,7 @@ def _build_llm_complete_with_image(config: dict):
     api_key = (config.get('api_key') or '').strip()
     model_name = (config.get('model_name') or '').strip()
     if not api_base_url or not api_key or not model_name:
-        raise ValueError('LLM 配置不完整：api_base_url / api_key / model_name 必填')
+        raise ValueError('LLM 閰嶇疆涓嶅畬鏁达細api_base_url / api_key / model_name 蹇呭～')
 
     client = OpenAI(
         base_url=api_base_url,
@@ -604,18 +605,18 @@ def _build_llm_task_summary(config: dict):
         state = str(run_result.get('state') or '')
         reason = str(run_result.get('reason') or '')
         prompt = "\n".join([
-            "请根据任务执行信息，输出一段简洁任务总结。",
-            "要求：",
-            "1) 只输出总结正文，不要加标题。",
-            "2) 如果任务成功，优先回答用户真正关心的结果内容。",
-            "3) 如果任务失败，说明失败阶段和可能原因。",
-            "4) 中文输出，2~6句。",
-            f"用户意图: {user_task}",
-            f"任务状态: {status}",
-            f"结束状态机: {state}",
-            f"失败原因: {reason}",
-            f"路由轨迹(JSON): {json.dumps(route_trace, ensure_ascii=False)}",
-            f"执行历史(JSON): {json.dumps(llm_hist, ensure_ascii=False)}",
+            "Generate a concise task summary from the execution signals below.",
+            "Requirements:",
+            "1) Output summary body only (no title).",
+            "2) If successful, focus on user-visible outcome.",
+            "3) If failed, state phase and likely reason.",
+            "4) Keep it concise.",
+            f"User task: {user_task}",
+            f"Task status: {status}",
+            f"Final FSM state: {state}",
+            f"Failure reason: {reason}",
+            f"Route trace (JSON): {json.dumps(route_trace, ensure_ascii=False)}",
+            f"Execution history (JSON): {json.dumps(llm_hist, ensure_ascii=False)}",
         ])
         response = client.chat.completions.create(
             model=model_name,
@@ -623,7 +624,7 @@ def _build_llm_task_summary(config: dict):
             messages=[
                 {
                     "role": "system",
-                    "content": "你是移动自动化任务总结助手，只根据给定信息生成事实性总结，不要臆测。",
+                    "content": "You are a mobile automation summarizer. Use only provided facts and do not speculate.",
                 },
                 {"role": "user", "content": prompt},
             ],
@@ -649,9 +650,10 @@ def _fallback_task_summary(user_task: str, run_result: dict) -> str:
             if len(observations) >= 2:
                 break
         if observations:
-            return f"任务已完成。针对“{user_task}”，最后观察到：{'；'.join(reversed(observations))}。"
-        return f"任务已完成。已按意图“{user_task}”执行结束。"
-    return f"任务未完成。结束于状态 {state}，原因：{reason or 'unknown'}。"
+            obs_text = "; ".join(reversed(observations))
+            return f'Task completed for "{user_task}". Final observations: {obs_text}.'
+        return f'Task completed for "{user_task}".'
+    return f'Task not completed. Ended at state={state}, reason={reason or "unknown"}.'
 
 
 def _extract_json_object(text: str) -> dict:
@@ -865,31 +867,31 @@ class _FSMPlannerBridge:
 
 @app.route('/')
 def index():
-    """控制台导航壳页面（内部切换子页面）"""
+    """Main dashboard page."""
     return render_template('index.html')
 
 
 @app.route('/command_studio')
 def command_studio():
-    """指令调试页面"""
+    """鎸囦护璋冭瘯椤甸潰"""
     return render_template('command_studio.html')
 
 
 @app.route('/map_builder')
 def map_builder():
-    """Map Builder 页面"""
+    """Map Builder 椤甸潰"""
     return render_template('map_builder.html')
 
 
 @app.route('/map_viewer')
 def map_viewer():
-    """Map Viewer 页面"""
+    """Map Viewer 椤甸潰"""
     return render_template('map_viewer.html')
 
 
 @app.route('/api/connect', methods=['POST'])
 def connect():
-    """兼容旧接口：创建连接并选为当前连接。"""
+    """Legacy connect endpoint: create/select active connection."""
     data = request.json or {}
     host = (data.get('host') or '192.168.1.100').strip()
     port = int(data.get('port') or 12345)
@@ -897,26 +899,26 @@ def connect():
         existed = _find_connection_by_host_port(host, port)
         if existed:
             _select_connection(existed.connection_id)
-            return jsonify({'success': True, 'message': f'已切换到 {host}:{port}', 'connection': _connection_public(existed)})
+            return jsonify({'success': True, 'message': f'宸插垏鎹㈠埌 {host}:{port}', 'connection': _connection_public(existed)})
         rec = _create_connection(host, port, source='manual', set_current=True)
-        return jsonify({'success': True, 'message': f'成功连接到 {host}:{port}', 'connection': _connection_public(rec)})
+        return jsonify({'success': True, 'message': f'鎴愬姛杩炴帴鍒?{host}:{port}', 'connection': _connection_public(rec)})
     except Exception as e:
-        return jsonify({'success': False, 'message': f'连接失败: {str(e)}'}), 500
+        return jsonify({'success': False, 'message': f'杩炴帴澶辫触: {str(e)}'}), 500
 
 
 @app.route('/api/disconnect', methods=['POST'])
 def disconnect():
-    """兼容旧接口：断开当前选中连接。"""
+    """Legacy disconnect endpoint: disconnect current active connection."""
     try:
         _disconnect_connection(None)
-        return jsonify({'success': True, 'message': '已断开连接'})
+        return jsonify({'success': True, 'message': '宸叉柇寮€杩炴帴'})
     except Exception as e:
-        return jsonify({'success': False, 'message': f'断开失败: {str(e)}'}), 500
+        return jsonify({'success': False, 'message': f'鏂紑澶辫触: {str(e)}'}), 500
 
 
 @app.route('/api/status', methods=['GET'])
 def status():
-    """获取当前连接状态及连接汇总。"""
+    """Get current connection and pool status."""
     _sync_connection_info()
     with CONNECTIONS_LOCK:
         connections = [_connection_public(x) for x in CONNECTIONS.values()]
@@ -980,7 +982,7 @@ def connections_disconnect(connection_id):
 
 @app.route('/api/command/handshake', methods=['POST'])
 def cmd_handshake():
-    """发送握手命令"""
+    """Send handshake command."""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -989,7 +991,7 @@ def cmd_handshake():
         response = client.handshake()
         return jsonify({
             'success': True,
-            'message': '握手成功',
+            'message': '鎻℃墜鎴愬姛',
             'response': {
                 'length': len(response)
             }
@@ -1000,7 +1002,7 @@ def cmd_handshake():
 
 @app.route('/api/command/heartbeat', methods=['POST'])
 def cmd_heartbeat():
-    """发送 HEARTBEAT 命令"""
+    """鍙戦€?HEARTBEAT 鍛戒护"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1009,7 +1011,7 @@ def cmd_heartbeat():
         response = client.heartbeat()
         return jsonify({
             'success': True,
-            'message': '心跳成功',
+            'message': '蹇冭烦鎴愬姛',
             'response': {
                 'length': len(response),
                 'data': list(response) if response else []
@@ -1025,7 +1027,7 @@ def cmd_heartbeat():
 
 @app.route('/api/command/tap', methods=['POST'])
 def cmd_tap():
-    """发送 TAP 命令"""
+    """鍙戦€?TAP 鍛戒护"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1038,7 +1040,7 @@ def cmd_tap():
         response = client.tap(x, y)
         return jsonify({
             'success': True,
-            'message': f'TAP ({x}, {y}) 成功',
+            'message': f'TAP ({x}, {y}) 鎴愬姛',
             'response': {
                 'length': len(response),
                 'data': list(response) if response else []
@@ -1050,7 +1052,7 @@ def cmd_tap():
 
 @app.route('/api/command/swipe', methods=['POST'])
 def cmd_swipe():
-    """发送 SWIPE 命令"""
+    """鍙戦€?SWIPE 鍛戒护"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1066,7 +1068,7 @@ def cmd_swipe():
         response = client.swipe(x1, y1, x2, y2, duration)
         return jsonify({
             'success': True,
-            'message': f'SWIPE ({x1},{y1})→({x2},{y2}) 成功',
+            'message': f'SWIPE ({x1},{y1})鈫?{x2},{y2}) 鎴愬姛',
             'response': {
                 'length': len(response),
                 'data': list(response) if response else []
@@ -1078,7 +1080,7 @@ def cmd_swipe():
 
 @app.route('/api/command/long_press', methods=['POST'])
 def cmd_long_press():
-    """发送 LONG_PRESS 命令"""
+    """鍙戦€?LONG_PRESS 鍛戒护"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1092,7 +1094,7 @@ def cmd_long_press():
         response = client.long_press(x, y, duration)
         return jsonify({
             'success': True,
-            'message': f'LONG_PRESS ({x}, {y}) {duration}ms 成功',
+            'message': f'LONG_PRESS ({x}, {y}) {duration}ms 鎴愬姛',
             'response': {
                 'length': len(response),
                 'data': list(response) if response else []
@@ -1104,7 +1106,7 @@ def cmd_long_press():
 
 @app.route('/api/command/unlock', methods=['POST'])
 def cmd_unlock():
-    """发送 UNLOCK 命令"""
+    """鍙戦€?UNLOCK 鍛戒护"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1113,7 +1115,7 @@ def cmd_unlock():
         success = client.unlock()
         return jsonify({
             'success': success,
-            'message': '解锁成功' if success else '解锁失败'
+            'message': '瑙ｉ攣鎴愬姛' if success else '瑙ｉ攣澶辫触'
         })
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
@@ -1125,7 +1127,7 @@ def cmd_unlock():
 
 @app.route('/api/command/input_text', methods=['POST'])
 def cmd_input_text():
-    """发送 INPUT_TEXT 命令"""
+    """鍙戦€?INPUT_TEXT 鍛戒护"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1143,7 +1145,7 @@ def cmd_input_text():
         )
         return jsonify({
             'success': status == 1,
-            'message': f'输入文本 "{text}" 成功' if status == 1 else '输入文本失败',
+            'message': f'杈撳叆鏂囨湰 "{text}" 鎴愬姛' if status == 1 else '杈撳叆鏂囨湰澶辫触',
             'response': {
                 'status': status,
                 'method': actual_method
@@ -1155,7 +1157,7 @@ def cmd_input_text():
 
 @app.route('/api/command/key_event', methods=['POST'])
 def cmd_key_event():
-    """发送 KEY_EVENT 命令"""
+    """鍙戦€?KEY_EVENT 鍛戒护"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1164,7 +1166,7 @@ def cmd_key_event():
     keycode = data.get('keycode', KEY_BACK)
     action = data.get('action', 2)  # 2 = CLICK
 
-    # 支持按名称指定按键
+    # 鏀寔鎸夊悕绉版寚瀹氭寜閿?
     key_map = {
         'home': KEY_HOME,
         'back': KEY_BACK,
@@ -1179,7 +1181,7 @@ def cmd_key_event():
         response = client.key_event(keycode, action)
         return jsonify({
             'success': True,
-            'message': f'KEY_EVENT keycode={keycode} 成功',
+            'message': f'KEY_EVENT keycode={keycode} 鎴愬姛',
             'response': {
                 'length': len(response) if response else 0
             }
@@ -1194,7 +1196,7 @@ def cmd_key_event():
 
 @app.route('/api/command/get_activity', methods=['POST'])
 def cmd_get_activity():
-    """发送 GET_ACTIVITY 命令"""
+    """鍙戦€?GET_ACTIVITY 鍛戒护"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1203,7 +1205,7 @@ def cmd_get_activity():
         success, package_name, activity_name = client.get_activity()
         return jsonify({
             'success': success,
-            'message': '获取 Activity 成功' if success else '获取 Activity 失败',
+            'message': '鑾峰彇 Activity 鎴愬姛' if success else '鑾峰彇 Activity 澶辫触',
             'response': {
                 'package': package_name,
                 'activity': activity_name
@@ -1215,17 +1217,17 @@ def cmd_get_activity():
 
 @app.route('/api/command/get_screen_state', methods=['POST'])
 def cmd_get_screen_state():
-    """发送 GET_SCREEN_STATE 命令"""
+    """Send GET_SCREEN_STATE command."""
     error_response = _require_client_response()
     if error_response:
         return error_response
 
     try:
         success, state = client.get_screen_state()
-        state_names = {0: '关闭', 1: '亮屏已解锁', 2: '亮屏已锁定'}
+        state_names = {0: 'screen_off', 1: 'screen_on_unlocked', 2: 'screen_on_locked'}
         return jsonify({
             'success': success,
-            'message': f'屏幕状态: {state_names.get(state, "未知")}',
+            'message': f'screen state: {state_names.get(state, "unknown")}',
             'response': {
                 'state': state,
                 'state_name': state_names.get(state, 'unknown')
@@ -1237,7 +1239,7 @@ def cmd_get_screen_state():
 
 @app.route('/api/command/get_screen_size', methods=['POST'])
 def cmd_get_screen_size():
-    """发送 GET_SCREEN_SIZE 命令"""
+    """鍙戦€?GET_SCREEN_SIZE 鍛戒护"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1246,7 +1248,7 @@ def cmd_get_screen_size():
         success, width, height, density = client.get_screen_size()
         return jsonify({
             'success': success,
-            'message': f'屏幕尺寸: {width}x{height} @{density}dpi',
+            'message': f'灞忓箷灏哄: {width}x{height} @{density}dpi',
             'response': {
                 'width': width,
                 'height': height,
@@ -1279,7 +1281,7 @@ def cmd_touch_mode():
 
 @app.route('/api/command/find_node', methods=['POST'])
 def cmd_find_node():
-    """发送 FIND_NODE 命令"""
+    """鍙戦€?FIND_NODE 鍛戒护"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1297,7 +1299,7 @@ def cmd_find_node():
         )
         return jsonify({
             'success': status == 1,
-            'message': f'找到 {len(results)} 个节点' if status == 1 else '未找到节点',
+            'message': f'found {len(results)} nodes' if status == 1 else 'node not found',
             'response': {
                 'status': status,
                 'count': len(results),
@@ -1310,27 +1312,26 @@ def cmd_find_node():
 
 @app.route('/api/command/dump_hierarchy', methods=['POST'])
 def cmd_dump_hierarchy():
-    """发送 DUMP_HIERARCHY 命令，获取完整 UI 层级结构"""
+    """鍙戦€?DUMP_HIERARCHY 鍛戒护锛岃幏鍙栧畬鏁?UI 灞傜骇缁撴瀯"""
     error_response = _require_client_response()
     if error_response:
         return error_response
 
     data = request.json
-    max_depth = data.get('max_depth', 0)  # 0 = 无限制
-
+    max_depth = data.get('max_depth', 0)  # 0 = 鏃犻檺鍒?
     try:
         hierarchy = client.dump_hierarchy(max_depth=max_depth)
         node_count = hierarchy.get('node_count', 0)
         nodes = hierarchy.get('nodes', [])
 
-        # 统计可交互节点
+        # Count interactive nodes
         clickable_count = sum(1 for n in nodes if n.get('clickable', False))
         editable_count = sum(1 for n in nodes if n.get('editable', False))
         scrollable_count = sum(1 for n in nodes if n.get('scrollable', False))
 
         return jsonify({
             'success': True,
-            'message': f'获取 UI 树成功: {node_count} 个节点',
+            'message': f'UI tree fetched: {node_count} nodes',
             'response': {
                 'version': hierarchy.get('version', 1),
                 'node_count': node_count,
@@ -1346,7 +1347,7 @@ def cmd_dump_hierarchy():
 
 @app.route('/api/command/dump_actions', methods=['POST'])
 def cmd_dump_actions():
-    """发送 DUMP_ACTIONS 命令，获取可交互节点 (用于路径规划)"""
+    """鍙戦€?DUMP_ACTIONS 鍛戒护锛岃幏鍙栧彲浜や簰鑺傜偣 (鐢ㄤ簬璺緞瑙勫垝)"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1356,7 +1357,7 @@ def cmd_dump_actions():
         node_count = actions.get('node_count', 0)
         nodes = actions.get('nodes', [])
 
-        # 统计各类型节点
+        # Count node categories
         clickable_count = sum(1 for n in nodes if n.get('clickable', False))
         editable_count = sum(1 for n in nodes if n.get('editable', False))
         scrollable_count = sum(1 for n in nodes if n.get('scrollable', False))
@@ -1364,7 +1365,7 @@ def cmd_dump_actions():
 
         return jsonify({
             'success': True,
-            'message': f'获取可交互节点成功: {node_count} 个节点',
+            'message': f'actionable nodes fetched: {node_count}',
             'response': {
                 'version': actions.get('version', 1),
                 'node_count': node_count,
@@ -1436,9 +1437,9 @@ def _load_map_json_text(package_name: str, data: dict) -> str:
     if map_filepath:
         abs_filepath = os.path.abspath(map_filepath)
         if not _is_safe_map_path(abs_filepath):
-            raise RuntimeError('非法 map_filepath：仅允许 maps/ 或 sample_maps/ 目录')
+            raise RuntimeError('闈炴硶 map_filepath锛氫粎鍏佽 maps/ 鎴?sample_maps/ 鐩綍')
         if not os.path.exists(abs_filepath):
-            raise RuntimeError(f'map 文件不存在: {abs_filepath}')
+            raise RuntimeError(f'map 鏂囦欢涓嶅瓨鍦? {abs_filepath}')
         with open(abs_filepath, 'r', encoding='utf-8') as f:
             obj = json.load(f)
         return json.dumps(obj, ensure_ascii=False)
@@ -1450,7 +1451,7 @@ def _load_map_json_text(package_name: str, data: dict) -> str:
         return json.dumps(obj, ensure_ascii=False)
 
     raise RuntimeError(
-        f'未找到可用 map：package={package_name}，可传 map_json 或 map_filepath'
+        f'鏈壘鍒板彲鐢?map锛歱ackage={package_name}锛屽彲浼?map_json 鎴?map_filepath'
     )
 
 
@@ -1470,7 +1471,7 @@ def cmd_map_get_info():
         ok = bool(info.get('ok'))
         return jsonify({
             'success': ok,
-            'message': f'MAP_GET_INFO {"成功" if ok else "失败"}: {package_name}',
+            'message': f'MAP_GET_INFO {"鎴愬姛" if ok else "澶辫触"}: {package_name}',
             'response': info
         })
     except Exception as e:
@@ -1494,7 +1495,7 @@ def cmd_map_set_gz():
         ok = bool(result.get('ok'))
         return jsonify({
             'success': ok,
-            'message': f'MAP_SET_GZ {"成功" if ok else "失败"}: {package_name}',
+            'message': f'MAP_SET_GZ {"鎴愬姛" if ok else "澶辫触"}: {package_name}',
             'response': result
         })
     except Exception as e:
@@ -1514,7 +1515,7 @@ def cmd_cortex_resolve_locator():
     try:
         result = client.cortex_resolve_locator(locator)
         ok = bool(result.get('ok'))
-        msg = 'CORTEX_RESOLVE_LOCATOR 成功' if ok else f'CORTEX_RESOLVE_LOCATOR 失败: {result.get("err", "")}'
+        msg = 'CORTEX_RESOLVE_LOCATOR 鎴愬姛' if ok else f'CORTEX_RESOLVE_LOCATOR 澶辫触: {result.get("err", "")}'
         return jsonify({
             'success': ok,
             'message': msg,
@@ -1537,7 +1538,7 @@ def cmd_cortex_tap_locator():
     try:
         result = client.cortex_tap_locator(locator)
         ok = bool(result.get('ok'))
-        msg = 'CORTEX_TAP_LOCATOR 成功' if ok else f'CORTEX_TAP_LOCATOR 失败: {result.get("err", "")}'
+        msg = 'CORTEX_TAP_LOCATOR 鎴愬姛' if ok else f'CORTEX_TAP_LOCATOR 澶辫触: {result.get("err", "")}'
         return jsonify({
             'success': ok,
             'message': msg,
@@ -1547,6 +1548,8 @@ def cmd_cortex_tap_locator():
         return jsonify({'success': False, 'message': str(e)}), 500
 
 
+@app.route('/api/command/cortex_trace_pull', methods=['POST'])
+@app.route('/api/command/trace_pull', methods=['POST'])
 def cmd_cortex_trace_pull():
     error_response = _require_client_response()
     if error_response:
@@ -1561,7 +1564,7 @@ def cmd_cortex_trace_pull():
         lines = [x for x in trace.splitlines() if x.strip()]
         return jsonify({
             'success': True,
-            'message': f'CORTEX_TRACE_PULL 成功: {len(lines)} 行',
+            'message': f'CORTEX_TRACE_PULL ok: {len(lines)} lines',
             'response': {
                 'max_lines': max_lines,
                 'line_count': len(lines),
@@ -1573,7 +1576,7 @@ def cmd_cortex_trace_pull():
 
 
 def cmd_cortex_route_run():
-    """端侧 route_run：根据 map 从 home/start_page 路由到 target_page。"""
+    """Run device-side route_run via map from home/start_page to target_page."""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1601,10 +1604,10 @@ def cmd_cortex_route_run():
         ok = bool(result.get('ok'))
         steps = result.get('steps') or []
         if ok:
-            msg = f'CORTEX_ROUTE_RUN 成功: {result.get("from_page")} -> {result.get("to_page")}, steps={len(steps)}'
+            msg = f'CORTEX_ROUTE_RUN 鎴愬姛: {result.get("from_page")} -> {result.get("to_page")}, steps={len(steps)}'
         else:
             reason = result.get('reason', '') or 'unknown'
-            msg = f'CORTEX_ROUTE_RUN 失败: {reason}'
+            msg = f'CORTEX_ROUTE_RUN 澶辫触: {reason}'
         return jsonify({
             'success': ok,
             'message': msg,
@@ -1627,17 +1630,17 @@ def cmd_cortex_route_run():
     if not package_name:
         return jsonify({'success': False, 'message': 'package is required'}), 400
     if not from_page or not to_page:
-        return jsonify({'success': False, 'message': 'from_page 和 to_page 均为必填'}), 400
+        return jsonify({'success': False, 'message': 'from_page 鍜?to_page 鍧囦负蹇呭～'}), 400
 
     try:
         result = client.cortex_route_run(package_name, from_page, to_page, max_steps=max_steps)
         ok = bool(result.get('ok'))
         steps = result.get('steps') or []
         if ok:
-            msg = f'CORTEX_ROUTE_RUN 成功: {from_page} -> {to_page}, steps={len(steps)}'
+            msg = f'CORTEX_ROUTE_RUN 鎴愬姛: {from_page} -> {to_page}, steps={len(steps)}'
         else:
             reason = result.get('reason', '') or 'unknown'
-            msg = f'CORTEX_ROUTE_RUN 失败: {reason}'
+            msg = f'CORTEX_ROUTE_RUN 澶辫触: {reason}'
         return jsonify({
             'success': ok,
             'message': msg,
@@ -1653,7 +1656,7 @@ def cmd_cortex_route_run():
 
 @app.route('/api/command/launch_app', methods=['POST'])
 def cmd_launch_app():
-    """发送 LAUNCH_APP 命令"""
+    """鍙戦€?LAUNCH_APP 鍛戒护"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1663,13 +1666,13 @@ def cmd_launch_app():
     clear_task = data.get('clear_task', False)
 
     if not package_name:
-        return jsonify({'success': False, 'message': '请输入包名'}), 400
+        return jsonify({'success': False, 'message': 'package is required'}), 400
 
     try:
         success = client.launch_app(package_name, clear_task=clear_task)
         return jsonify({
             'success': success,
-            'message': f'启动 {package_name} 成功' if success else f'启动 {package_name} 失败'
+            'message': f'鍚姩 {package_name} 鎴愬姛' if success else f'鍚姩 {package_name} 澶辫触'
         })
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
@@ -1677,7 +1680,7 @@ def cmd_launch_app():
 
 @app.route('/api/command/stop_app', methods=['POST'])
 def cmd_stop_app():
-    """发送 STOP_APP 命令"""
+    """鍙戦€?STOP_APP 鍛戒护"""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -1686,13 +1689,13 @@ def cmd_stop_app():
     package_name = data.get('package', '')
 
     if not package_name:
-        return jsonify({'success': False, 'message': '请输入包名'}), 400
+        return jsonify({'success': False, 'message': 'package is required'}), 400
 
     try:
         success = client.stop_app(package_name)
         return jsonify({
             'success': success,
-            'message': f'停止 {package_name} 成功' if success else f'停止 {package_name} 失败'
+            'message': f'鍋滄 {package_name} 鎴愬姛' if success else f'鍋滄 {package_name} 澶辫触'
         })
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
@@ -1731,21 +1734,20 @@ def cmd_list_apps():
 
 @app.route('/api/command/screenshot', methods=['POST'])
 def cmd_screenshot():
-    """发送 SCREENSHOT 命令 (使用分片传输)"""
+    """鍙戦€?SCREENSHOT 鍛戒护 (浣跨敤鍒嗙墖浼犺緭)"""
     error_response = _require_client_response()
     if error_response:
         return error_response
 
     try:
-        # 使用分片传输方式获取截图
+        # 浣跨敤鍒嗙墖浼犺緭鏂瑰紡鑾峰彇鎴浘
         image_data = client.request_screenshot()
 
         if image_data and len(image_data) > 0:
-            # 截图成功，返回 base64 编码的图片
-            image_base64 = base64.b64encode(image_data).decode('utf-8')
+            # 鎴浘鎴愬姛锛岃繑鍥?base64 缂栫爜鐨勫浘鐗?            image_base64 = base64.b64encode(image_data).decode('utf-8')
             return jsonify({
                 'success': True,
-                'message': f'截图成功: {len(image_data)} 字节 ({len(image_data)/1024:.1f} KB)',
+                'message': f'鎴浘鎴愬姛: {len(image_data)} 瀛楄妭 ({len(image_data)/1024:.1f} KB)',
                 'response': {
                     'size': len(image_data),
                     'image': image_base64
@@ -1754,7 +1756,7 @@ def cmd_screenshot():
         else:
             return jsonify({
                 'success': False,
-                'message': '截图失败: 无数据返回'
+                'message': 'screenshot failed: empty data'
             })
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
@@ -1762,19 +1764,19 @@ def cmd_screenshot():
 
 @app.route('/api/command/screenshot/raw', methods=['GET'])
 def cmd_screenshot_raw():
-    """获取原始截图图片（可直接嵌入 img 标签）"""
+    """Return raw screenshot bytes."""
     if not client:
-        return Response('未连接', status=400, mimetype='text/plain')
+        return Response('not connected', status=400, mimetype='text/plain')
 
     try:
-        # 使用分片传输方式获取截图
+        # 浣跨敤鍒嗙墖浼犺緭鏂瑰紡鑾峰彇鎴浘
         image_data = client.request_screenshot()
 
         if image_data and len(image_data) > 0:
-            # 返回 JPEG 图片 (服务端已压缩为 JPEG)
+            # 杩斿洖 JPEG 鍥剧墖 (鏈嶅姟绔凡鍘嬬缉涓?JPEG)
             return Response(image_data, mimetype='image/jpeg')
         else:
-            return Response('截图失败', status=500, mimetype='text/plain')
+            return Response('鎴浘澶辫触', status=500, mimetype='text/plain')
     except Exception as e:
         return Response(str(e), status=500, mimetype='text/plain')
 
@@ -1783,7 +1785,7 @@ def cmd_screenshot_raw():
 # Auto Map Builder v2/v3
 # =============================================================================
 
-# 检测 VLM 是否可用
+# 妫€娴?VLM 鏄惁鍙敤
 VLM_AVAILABLE = False
 try:
     from map_builder import (
@@ -1796,23 +1798,232 @@ try:
     from map_builder.som_annotator import create_annotated_screenshot
     VLM_AVAILABLE = True
 except ImportError as e:
-    print(f"[app.py] Auto Map Builder 不可用: {e}")
+    print(f"[app.py] Auto Map Builder 涓嶅彲鐢? {e}")
 
-# 全局探索器实例和状态
-explorer_instance = None
+# 鍏ㄥ眬鎺㈢储鍣ㄥ疄渚嬪拰鐘舵€?explorer_instance = None
 exploration_result = None
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__))))
+MAP_REPO_DEFAULT_ROOT = os.path.join(PROJECT_ROOT, 'map_repo')
+EXPLORATION_LOCK = threading.RLock()
+QUEUE_LOCK = threading.RLock()
+QUEUE_THREAD = None
+
+
+def _new_queue_state() -> dict:
+    return {
+        'mode': 'node_queue',
+        'run_id': None,
+        'running': False,
+        'stopping': False,
+        'retry_max': 2,
+        'pending': [],
+        'current': None,
+        'completed': [],
+        'failed': [],
+        'attempts': {},
+        'started_at': None,
+        'finished_at': None,
+        'output_root': 'map_repo',
+    }
+
+
 exploration_status = {
     'running': False,
     'package': None,
-    'version': 'v2',  # v2 或 v3
+    'version': 'v2',  # v2 鎴?v3
     'progress': {
         'pages_discovered': 0,
         'nodes_discovered': 0,
         'current_page': None
     },
     'result': None,
-    'logs': []
+    'logs': [],
+    'queue': _new_queue_state(),
 }
+
+
+def _append_explore_log(level: str, message: str, log_data=None) -> None:
+    with EXPLORATION_LOCK:
+        logs = exploration_status.setdefault('logs', [])
+        logs.append({
+            'time': datetime.now().strftime('%H:%M:%S'),
+            'level': str(level or 'info'),
+            'message': str(message or ''),
+            'data': log_data
+        })
+        if len(logs) > 5000:
+            del logs[:len(logs) - 5000]
+
+
+def _safe_package_dir_name(package_name: str) -> str:
+    value = str(package_name or '').strip()
+    if not value:
+        return 'unknown'
+    return value.replace('/', '_').replace('\\', '_')
+
+
+def _resolve_map_repo_root(output_root: Optional[str] = None) -> str:
+    root = str(output_root or '').strip()
+    if not root:
+        root = MAP_REPO_DEFAULT_ROOT
+    elif not os.path.isabs(root):
+        root = os.path.abspath(os.path.join(PROJECT_ROOT, root))
+    os.makedirs(root, exist_ok=True)
+    os.makedirs(os.path.join(root, 'maps'), exist_ok=True)
+    return root
+
+
+def _map_repo_index_path(repo_root: str) -> str:
+    return os.path.join(repo_root, 'index.json')
+
+
+def _new_map_repo_index() -> dict:
+    return {
+        'schema_version': 'lxb.maps.index.v1',
+        'updated_at': datetime.now(timezone.utc).isoformat(),
+        'maps': []
+    }
+
+
+def _load_map_repo_index(repo_root: str) -> dict:
+    index_path = _map_repo_index_path(repo_root)
+    if not os.path.exists(index_path):
+        return _new_map_repo_index()
+    try:
+        with open(index_path, 'r', encoding='utf-8') as f:
+            loaded = json.load(f)
+        if isinstance(loaded, dict):
+            if not isinstance(loaded.get('maps'), list):
+                loaded['maps'] = []
+            if not loaded.get('schema_version'):
+                loaded['schema_version'] = 'lxb.maps.index.v1'
+            return loaded
+    except Exception:
+        pass
+    return _new_map_repo_index()
+
+
+def _save_map_repo_index(repo_root: str, index_obj: dict) -> str:
+    index_path = _map_repo_index_path(repo_root)
+    index_obj = dict(index_obj or {})
+    index_obj['schema_version'] = index_obj.get('schema_version') or 'lxb.maps.index.v1'
+    index_obj['updated_at'] = datetime.now(timezone.utc).isoformat()
+    with open(index_path, 'w', encoding='utf-8') as f:
+        json.dump(index_obj, f, ensure_ascii=False, indent=2)
+    return index_path
+
+
+def _save_nav_map_to_repo(
+        package_name: str,
+        nav_map_obj: dict,
+        run_stats: Optional[dict] = None,
+        config_snapshot: Optional[dict] = None,
+        source: str = 'manual',
+        output_root: Optional[str] = None
+) -> dict:
+    repo_root = _resolve_map_repo_root(output_root)
+    pkg_dir = _safe_package_dir_name(package_name)
+    generated_at = datetime.now(timezone.utc).isoformat()
+
+    nav_json_text = json.dumps(nav_map_obj or {}, ensure_ascii=False, indent=2)
+    nav_json_bytes = nav_json_text.encode('utf-8')
+    gz_bytes = gzip.compress(nav_json_bytes, compresslevel=6)
+    sha256_hex = hashlib.sha256(gz_bytes).hexdigest()
+    map_id = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{sha256_hex[:8]}"
+
+    rel_dir = os.path.join('maps', pkg_dir, map_id).replace('\\', '/')
+    abs_dir = os.path.join(repo_root, 'maps', pkg_dir, map_id)
+    os.makedirs(abs_dir, exist_ok=True)
+
+    rel_map_path = f"{rel_dir}/nav_map.json.gz"
+    rel_meta_path = f"{rel_dir}/meta.json"
+    abs_map_path = os.path.join(abs_dir, 'nav_map.json.gz')
+    abs_meta_path = os.path.join(abs_dir, 'meta.json')
+
+    with open(abs_map_path, 'wb') as f:
+        f.write(gz_bytes)
+
+    meta_obj = {
+        'schema_version': 'lxb.map.meta.v1',
+        'package': package_name,
+        'map_id': map_id,
+        'generated_at': generated_at,
+        'source': source,
+        'builder': {
+            'name': 'LXB-MapBuilder',
+            'track': 'node_v5',
+        },
+        'config': config_snapshot or {},
+        'stats': run_stats or {},
+        'artifacts': {
+            'map_path': rel_map_path,
+            'sha256': sha256_hex,
+            'bytes_gzip': len(gz_bytes),
+            'bytes_json': len(nav_json_bytes),
+        }
+    }
+    with open(abs_meta_path, 'w', encoding='utf-8') as f:
+        json.dump(meta_obj, f, ensure_ascii=False, indent=2)
+
+    index_obj = _load_map_repo_index(repo_root)
+    rows = list(index_obj.get('maps') or [])
+    rows = [
+        row for row in rows
+        if not (str(row.get('package')) == package_name and str(row.get('map_id')) == map_id)
+    ]
+    rows.append({
+        'package': package_name,
+        'map_id': map_id,
+        'generated_at': generated_at,
+        'map_path': rel_map_path,
+        'meta_path': rel_meta_path,
+        'sha256': sha256_hex,
+        'bytes': len(gz_bytes),
+        'stats': run_stats or {},
+    })
+    rows.sort(key=lambda x: str(x.get('generated_at') or ''), reverse=True)
+    index_obj['maps'] = rows
+    _save_map_repo_index(repo_root, index_obj)
+
+    return {
+        'repo_root': repo_root,
+        'package': package_name,
+        'map_id': map_id,
+        'generated_at': generated_at,
+        'map_path': abs_map_path,
+        'map_path_rel': rel_map_path,
+        'meta_path': abs_meta_path,
+        'meta_path_rel': rel_meta_path,
+        'sha256': sha256_hex,
+        'bytes': len(gz_bytes),
+    }
+
+
+def _snapshot_node_config(data: dict) -> dict:
+    return {
+        'max_pages': int(data.get('max_pages', 30)),
+        'max_depth': int(data.get('max_depth', 3)),
+        'max_time_seconds': int(data.get('max_time_seconds', 1800)),
+        'action_delay_ms': int(data.get('action_delay_ms', 800)),
+        'explore_mode': str(data.get('explore_mode', 'serial')),
+        'click_delay': float(data.get('click_delay', 1.5)),
+    }
+
+
+def _load_json_or_gz(abs_filepath: str):
+    if abs_filepath.lower().endswith('.json.gz'):
+        with gzip.open(abs_filepath, 'rt', encoding='utf-8') as f:
+            return json.load(f)
+    with open(abs_filepath, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+
+def _safe_path_under_root(root: str, candidate_path: str) -> str:
+    root_abs = os.path.abspath(root)
+    candidate_abs = os.path.abspath(candidate_path)
+    if not candidate_abs.startswith(root_abs):
+        raise RuntimeError('illegal_path')
+    return candidate_abs
 
 
 def _legacy_map_builder_disabled_response():
@@ -1825,7 +2036,7 @@ def _legacy_map_builder_disabled_response():
 @app.route('/api/explore/start', methods=['POST'])
 def explore_start():
     return _legacy_map_builder_disabled_response()
-    """启动应用探索 (v2 VLM+XML 融合)"""
+    """鍚姩搴旂敤鎺㈢储 (v2 VLM+XML 铻嶅悎)"""
     global client, explorer_instance, exploration_result, exploration_status
 
     error_response = _require_client_response()
@@ -1833,21 +2044,21 @@ def explore_start():
         return error_response
 
     if exploration_status['running']:
-        return jsonify({'success': False, 'message': '探索正在进行中'}), 400
+        return jsonify({'success': False, 'message': 'exploration is already running'}), 400
 
     if not VLM_AVAILABLE:
-        return jsonify({'success': False, 'message': 'Auto Map Builder 模块不可用'}), 400
+        return jsonify({'success': False, 'message': 'Auto Map Builder module unavailable'}), 400
 
     data = request.json
     package_name = data.get('package', '')
 
     if not package_name:
-        return jsonify({'success': False, 'message': '请指定应用包名'}), 400
+        return jsonify({'success': False, 'message': 'package is required'}), 400
 
     try:
         from datetime import datetime
 
-        # 创建配置
+        # 鍒涘缓閰嶇疆
         config = ExplorationConfig(
             max_pages=data.get('max_pages', 50),
             max_depth=data.get('max_depth', 10),
@@ -1855,7 +2066,7 @@ def explore_start():
             enable_od=data.get('enable_od', True),
             enable_ocr=data.get('enable_ocr', True),
             enable_caption=data.get('enable_caption', True),
-            # 并发推理配置
+            # 骞跺彂鎺ㄧ悊閰嶇疆
             vlm_concurrent_enabled=data.get('vlm_concurrent_enabled', False),
             vlm_concurrent_requests=data.get('vlm_concurrent_requests', 5),
             vlm_occurrence_threshold=data.get('vlm_occurrence_threshold', 2),
@@ -1867,7 +2078,7 @@ def explore_start():
             output_dir=data.get('output_dir', './maps')
         )
 
-        # 日志回调
+        # 鏃ュ織鍥炶皟
         def log_callback(level, message, log_data=None):
             log_entry = {
                 'time': datetime.now().strftime('%H:%M:%S'),
@@ -1877,14 +2088,12 @@ def explore_start():
             }
             exploration_status['logs'].append(log_entry)
 
-        # 清空日志
+        # 娓呯┖鏃ュ織
         exploration_status['logs'] = []
 
-        # 创建探索器
-        explorer_instance = AutoMapBuilder(client, config, log_callback)
+        # 鍒涘缓鎺㈢储鍣?        explorer_instance = AutoMapBuilder(client, config, log_callback)
 
-        # 更新状态
-        exploration_status['running'] = True
+        # 鏇存柊鐘舵€?        exploration_status['running'] = True
         exploration_status['package'] = package_name
         exploration_status['progress'] = {
             'pages_discovered': 0,
@@ -1893,12 +2102,12 @@ def explore_start():
         }
         exploration_status['result'] = None
 
-        log_callback('info', f'开始探索: {package_name}')
+        log_callback('info', f'寮€濮嬫帰绱? {package_name}')
 
-        # 执行探索
+        # 鎵ц鎺㈢储
         exploration_result = explorer_instance.explore(package_name)
 
-        # 更新结果
+        # 鏇存柊缁撴灉
         exploration_status['running'] = False
         exploration_status['progress'] = {
             'pages_discovered': exploration_result.page_count,
@@ -1915,7 +2124,7 @@ def explore_start():
 
         return jsonify({
             'success': True,
-            'message': f'探索完成: {exploration_result.page_count} 个页面',
+            'message': 'message',
             'result': exploration_status['result']
         })
 
@@ -1924,43 +2133,52 @@ def explore_start():
         exploration_status['running'] = False
         return jsonify({
             'success': False,
-            'message': f'探索失败: {str(e)}',
+            'message': f'鎺㈢储澶辫触: {str(e)}',
             'traceback': traceback.format_exc()
         }), 500
 
 
 @app.route('/api/explore/status', methods=['GET'])
 def explore_status():
-    """获取探索状态"""
+    """Get exploration status."""
     global explorer_instance
 
-    # 如果有探索器实例，获取实际状态
+    queue_running = False
+    with QUEUE_LOCK:
+        queue_state = dict(exploration_status.get('queue') or _new_queue_state())
+        queue_running = bool(queue_state.get('running'))
+
     if explorer_instance:
         try:
             from map_builder import ExplorationStatus
             actual_status = explorer_instance.status
-            exploration_status['status'] = actual_status.value
-            exploration_status['running'] = actual_status == ExplorationStatus.RUNNING
-            exploration_status['paused'] = actual_status == ExplorationStatus.PAUSED
+            with EXPLORATION_LOCK:
+                exploration_status['status'] = actual_status.value
+                if not queue_running:
+                    exploration_status['running'] = actual_status == ExplorationStatus.RUNNING
+                exploration_status['paused'] = actual_status == ExplorationStatus.PAUSED
         except Exception:
             pass
 
-    return jsonify(exploration_status)
+    with EXPLORATION_LOCK:
+        snapshot = dict(exploration_status)
+        snapshot['queue'] = dict(exploration_status.get('queue') or _new_queue_state())
+    return jsonify(snapshot)
 
 
 @app.route('/api/explore/pause', methods=['POST'])
 def explore_pause():
-    """暂停探索"""
+    """鏆傚仠鎺㈢储"""
     global explorer_instance
 
     if not explorer_instance:
-        return jsonify({'success': False, 'message': '没有正在进行的探索'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     try:
         explorer_instance.pause()
         return jsonify({
             'success': True,
-            'message': '探索已暂停',
+            'message': 'message',
             'status': explorer_instance.status.value
         })
     except Exception as e:
@@ -1969,17 +2187,17 @@ def explore_pause():
 
 @app.route('/api/explore/resume', methods=['POST'])
 def explore_resume():
-    """恢复探索"""
+    """鎭㈠鎺㈢储"""
     global explorer_instance
 
     if not explorer_instance:
-        return jsonify({'success': False, 'message': '没有正在进行的探索'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     try:
         explorer_instance.resume()
         return jsonify({
             'success': True,
-            'message': '探索已恢复',
+            'message': 'message',
             'status': explorer_instance.status.value
         })
     except Exception as e:
@@ -1988,18 +2206,30 @@ def explore_resume():
 
 @app.route('/api/explore/stop', methods=['POST'])
 def explore_stop():
-    """终止探索"""
-    global explorer_instance
+    """Stop single exploration or queue exploration."""
+    global explorer_instance, exploration_status
 
-    if not explorer_instance:
-        return jsonify({'success': False, 'message': '没有正在进行的探索'}), 400
+    queue_running = False
+    with QUEUE_LOCK:
+        queue_state = exploration_status.get('queue') or _new_queue_state()
+        queue_running = bool(queue_state.get('running'))
+        if queue_running:
+            queue_state['stopping'] = True
+            exploration_status['queue'] = queue_state
+
+    if not explorer_instance and not queue_running:
+        return jsonify({'success': False, 'message': 'no running exploration'}), 400
 
     try:
-        explorer_instance.stop()
+        if explorer_instance:
+            explorer_instance.stop()
+        if queue_running:
+            _append_explore_log('warn', '[queue] stop requested by user')
         return jsonify({
             'success': True,
-            'message': '正在终止探索',
-            'status': explorer_instance.status.value
+            'message': 'stop requested',
+            'queue_running': queue_running,
+            'status': explorer_instance.status.value if explorer_instance else 'idle'
         })
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
@@ -2007,7 +2237,7 @@ def explore_stop():
 
 @app.route('/api/explore/logs', methods=['GET'])
 def explore_logs():
-    """获取探索日志"""
+    """鑾峰彇鎺㈢储鏃ュ織"""
     since = request.args.get('since', 0, type=int)
     logs = exploration_status.get('logs', [])
     return jsonify({
@@ -2019,20 +2249,20 @@ def explore_logs():
 
 @app.route('/api/explore/realtime', methods=['GET'])
 def explore_realtime():
-    """获取实时探索状态（用于可视化）"""
+    """鑾峰彇瀹炴椂鎺㈢储鐘舵€侊紙鐢ㄤ簬鍙鍖栵級"""
     global explorer_instance
 
     if not explorer_instance:
         return jsonify({
             'success': False,
-            'message': '没有正在进行的探索'
+            'message': 'message',
         }), 400
 
     try:
-        # v3 使用 get_realtime_state 方法
+        # v3 浣跨敤 get_realtime_state 鏂规硶
         if hasattr(explorer_instance, 'get_realtime_state'):
             realtime_state = explorer_instance.get_realtime_state()
-        # v2 使用 _explorer.get_realtime_state
+        # v2 浣跨敤 _explorer.get_realtime_state
         elif hasattr(explorer_instance, '_explorer') and explorer_instance._explorer:
             realtime_state = explorer_instance._explorer.get_realtime_state()
         else:
@@ -2050,13 +2280,13 @@ def explore_realtime():
 
 
 # =============================================================================
-# Auto Map Builder v3 - 语义探索 API
+# Auto Map Builder v3 - 璇箟鎺㈢储 API
 # =============================================================================
 
 @app.route('/api/explore/v3/start', methods=['POST'])
 def explore_v3_start():
     return _legacy_map_builder_disabled_response()
-    """启动 v3 语义探索"""
+    """鍚姩 v3 璇箟鎺㈢储"""
     global client, explorer_instance, exploration_result, exploration_status
 
     error_response = _require_client_response()
@@ -2064,21 +2294,21 @@ def explore_v3_start():
         return error_response
 
     if exploration_status['running']:
-        return jsonify({'success': False, 'message': '探索正在进行中'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     if not VLM_AVAILABLE:
-        return jsonify({'success': False, 'message': 'Auto Map Builder 模块不可用'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     data = request.json
     package_name = data.get('package', '')
 
     if not package_name:
-        return jsonify({'success': False, 'message': '请指定应用包名'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     try:
         from datetime import datetime
 
-        # 创建配置
+        # 鍒涘缓閰嶇疆
         config = ExplorationConfig(
             max_pages=data.get('max_pages', 30),
             max_depth=data.get('max_depth', 5),
@@ -2087,7 +2317,7 @@ def explore_v3_start():
             output_dir=data.get('output_dir', './maps')
         )
 
-        # 日志回调
+        # 鏃ュ織鍥炶皟
         def log_callback(level, message, log_data=None):
             log_entry = {
                 'time': datetime.now().strftime('%H:%M:%S'),
@@ -2097,14 +2327,12 @@ def explore_v3_start():
             }
             exploration_status['logs'].append(log_entry)
 
-        # 清空日志
+        # 娓呯┖鏃ュ織
         exploration_status['logs'] = []
 
-        # 创建 v3 探索器
-        explorer_instance = SemanticMapBuilder(client, config, log_callback)
+        # 鍒涘缓 v3 鎺㈢储鍣?        explorer_instance = SemanticMapBuilder(client, config, log_callback)
 
-        # 更新状态
-        exploration_status['running'] = True
+        # 鏇存柊鐘舵€?        exploration_status['running'] = True
         exploration_status['package'] = package_name
         exploration_status['version'] = 'v3'
         exploration_status['progress'] = {
@@ -2114,12 +2342,12 @@ def explore_v3_start():
         }
         exploration_status['result'] = None
 
-        log_callback('info', f'[v3] 开始语义探索: {package_name}')
+        log_callback('info', f'[v3] 寮€濮嬭涔夋帰绱? {package_name}')
 
-        # 执行探索
+        # 鎵ц鎺㈢储
         exploration_result = explorer_instance.explore(package_name)
 
-        # 更新结果
+        # 鏇存柊缁撴灉
         exploration_status['running'] = False
         exploration_status['progress'] = {
             'pages_discovered': len(exploration_result.graph.pages),
@@ -2137,7 +2365,7 @@ def explore_v3_start():
 
         return jsonify({
             'success': True,
-            'message': f'[v3] 探索完成: {len(exploration_result.graph.pages)} 个页面, {len(exploration_result.graph.transitions)} 个跳转',
+            'message': 'message',
             'result': exploration_status['result']
         })
 
@@ -2146,29 +2374,27 @@ def explore_v3_start():
         exploration_status['running'] = False
         return jsonify({
             'success': False,
-            'message': f'探索失败: {str(e)}',
+            'message': f'鎺㈢储澶辫触: {str(e)}',
             'traceback': traceback.format_exc()
         }), 500
 
 
 @app.route('/api/explore/v3/graph', methods=['GET'])
 def explore_v3_graph():
+    """Get v3 navigation graph."""
     return _legacy_map_builder_disabled_response()
-    """获取 v3 导航图"""
     global explorer_instance
 
     if not explorer_instance:
-        return jsonify({'success': False, 'message': '没有探索结果'}), 400
+        return jsonify({'success': False, 'message': '娌℃湁鎺㈢储缁撴灉'}), 400
 
-    # 检查是否是 v3 探索器
-    if not hasattr(explorer_instance, 'graph') or explorer_instance.graph is None:
-        return jsonify({'success': False, 'message': '当前不是 v3 探索或没有导航图'}), 400
+    # 妫€鏌ユ槸鍚︽槸 v3 鎺㈢储鍣?    if not hasattr(explorer_instance, 'graph') or explorer_instance.graph is None:
+        return jsonify({'success': False, 'message': '褰撳墠涓嶆槸 v3 鎺㈢储鎴栨病鏈夊鑸浘'}), 400
 
     try:
         graph = explorer_instance.graph
 
-        # 序列化页面
-        pages = []
+        # 搴忓垪鍖栭〉闈?        pages = []
         for page in graph.pages.values():
             anchors = []
             for anchor in page.nav_anchors:
@@ -2192,8 +2418,7 @@ def explore_v3_graph():
                 'nav_anchors': anchors
             })
 
-        # 序列化跳转
-        transitions = []
+        # 搴忓垪鍖栬烦杞?        transitions = []
         for trans in graph.transitions:
             transitions.append({
                 'from_page': trans.from_page,
@@ -2227,15 +2452,15 @@ def explore_v3_graph():
 
 @app.route('/api/explore/v3/save', methods=['POST'])
 def explore_v3_save():
+    """Save v3 navigation graph."""
     return _legacy_map_builder_disabled_response()
-    """保存 v3 导航图"""
     global explorer_instance, exploration_result
 
     if not explorer_instance:
-        return jsonify({'success': False, 'message': '没有探索结果'}), 400
+        return jsonify({'success': False, 'message': '娌℃湁鎺㈢储缁撴灉'}), 400
 
     if not hasattr(explorer_instance, 'save'):
-        return jsonify({'success': False, 'message': '当前不是 v3 探索器'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     data = request.json or {}
     filepath = data.get('filepath')
@@ -2245,7 +2470,7 @@ def explore_v3_save():
 
         return jsonify({
             'success': True,
-            'message': f'导航图已保存',
+            'message': f'瀵艰埅鍥惧凡淇濆瓨',
             'filepath': filepath
         })
 
@@ -2261,21 +2486,21 @@ def explore_v3_save():
 @app.route('/api/explore/v3/find_path', methods=['POST'])
 def explore_v3_find_path():
     return _legacy_map_builder_disabled_response()
-    """查找路径"""
+    """鏌ユ壘璺緞"""
     global explorer_instance
 
     if not explorer_instance:
-        return jsonify({'success': False, 'message': '没有探索结果'}), 400
+        return jsonify({'success': False, 'message': '娌℃湁鎺㈢储缁撴灉'}), 400
 
     if not hasattr(explorer_instance, 'find_path'):
-        return jsonify({'success': False, 'message': '当前不是 v3 探索器'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     data = request.json
     from_page = data.get('from_page', '')
     to_page = data.get('to_page', '')
 
     if not from_page or not to_page:
-        return jsonify({'success': False, 'message': '请指定起始和目标页面'}), 400
+        return jsonify({'success': False, 'message': '璇锋寚瀹氳捣濮嬪拰鐩爣椤甸潰'}), 400
 
     try:
         path = explorer_instance.find_path(from_page, to_page)
@@ -2283,11 +2508,10 @@ def explore_v3_find_path():
         if path is None:
             return jsonify({
                 'success': False,
-                'message': f'无法找到从 {from_page} 到 {to_page} 的路径'
+                'message': 'message',
             })
 
-        # 序列化路径
-        path_data = []
+        # 搴忓垪鍖栬矾寰?        path_data = []
         for trans in path:
             path_data.append({
                 'from_page': trans.from_page,
@@ -2297,7 +2521,7 @@ def explore_v3_find_path():
 
         return jsonify({
             'success': True,
-            'message': f'找到路径: {len(path)} 步',
+            'message': 'message',
             'data': {
                 'path': path_data,
                 'steps': len(path)
@@ -2316,21 +2540,21 @@ def explore_v3_find_path():
 @app.route('/api/explore/v3/navigate', methods=['POST'])
 def explore_v3_navigate():
     return _legacy_map_builder_disabled_response()
-    """执行导航"""
+    """鎵ц瀵艰埅"""
     global explorer_instance
 
     if not explorer_instance:
-        return jsonify({'success': False, 'message': '没有探索结果'}), 400
+        return jsonify({'success': False, 'message': '娌℃湁鎺㈢储缁撴灉'}), 400
 
     if not hasattr(explorer_instance, 'navigate_to'):
-        return jsonify({'success': False, 'message': '当前不是 v3 探索器'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     data = request.json
     target_page = data.get('target_page', '')
     verify = data.get('verify', True)
 
     if not target_page:
-        return jsonify({'success': False, 'message': '请指定目标页面'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     try:
         success, message = explorer_instance.navigate_to(target_page, verify=verify)
@@ -2356,7 +2580,7 @@ def explore_v3_navigate():
 @app.route('/api/explore/som/start', methods=['POST'])
 def explore_som_start():
     return _legacy_map_builder_disabled_response()
-    """启动 SoM 探索（推荐）"""
+    """鍚姩 SoM 鎺㈢储锛堟帹鑽愶級"""
     global client, explorer_instance, exploration_result, exploration_status
 
     error_response = _require_client_response()
@@ -2364,21 +2588,21 @@ def explore_som_start():
         return error_response
 
     if exploration_status['running']:
-        return jsonify({'success': False, 'message': '探索正在进行中'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     if not VLM_AVAILABLE:
-        return jsonify({'success': False, 'message': 'Auto Map Builder 模块不可用'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     data = request.json
     package_name = data.get('package', '')
 
     if not package_name:
-        return jsonify({'success': False, 'message': '请指定应用包名'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     try:
         from datetime import datetime
 
-        # 创建配置
+        # 鍒涘缓閰嶇疆
         config = ExplorationConfig(
             max_pages=data.get('max_pages', 30),
             max_depth=data.get('max_depth', 5),
@@ -2387,7 +2611,7 @@ def explore_som_start():
             output_dir=data.get('output_dir', './maps')
         )
 
-        # 日志回调
+        # 鏃ュ織鍥炶皟
         def log_callback(level, message, log_data=None):
             log_entry = {
                 'time': datetime.now().strftime('%H:%M:%S'),
@@ -2397,14 +2621,12 @@ def explore_som_start():
             }
             exploration_status['logs'].append(log_entry)
 
-        # 清空日志
+        # 娓呯┖鏃ュ織
         exploration_status['logs'] = []
 
-        # 创建 SoM 探索器
-        explorer_instance = SoMMapBuilder(client, config, log_callback)
+        # 鍒涘缓 SoM 鎺㈢储鍣?        explorer_instance = SoMMapBuilder(client, config, log_callback)
 
-        # 更新状态
-        exploration_status['running'] = True
+        # 鏇存柊鐘舵€?        exploration_status['running'] = True
         exploration_status['package'] = package_name
         exploration_status['version'] = 'som'
         exploration_status['progress'] = {
@@ -2414,12 +2636,12 @@ def explore_som_start():
         }
         exploration_status['result'] = None
 
-        log_callback('info', f'[SoM] 开始探索: {package_name}')
+        log_callback('info', f'[SoM] 寮€濮嬫帰绱? {package_name}')
 
-        # 执行探索
+        # 鎵ц鎺㈢储
         exploration_result = explorer_instance.explore(package_name)
 
-        # 更新结果
+        # 鏇存柊缁撴灉
         exploration_status['running'] = False
         exploration_status['progress'] = {
             'pages_discovered': len(exploration_result.graph.pages),
@@ -2437,7 +2659,7 @@ def explore_som_start():
 
         return jsonify({
             'success': True,
-            'message': f'[SoM] 探索完成: {len(exploration_result.graph.pages)} 个页面, {len(exploration_result.graph.transitions)} 个跳转',
+            'message': 'message',
             'result': exploration_status['result']
         })
 
@@ -2446,7 +2668,7 @@ def explore_som_start():
         exploration_status['running'] = False
         return jsonify({
             'success': False,
-            'message': f'探索失败: {str(e)}',
+            'message': f'鎺㈢储澶辫触: {str(e)}',
             'traceback': traceback.format_exc()
         }), 500
 
@@ -2454,7 +2676,7 @@ def explore_som_start():
 @app.route('/api/explore/coord/start', methods=['POST'])
 def explore_coord_start():
     return _legacy_map_builder_disabled_response()
-    """启动坐标驱动探索 (v4 推荐)"""
+    """鍚姩鍧愭爣椹卞姩鎺㈢储 (v4 鎺ㄨ崘)"""
     global client, explorer_instance, exploration_result, exploration_status
 
     error_response = _require_client_response()
@@ -2462,16 +2684,16 @@ def explore_coord_start():
         return error_response
 
     if exploration_status['running']:
-        return jsonify({'success': False, 'message': '探索正在进行中'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     if not VLM_AVAILABLE:
-        return jsonify({'success': False, 'message': 'Auto Map Builder 模块不可用'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     data = request.json
     package_name = data.get('package', '')
 
     if not package_name:
-        return jsonify({'success': False, 'message': '请指定应用包名'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     try:
         from datetime import datetime
@@ -2506,7 +2728,7 @@ def explore_coord_start():
         }
         exploration_status['result'] = None
 
-        log_callback('info', f'[v4] 坐标驱动探索: {package_name}')
+        log_callback('info', f'[v4] 鍧愭爣椹卞姩鎺㈢储: {package_name}')
 
         exploration_result = explorer_instance.explore(package_name)
 
@@ -2525,7 +2747,7 @@ def explore_coord_start():
 
         return jsonify({
             'success': True,
-            'message': f'[v4] 探索完成: {exploration_result["page_count"]} 页面, {exploration_result["transition_count"]} 跳转',
+            'message': f'[v4] 鎺㈢储瀹屾垚: {exploration_result["page_count"]} 椤甸潰, {exploration_result["transition_count"]} 璺宠浆',
             'result': exploration_status['result']
         })
 
@@ -2534,34 +2756,15 @@ def explore_coord_start():
         exploration_status['running'] = False
         return jsonify({
             'success': False,
-            'message': f'探索失败: {str(e)}',
+            'message': f'鎺㈢储澶辫触: {str(e)}',
             'traceback': traceback.format_exc()
         }), 500
 
 
-@app.route('/api/explore/node/start', methods=['POST'])
-def explore_node_start():
-    """启动 Node 驱动探索 (v5 推荐)"""
+def _run_node_explore_once(package_name: str, data: dict, log_prefix: str = '', keep_running: bool = False):
     global client, explorer_instance, exploration_result, exploration_status
-
-    error_response = _require_client_response()
-    if error_response:
-        return error_response
-
-    if exploration_status['running']:
-        return jsonify({'success': False, 'message': '探索正在进行中'}), 400
-
-    if not VLM_AVAILABLE:
-        return jsonify({'success': False, 'message': 'Auto Map Builder 模块不可用'}), 400
-
-    data = request.json
-    package_name = data.get('package', '')
-
-    if not package_name:
-        return jsonify({'success': False, 'message': '请指定应用包名'}), 400
-
+    builder = None
     try:
-        from datetime import datetime
         from map_builder import NodeMapBuilder
 
         config = ExplorationConfig(
@@ -2573,229 +2776,381 @@ def explore_node_start():
         )
 
         def log_callback(level, message, log_data=None):
-            log_entry = {
-                'time': datetime.now().strftime('%H:%M:%S'),
-                'level': level,
-                'message': message,
-                'data': log_data
-            }
-            exploration_status['logs'].append(log_entry)
+            msg = f"{log_prefix}{message}" if log_prefix else message
+            _append_explore_log(level, msg, log_data)
 
-        exploration_status['logs'] = []
-        explorer_instance = NodeMapBuilder(client, config, log_callback)
-
-        # 设置探索模式和点击延迟
+        builder = NodeMapBuilder(client, config, log_callback)
         explore_mode = data.get('explore_mode', 'serial')
         click_delay = data.get('click_delay', 1.5)
-        explorer_instance.set_mode(explore_mode)
-        explorer_instance.set_click_delay(click_delay)
+        builder.set_mode(explore_mode)
+        builder.set_click_delay(click_delay)
 
-        exploration_status['running'] = True
-        exploration_status['package'] = package_name
-        exploration_status['version'] = 'node'
-        exploration_status['progress'] = {
-            'nodes_discovered': 0,
-            'nodes_explored': 0,
-            'current_node': None
-        }
-        exploration_status['result'] = None
+        with EXPLORATION_LOCK:
+            explorer_instance = builder
+            exploration_status['running'] = True
+            exploration_status['package'] = package_name
+            exploration_status['version'] = 'node'
+            exploration_status['progress'] = {
+                'nodes_discovered': 0,
+                'nodes_explored': 0,
+                'current_node': None
+            }
+            exploration_status['result'] = None
 
-        log_callback('info', f'[v5] Node 驱动探索: {package_name}')
+        log_callback('info', f'[v5] Node explore start: {package_name}')
+        result = builder.explore(package_name)
 
-        exploration_result = explorer_instance.explore(package_name)
-
-        exploration_status['running'] = False
-        exploration_status['progress'] = {
-            'pages_discovered': exploration_result['total_pages'],
-            'transitions_discovered': exploration_result['total_transitions'],
-            'current_node': 'completed'
-        }
-        exploration_status['result'] = {
-            'total_pages': exploration_result['total_pages'],
-            'total_transitions': exploration_result['total_transitions'],
-            'time': round(exploration_result['exploration_time_seconds'], 2),
-            'actions': exploration_result['total_actions']
-        }
-
-        return jsonify({
-            'success': True,
-            'message': f'[v5] 探索完成: {exploration_result["total_pages"]} 页面, {exploration_result["total_transitions"]} 跳转',
-            'result': exploration_status['result']
-        })
-
+        with EXPLORATION_LOCK:
+            exploration_result = result
+            exploration_status['progress'] = {
+                'pages_discovered': result.get('total_pages', 0),
+                'transitions_discovered': result.get('total_transitions', 0),
+                'current_node': 'completed'
+            }
+            exploration_status['result'] = {
+                'total_pages': result.get('total_pages', 0),
+                'total_transitions': result.get('total_transitions', 0),
+                'time': round(float(result.get('exploration_time_seconds', 0.0)), 2),
+                'actions': result.get('total_actions', 0)
+            }
+        return True, builder, result, None
     except Exception as e:
         import traceback
+        with EXPLORATION_LOCK:
+            exploration_status['result'] = {
+                'error': str(e),
+            }
+        return False, builder, None, {
+            'message': str(e),
+            'traceback': traceback.format_exc()
+        }
+    finally:
+        if not keep_running:
+            with EXPLORATION_LOCK:
+                exploration_status['running'] = False
+
+
+def _node_queue_worker(run_id: str, request_data: dict):
+    global QUEUE_THREAD, exploration_status
+
+    retry_max = max(1, min(5, int(request_data.get('retry_max', 2))))
+    auto_save = bool(request_data.get('auto_save', True))
+    output_root = str(request_data.get('output_root') or 'map_repo').strip()
+    config_snapshot = _snapshot_node_config(request_data)
+
+    _append_explore_log('info', f'[queue] run started: run_id={run_id}, retry_max={retry_max}, auto_save={auto_save}')
+
+    while True:
+        with QUEUE_LOCK:
+            queue_state = exploration_status.get('queue') or _new_queue_state()
+            if queue_state.get('stopping'):
+                break
+            pending = list(queue_state.get('pending') or [])
+            if not pending:
+                break
+            package_name = pending.pop(0)
+            attempts = dict(queue_state.get('attempts') or {})
+            attempt = int(attempts.get(package_name, 0)) + 1
+            attempts[package_name] = attempt
+            queue_state['attempts'] = attempts
+            queue_state['pending'] = pending
+            queue_state['current'] = {
+                'package': package_name,
+                'attempt': attempt,
+            }
+            queue_state['retry_max'] = retry_max
+            queue_state['output_root'] = output_root
+            exploration_status['queue'] = queue_state
+
+        prefix = f"[queue][pkg={package_name}][attempt={attempt}/{retry_max}] "
+        ok, builder, result, err = _run_node_explore_once(
+            package_name,
+            request_data,
+            log_prefix=prefix,
+            keep_running=True
+        )
+
+        save_info = None
+        if ok and auto_save and builder and getattr(builder, 'nav_map', None):
+            try:
+                nav_map_obj = builder.nav_map.to_dict()
+                run_stats = {
+                    'total_pages': result.get('total_pages', 0),
+                    'total_transitions': result.get('total_transitions', 0),
+                    'total_actions': result.get('total_actions', 0),
+                    'exploration_time_seconds': result.get('exploration_time_seconds', 0),
+                }
+                save_info = _save_nav_map_to_repo(
+                    package_name=package_name,
+                    nav_map_obj=nav_map_obj,
+                    run_stats=run_stats,
+                    config_snapshot=config_snapshot,
+                    source='queue_auto',
+                    output_root=output_root
+                )
+                _append_explore_log('info', f'{prefix}saved -> {save_info["map_path_rel"]}')
+            except Exception as save_err:
+                ok = False
+                err = {
+                    'message': f'auto_save_failed: {save_err}',
+                    'traceback': ''
+                }
+
+        with QUEUE_LOCK:
+            queue_state = exploration_status.get('queue') or _new_queue_state()
+            queue_state['current'] = None
+            completed = list(queue_state.get('completed') or [])
+            failed = list(queue_state.get('failed') or [])
+            pending = list(queue_state.get('pending') or [])
+            stopping = bool(queue_state.get('stopping'))
+
+            if ok:
+                completed.append({
+                    'package': package_name,
+                    'attempt': attempt,
+                    'finished_at': datetime.now(timezone.utc).isoformat(),
+                    'result': result or {},
+                    'artifact': save_info or {},
+                })
+                _append_explore_log('info', f'{prefix}completed')
+            else:
+                reason = (err or {}).get('message') or 'unknown_error'
+                if attempt < retry_max and not stopping:
+                    pending.append(package_name)
+                    _append_explore_log('warn', f'{prefix}failed -> moved to tail ({reason})')
+                else:
+                    failed.append({
+                        'package': package_name,
+                        'attempt': attempt,
+                        'finished_at': datetime.now(timezone.utc).isoformat(),
+                        'reason': reason,
+                        'traceback': (err or {}).get('traceback') or '',
+                    })
+                    _append_explore_log('error', f'{prefix}failed permanently ({reason})')
+
+            queue_state['pending'] = pending
+            queue_state['completed'] = completed
+            queue_state['failed'] = failed
+            exploration_status['queue'] = queue_state
+
+    with QUEUE_LOCK:
+        queue_state = exploration_status.get('queue') or _new_queue_state()
+        was_stopping = bool(queue_state.get('stopping'))
+        queue_state['running'] = False
+        queue_state['stopping'] = False
+        queue_state['current'] = None
+        queue_state['finished_at'] = datetime.now(timezone.utc).isoformat()
+        exploration_status['queue'] = queue_state
+
+    with EXPLORATION_LOCK:
         exploration_status['running'] = False
+        exploration_status['package'] = None
+
+    if was_stopping:
+        _append_explore_log('warn', f'[queue] run stopped: run_id={run_id}')
+    else:
+        q = exploration_status.get('queue') or {}
+        _append_explore_log(
+            'info',
+            f'[queue] run finished: run_id={run_id}, completed={len(q.get("completed") or [])}, failed={len(q.get("failed") or [])}'
+        )
+
+    with QUEUE_LOCK:
+        QUEUE_THREAD = None
+
+
+@app.route('/api/explore/node/queue/start', methods=['POST'])
+def explore_node_queue_start():
+    global QUEUE_THREAD, exploration_status
+
+    error_response = _require_client_response()
+    if error_response:
+        return error_response
+
+    if not VLM_AVAILABLE:
+        return jsonify({'success': False, 'message': 'Auto Map Builder module unavailable'}), 400
+
+    data = request.json or {}
+    packages_raw = data.get('packages') or []
+    if not isinstance(packages_raw, list):
+        return jsonify({'success': False, 'message': 'packages must be a list'}), 400
+
+    packages = []
+    seen = set()
+    for item in packages_raw:
+        pkg = str(item or '').strip()
+        if not pkg or pkg in seen:
+            continue
+        seen.add(pkg)
+        packages.append(pkg)
+
+    if not packages:
+        return jsonify({'success': False, 'message': 'no packages provided'}), 400
+
+    with QUEUE_LOCK:
+        alive = QUEUE_THREAD is not None and QUEUE_THREAD.is_alive()
+    if exploration_status.get('running') or alive:
+        return jsonify({'success': False, 'message': 'exploration is already running'}), 400
+
+    run_id = str(uuid.uuid4())
+    queue_state = _new_queue_state()
+    queue_state['run_id'] = run_id
+    queue_state['running'] = True
+    queue_state['retry_max'] = max(1, min(5, int(data.get('retry_max', 2))))
+    queue_state['pending'] = list(packages)
+    queue_state['started_at'] = datetime.now(timezone.utc).isoformat()
+    queue_state['output_root'] = str(data.get('output_root') or 'map_repo').strip() or 'map_repo'
+
+    with EXPLORATION_LOCK:
+        exploration_status['logs'] = []
+        exploration_status['running'] = True
+        exploration_status['version'] = 'node'
+        exploration_status['package'] = None
+        exploration_status['result'] = None
+        exploration_status['queue'] = queue_state
+
+    worker = threading.Thread(
+        target=_node_queue_worker,
+        args=(run_id, dict(data)),
+        daemon=True
+    )
+    with QUEUE_LOCK:
+        QUEUE_THREAD = worker
+    worker.start()
+
+    return jsonify({
+        'success': True,
+        'accepted': True,
+        'message': f'queue accepted: {len(packages)} packages',
+        'run_id': run_id,
+        'queue': queue_state,
+    })
+
+
+@app.route('/api/explore/node/start', methods=['POST'])
+def explore_node_start():
+    """Start Node-driven exploration (v5)."""
+    global client, explorer_instance, exploration_result, exploration_status
+
+    error_response = _require_client_response()
+    if error_response:
+        return error_response
+
+    with QUEUE_LOCK:
+        queue_alive = QUEUE_THREAD is not None and QUEUE_THREAD.is_alive()
+    if exploration_status.get('running') or queue_alive:
+        return jsonify({'success': False, 'message': 'exploration is already running'}), 400
+
+    if not VLM_AVAILABLE:
+        return jsonify({'success': False, 'message': 'Auto Map Builder module unavailable'}), 400
+
+    data = request.json or {}
+    package_name = str(data.get('package', '')).strip()
+    if not package_name:
+        return jsonify({'success': False, 'message': 'package is required'}), 400
+
+    with EXPLORATION_LOCK:
+        exploration_status['logs'] = []
+        exploration_status['queue'] = _new_queue_state()
+
+    ok, _, result, err = _run_node_explore_once(package_name, data, keep_running=False)
+    if not ok:
         return jsonify({
             'success': False,
-            'message': f'探索失败: {str(e)}',
-            'traceback': traceback.format_exc()
+            'message': f'explore failed: {(err or {}).get("message", "unknown_error")}',
+            'traceback': (err or {}).get('traceback', '')
         }), 500
+
+    return jsonify({
+        'success': True,
+        'message': f'[v5] exploration completed: {result.get("total_pages", 0)} pages, {result.get("total_transitions", 0)} transitions',
+        'result': exploration_status.get('result') or {},
+    })
 
 
 @app.route('/api/maps/list', methods=['GET'])
 def maps_list():
-    """列出所有已保存的 map 文件"""
+    """List saved maps from map_repo index."""
     try:
-        import os
-        import glob
-        from datetime import datetime
-
-        base_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'maps')
-
-        if not os.path.exists(base_dir):
-            return jsonify({
-                'success': True,
-                'data': []
-            })
-
-        maps = []
-        # 遍历所有包目录
-        for pkg_dir in os.listdir(base_dir):
-            pkg_path = os.path.join(base_dir, pkg_dir)
-            if not os.path.isdir(pkg_path):
+        repo_root = _resolve_map_repo_root()
+        index_obj = _load_map_repo_index(repo_root)
+        rows = []
+        for row in list(index_obj.get('maps') or []):
+            map_rel = str(row.get('map_path') or '').strip()
+            if not map_rel:
                 continue
-
-            # 查找该包下的所有 nav_map_*.json 文件
-            pattern = os.path.join(pkg_path, 'nav_map_*.json')
-            for filepath in glob.glob(pattern):
-                filename = os.path.basename(filepath)
-                stat = os.stat(filepath)
-                maps.append({
-                    'package': pkg_dir.replace('_', '.'),
-                    'filename': filename,
-                    'filepath': filepath,
-                    'size': stat.st_size,
-                    'modified': datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
-                })
-
-        # 按修改时间倒序排列
-        maps.sort(key=lambda x: x['modified'], reverse=True)
-
-        return jsonify({
-            'success': True,
-            'data': maps
-        })
-
+            abs_map_path = _safe_path_under_root(repo_root, os.path.join(repo_root, map_rel))
+            size = int(row.get('bytes') or (os.path.getsize(abs_map_path) if os.path.exists(abs_map_path) else 0))
+            generated_at = str(row.get('generated_at') or '')
+            map_id = str(row.get('map_id') or os.path.basename(os.path.dirname(abs_map_path)))
+            rows.append({
+                'package': str(row.get('package') or ''),
+                'filename': f'{map_id}.json.gz',
+                'filepath': abs_map_path,
+                'size': size,
+                'modified': generated_at,
+                'map_id': map_id,
+            })
+        rows.sort(key=lambda x: x.get('modified') or '', reverse=True)
+        return jsonify({'success': True, 'data': rows})
     except Exception as e:
         import traceback
-        return jsonify({
-            'success': False,
-            'message': str(e),
-            'traceback': traceback.format_exc()
-        }), 500
+        return jsonify({'success': False, 'message': str(e), 'traceback': traceback.format_exc()}), 500
 
 
 @app.route('/api/maps/latest', methods=['GET'])
 def maps_latest():
-    """获取最新的 map 文件内容"""
+    """Load latest map content from map_repo index."""
     try:
-        import os
-        import glob
-        import json
+        repo_root = _resolve_map_repo_root()
+        index_obj = _load_map_repo_index(repo_root)
+        rows = list(index_obj.get('maps') or [])
+        rows.sort(key=lambda x: str(x.get('generated_at') or ''), reverse=True)
+        if not rows:
+            return jsonify({'success': False, 'message': 'no map found'}), 404
 
-        base_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'maps')
+        latest = rows[0]
+        map_rel = str(latest.get('map_path') or '').strip()
+        if not map_rel:
+            return jsonify({'success': False, 'message': 'invalid latest map entry'}), 500
 
-        if not os.path.exists(base_dir):
-            return jsonify({
-                'success': False,
-                'message': '没有找到 map 文件'
-            }), 404
+        abs_map_path = _safe_path_under_root(repo_root, os.path.join(repo_root, map_rel))
+        if not os.path.exists(abs_map_path):
+            return jsonify({'success': False, 'message': 'latest map file missing'}), 404
 
-        # 查找所有 nav_map_*.json 文件
-        all_maps = []
-        for pkg_dir in os.listdir(base_dir):
-            pkg_path = os.path.join(base_dir, pkg_dir)
-            if not os.path.isdir(pkg_path):
-                continue
-
-            pattern = os.path.join(pkg_path, 'nav_map_*.json')
-            for filepath in glob.glob(pattern):
-                stat = os.stat(filepath)
-                all_maps.append({
-                    'filepath': filepath,
-                    'mtime': stat.st_mtime
-                })
-
-        if not all_maps:
-            return jsonify({
-                'success': False,
-                'message': '没有找到 map 文件'
-            }), 404
-
-        # 找到最新的文件
-        latest = max(all_maps, key=lambda x: x['mtime'])
-
-        # 读取文件内容
-        with open(latest['filepath'], 'r', encoding='utf-8') as f:
-            content = json.load(f)
-
-        return jsonify({
-            'success': True,
-            'filepath': latest['filepath'],
-            'data': content
-        })
-
+        content = _load_json_or_gz(abs_map_path)
+        return jsonify({'success': True, 'filepath': abs_map_path, 'data': content})
     except Exception as e:
         import traceback
-        return jsonify({
-            'success': False,
-            'message': str(e),
-            'traceback': traceback.format_exc()
-        }), 500
+        return jsonify({'success': False, 'message': str(e), 'traceback': traceback.format_exc()}), 500
 
 
 @app.route('/api/maps/load', methods=['POST'])
 def maps_load():
-    """加载指定的 map 文件"""
+    """Load map JSON from map_repo filepath (.json.gz supported)."""
     try:
-        import os
-        import json
-
-        data = request.json
-        filepath = data.get('filepath', '')
-
+        data = request.json or {}
+        filepath = str(data.get('filepath') or '').strip()
         if not filepath:
-            return jsonify({
-                'success': False,
-                'message': '请指定文件路径'
-            }), 400
+            return jsonify({'success': False, 'message': 'filepath is required'}), 400
 
-        # 安全检查：只允许访问 maps 目录下的文件
-        base_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'maps'))
-        abs_filepath = os.path.abspath(filepath)
-
-        if not abs_filepath.startswith(base_dir):
-            return jsonify({
-                'success': False,
-                'message': '非法路径'
-            }), 403
+        repo_root = _resolve_map_repo_root()
+        candidate = filepath if os.path.isabs(filepath) else os.path.join(repo_root, filepath)
+        try:
+            abs_filepath = _safe_path_under_root(repo_root, candidate)
+        except RuntimeError:
+            return jsonify({'success': False, 'message': 'illegal path'}), 403
 
         if not os.path.exists(abs_filepath):
-            return jsonify({
-                'success': False,
-                'message': '文件不存在'
-            }), 404
+            return jsonify({'success': False, 'message': 'file not found'}), 404
 
-        # 读取文件内容
-        with open(abs_filepath, 'r', encoding='utf-8') as f:
-            content = json.load(f)
-
-        return jsonify({
-            'success': True,
-            'filepath': abs_filepath,
-            'data': content
-        })
-
+        content = _load_json_or_gz(abs_filepath)
+        return jsonify({'success': True, 'filepath': abs_filepath, 'data': content})
     except Exception as e:
         import traceback
-        return jsonify({
-            'success': False,
-            'message': str(e),
-            'traceback': traceback.format_exc()
-        }), 500
-
-
+        return jsonify({'success': False, 'message': str(e), 'traceback': traceback.format_exc()}), 500
+@app.route('/api/cortex/llm_config', methods=['GET'])
+@app.route('/api/cortex/llm/config', methods=['GET'])
 def cortex_llm_config_get():
     """Get Cortex Route Planner LLM config."""
     try:
@@ -2842,6 +3197,8 @@ def cortex_llm_config_get():
         }), 500
 
 
+@app.route('/api/cortex/llm_config', methods=['POST'])
+@app.route('/api/cortex/llm/config', methods=['POST'])
 def cortex_llm_config_set():
     """Save Cortex Route Planner LLM config."""
     try:
@@ -2893,6 +3250,8 @@ def cortex_llm_config_set():
         }), 500
 
 
+@app.route('/api/cortex/llm_test', methods=['POST'])
+@app.route('/api/cortex/llm/test', methods=['POST'])
 def cortex_llm_test():
     """Test Cortex Route Planner LLM connectivity."""
     try:
@@ -2915,6 +3274,8 @@ def cortex_llm_test():
         }), 500
 
 
+@app.route('/api/cortex/route_then_act/run', methods=['POST'])
+@app.route('/api/cortex/route_then_act', methods=['POST'])
 def cortex_route_then_act_run():
     """Run route stage: resolve app -> target_page -> BFS -> device routing."""
     try:
@@ -3256,6 +3617,7 @@ def _run_cortex_fsm_logic(data: dict, log_callback, run_client):
     }
 
 
+@app.route('/api/cortex/fsm/run', methods=['POST'])
 def cortex_fsm_run():
     data = request.json or {}
     try:
@@ -3269,6 +3631,7 @@ def cortex_fsm_run():
         return jsonify({'success': False, 'message': str(e), 'traceback': traceback.format_exc()}), 500
 
 
+@app.route('/api/cortex/fsm/start', methods=['POST'])
 def cortex_fsm_start():
     data = request.json or {}
     try:
@@ -3309,6 +3672,8 @@ def cortex_fsm_start():
     return jsonify({'success': True, 'task_id': task_id, 'connection_id': conn.connection_id})
 
 
+@app.route('/api/cortex/task/<task_id>', methods=['GET'])
+@app.route('/api/cortex/tasks/<task_id>', methods=['GET'])
 def cortex_task_poll(task_id):
     cursor = int(request.args.get('cursor', '0'))
     with TASKS_LOCK:
@@ -3336,6 +3701,8 @@ def cortex_task_poll(task_id):
         })
 
 
+@app.route('/api/cortex/task/<task_id>/cancel', methods=['POST'])
+@app.route('/api/cortex/tasks/<task_id>/cancel', methods=['POST'])
 def cortex_task_cancel(task_id):
     with TASKS_LOCK:
         t = TASKS.get(task_id)
@@ -3435,54 +3802,59 @@ def _pick_latest_map_file(base_dir: str, package_name: str = None) -> str:
 
 @app.route('/api/explore/node/save', methods=['POST'])
 def explore_node_save():
-    """保存 Node 驱动探索结果"""
+    """Save current node exploration result in map-repo format."""
     global explorer_instance, exploration_status
 
     if not explorer_instance:
-        return jsonify({'success': False, 'message': '没有探索结果'}), 400
+        return jsonify({'success': False, 'message': 'no exploration result'}), 400
 
-    # 检查是否是 NodeMapBuilder
     if exploration_status.get('version') != 'node':
-        return jsonify({'success': False, 'message': '当前不是 Node 驱动探索结果'}), 400
+        return jsonify({'success': False, 'message': 'current result is not node exploration'}), 400
 
     try:
-        import os
-        from datetime import datetime
+        data = request.json or {}
+        output_root = str(data.get('output_root') or 'map_repo').strip() or 'map_repo'
+        package_name = str(data.get('package') or exploration_status.get('package') or 'unknown').strip() or 'unknown'
 
-        # 获取包名
-        package_name = exploration_status.get('package', 'unknown')
+        nav_map_obj = None
+        if getattr(explorer_instance, 'nav_map', None):
+            nav_map_obj = explorer_instance.nav_map.to_dict()
+        if not isinstance(nav_map_obj, dict):
+            return jsonify({'success': False, 'message': 'missing nav_map data'}), 400
 
-        # 创建保存目录: maps/{package_name}/
-        base_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'maps')
-        save_dir = os.path.join(base_dir, package_name.replace('.', '_'))
-        os.makedirs(save_dir, exist_ok=True)
+        run_result = exploration_status.get('result') or {}
+        run_stats = {
+            'total_pages': int(run_result.get('total_pages') or 0),
+            'total_transitions': int(run_result.get('total_transitions') or 0),
+            'total_actions': int(run_result.get('actions') or 0),
+            'exploration_time_seconds': float(run_result.get('time') or 0.0),
+        }
 
-        # 生成文件名（带时间戳）
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        filename = f'nav_map_{timestamp}.json'
-        filepath = os.path.join(save_dir, filename)
-
-        # 保存
-        explorer_instance.save(filepath)
+        save_info = _save_nav_map_to_repo(
+            package_name=package_name,
+            nav_map_obj=nav_map_obj,
+            run_stats=run_stats,
+            config_snapshot={},
+            source='manual_save',
+            output_root=output_root,
+        )
 
         return jsonify({
             'success': True,
-            'message': f'已保存到 {filepath}',
-            'filepath': filepath
+            'message': f'saved map-repo artifact: {save_info["map_path_rel"]}',
+            'filepath': save_info['map_path'],
+            'map_id': save_info['map_id'],
+            'meta_path': save_info['meta_path'],
+            'sha256': save_info['sha256'],
         })
-
     except Exception as e:
         import traceback
-        return jsonify({
-            'success': False,
-            'message': str(e),
-            'traceback': traceback.format_exc()
-        }), 500
+        return jsonify({'success': False, 'message': str(e), 'traceback': traceback.format_exc()}), 500
 
 
 @app.route('/api/debug/som_annotate', methods=['POST'])
 def debug_som_annotate():
-    """调试：获取 SoM 标注截图"""
+    """璋冭瘯锛氳幏鍙?SoM 鏍囨敞鎴浘"""
     global client
 
     error_response = _require_client_response()
@@ -3490,36 +3862,36 @@ def debug_som_annotate():
         return error_response
 
     if not VLM_AVAILABLE:
-        return jsonify({'success': False, 'message': 'VLM 模块不可用'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     try:
         import time
 
-        # 获取屏幕尺寸
+        # 鑾峰彇灞忓箷灏哄
         success, width, height, _ = client.get_screen_size()
         if not success:
             width, height = 1080, 2400
 
-        # 获取截图
+        # 鑾峰彇鎴浘
         screenshot = client.request_screenshot()
         if not screenshot:
-            return jsonify({'success': False, 'message': '截图失败'}), 400
+            return jsonify({'success': False, 'message': '鎴浘澶辫触'}), 400
 
-        # 获取 XML 节点
+        # 鑾峰彇 XML 鑺傜偣
         actions = client.dump_actions()
         xml_nodes = actions.get('nodes', [])
 
-        # 创建标注截图
+        # 鍒涘缓鏍囨敞鎴浘
         start = time.time()
         annotated, nodes, description = create_annotated_screenshot(
             screenshot, xml_nodes, width, height
         )
         elapsed = (time.time() - start) * 1000
 
-        # 返回结果
+        # 杩斿洖缁撴灉
         return jsonify({
             'success': True,
-            'message': f'标注完成: {len(nodes)} 个节点',
+            'message': 'message',
             'response': {
                 'node_count': len(nodes),
                 'original_count': len(xml_nodes),
@@ -3552,18 +3924,18 @@ def debug_som_annotate():
 
 @app.route('/api/explore/screenshot/<path:filename>', methods=['GET'])
 def explore_screenshot(filename):
-    """获取探索过程中保存的截图"""
+    """鑾峰彇鎺㈢储杩囩▼涓繚瀛樼殑鎴浘"""
     import os
 
-    # 安全检查：只允许访问 maps 目录下的文件
+    # 瀹夊叏妫€鏌ワ細鍙厑璁歌闂?maps 鐩綍涓嬬殑鏂囦欢
     base_dir = os.path.abspath('./maps')
     file_path = os.path.abspath(os.path.join(base_dir, filename))
 
     if not file_path.startswith(base_dir):
-        return jsonify({'success': False, 'message': '非法路径'}), 403
+        return jsonify({'success': False, 'message': '闈炴硶璺緞'}), 403
 
     if not os.path.exists(file_path):
-        return jsonify({'success': False, 'message': '文件不存在'}), 404
+        return jsonify({'success': False, 'message': 'request failed'}), 404
 
     return Response(
         open(file_path, 'rb').read(),
@@ -3573,11 +3945,11 @@ def explore_screenshot(filename):
 
 @app.route('/api/explore/result/overview', methods=['GET'])
 def explore_result_overview():
-    """获取探索结果 - app_overview.json"""
+    """鑾峰彇鎺㈢储缁撴灉 - app_overview.json"""
     global explorer_instance, exploration_result
 
     if not exploration_result:
-        return jsonify({'success': False, 'message': '没有探索结果'}), 400
+        return jsonify({'success': False, 'message': '娌℃湁鎺㈢储缁撴灉'}), 400
 
     try:
         overview = explorer_instance.generate_overview_json()
@@ -3596,11 +3968,11 @@ def explore_result_overview():
 
 @app.route('/api/explore/result/pages', methods=['GET'])
 def explore_result_pages():
-    """获取所有页面列表"""
+    """Get all discovered pages from exploration result."""
     global exploration_result
 
     if not exploration_result:
-        return jsonify({'success': False, 'message': '没有探索结果'}), 400
+        return jsonify({'success': False, 'message': '娌℃湁鎺㈢储缁撴灉'}), 400
 
     try:
         pages_summary = []
@@ -3623,16 +3995,16 @@ def explore_result_pages():
 
 @app.route('/api/explore/result/page/<page_id>', methods=['GET'])
 def explore_result_page(page_id):
-    """获取指定页面详情"""
+    """鑾峰彇鎸囧畾椤甸潰璇︽儏"""
     global exploration_result
 
     if not exploration_result:
-        return jsonify({'success': False, 'message': '没有探索结果'}), 400
+        return jsonify({'success': False, 'message': '娌℃湁鎺㈢储缁撴灉'}), 400
 
     if page_id not in exploration_result.pages:
         return jsonify({
             'success': False,
-            'message': f'页面 {page_id} 不存在',
+            'message': 'message',
             'available': list(exploration_result.pages.keys())
         }), 404
 
@@ -3672,11 +4044,11 @@ def explore_result_page(page_id):
 
 @app.route('/api/explore/save', methods=['POST'])
 def explore_save():
-    """保存探索结果到文件"""
+    """Save exploration result to file."""
     global explorer_instance
 
     if not explorer_instance:
-        return jsonify({'success': False, 'message': '没有探索结果'}), 400
+        return jsonify({'success': False, 'message': '娌℃湁鎺㈢储缁撴灉'}), 400
 
     data = request.json or {}
     output_dir = data.get('output_dir', './maps')
@@ -3686,7 +4058,7 @@ def explore_save():
 
         return jsonify({
             'success': True,
-            'message': f'已保存到 {output_dir}',
+            'message': f'宸蹭繚瀛樺埌 {output_dir}',
             'path': output_dir
         })
     except Exception as e:
@@ -3699,14 +4071,14 @@ def explore_save():
 
 
 # =============================================================================
-# VLM 调试 API
+# VLM 璋冭瘯 API
 # =============================================================================
 
 @app.route('/api/vlm/config', methods=['GET'])
 def vlm_config_get():
-    """获取 VLM 配置"""
+    """鑾峰彇 VLM 閰嶇疆"""
     if not VLM_AVAILABLE:
-        return jsonify({'success': False, 'message': 'VLM 模块不可用'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     try:
         from map_builder.vlm_engine import get_config as get_vlm_config
@@ -3715,13 +4087,13 @@ def vlm_config_get():
             'success': True,
             'data': {
                 'api_base_url': config.api_base_url,
-                'api_key': '***' if config.api_key else '',  # 隐藏 API Key
+                'api_key': '***' if config.api_key else '',  # 闅愯棌 API Key
                 'model_name': config.model_name,
                 'enable_od': config.enable_od,
                 'enable_ocr': config.enable_ocr,
                 'enable_caption': config.enable_caption,
                 'timeout': config.timeout,
-                # 并发配置
+                # 骞跺彂閰嶇疆
                 'concurrent_enabled': config.concurrent_enabled,
                 'concurrent_requests': config.concurrent_requests,
                 'occurrence_threshold': config.occurrence_threshold or 2
@@ -3733,9 +4105,9 @@ def vlm_config_get():
 
 @app.route('/api/vlm/config', methods=['POST'])
 def vlm_config_set():
-    """设置 VLM 配置"""
+    """璁剧疆 VLM 閰嶇疆"""
     if not VLM_AVAILABLE:
-        return jsonify({'success': False, 'message': 'VLM 模块不可用'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     try:
         from map_builder.vlm_engine import VLMConfig, set_config, get_config
@@ -3743,7 +4115,7 @@ def vlm_config_set():
         data = request.json
         current_config = get_config()
 
-        # 创建新配置，保留未修改的字段
+        # 鍒涘缓鏂伴厤缃紝淇濈暀鏈慨鏀圭殑瀛楁
         new_config = VLMConfig(
             api_base_url=data.get('api_base_url', current_config.api_base_url),
             api_key=data.get('api_key', current_config.api_key) if data.get('api_key') != '***' else current_config.api_key,
@@ -3752,7 +4124,7 @@ def vlm_config_set():
             enable_ocr=data.get('enable_ocr', current_config.enable_ocr),
             enable_caption=data.get('enable_caption', current_config.enable_caption),
             timeout=data.get('timeout', current_config.timeout),
-            # 并发配置
+            # 骞跺彂閰嶇疆
             concurrent_enabled=data.get('concurrent_enabled', current_config.concurrent_enabled),
             concurrent_requests=data.get('concurrent_requests', current_config.concurrent_requests),
             occurrence_threshold=data.get('occurrence_threshold', current_config.occurrence_threshold or 2)
@@ -3762,7 +4134,7 @@ def vlm_config_set():
 
         return jsonify({
             'success': True,
-            'message': 'VLM 配置已更新'
+            'message': 'message',
         })
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
@@ -3770,9 +4142,9 @@ def vlm_config_set():
 
 @app.route('/api/vlm/test', methods=['POST'])
 def vlm_test():
-    """测试 VLM API 连接"""
+    """娴嬭瘯 VLM API 杩炴帴"""
     if not VLM_AVAILABLE:
-        return jsonify({'success': False, 'message': 'VLM 模块不可用'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     try:
         from map_builder.vlm_engine import VLMConfig, VLMEngine
@@ -3784,9 +4156,9 @@ def vlm_test():
         model_name = data.get('model_name', 'qwen-vl-plus')
 
         if not api_url or not api_key:
-            return jsonify({'success': False, 'message': '请提供 API URL 和 API Key'}), 400
+            return jsonify({'success': False, 'message': '璇锋彁渚?API URL 鍜?API Key'}), 400
 
-        # 创建临时配置
+        # 鍒涘缓涓存椂閰嶇疆
         test_config = VLMConfig(
             api_base_url=api_url,
             api_key=api_key,
@@ -3794,10 +4166,9 @@ def vlm_test():
             timeout=30
         )
 
-        # 创建引擎并测试
-        engine = VLMEngine(test_config)
+        # 鍒涘缓寮曟搸骞舵祴璇?        engine = VLMEngine(test_config)
 
-        # 创建一个简单的测试图片 (1x1 红色像素)
+        # 鍒涘缓涓€涓畝鍗曠殑娴嬭瘯鍥剧墖 (1x1 绾㈣壊鍍忕礌)
         from PIL import Image
         from io import BytesIO
         img = Image.new('RGB', (100, 100), color='red')
@@ -3805,12 +4176,12 @@ def vlm_test():
         img.save(buffer, format='PNG')
         test_image = buffer.getvalue()
 
-        # 调用 API
-        response = engine._call_api(test_image, "这是什么颜色的图片？请简短回答。")
+        # 璋冪敤 API
+        response = engine._call_api(test_image, "Describe this image color in one short sentence.")
 
         return jsonify({
             'success': True,
-            'message': f'API 连接成功，模型: {model_name}',
+            'message': f'API 杩炴帴鎴愬姛锛屾ā鍨? {model_name}',
             'response': response[:500] if response else ''
         })
 
@@ -3818,18 +4189,18 @@ def vlm_test():
         import traceback
         return jsonify({
             'success': False,
-            'message': f'API 测试失败: {str(e)}',
+            'message': f'API 娴嬭瘯澶辫触: {str(e)}',
             'traceback': traceback.format_exc()
         }), 500
 
 
 @app.route('/api/debug/vlm_status', methods=['GET', 'POST'])
 def debug_vlm_status():
-    """检测 VLM 可用性"""
+    """Check VLM availability and runtime configuration."""
     try:
         status = {
             'available': VLM_AVAILABLE,
-            'message': 'VLM 模块可用' if VLM_AVAILABLE else 'VLM 模块不可用'
+            'message': 'message',
         }
 
         if VLM_AVAILABLE:
@@ -3852,7 +4223,7 @@ def debug_vlm_status():
 
 @app.route('/api/debug/vlm_test', methods=['POST'])
 def debug_vlm_test():
-    """测试 VLM 推理"""
+    """娴嬭瘯 VLM 鎺ㄧ悊"""
     global client
 
     error_response = _require_client_response()
@@ -3860,24 +4231,23 @@ def debug_vlm_test():
         return error_response
 
     if not VLM_AVAILABLE:
-        return jsonify({'success': False, 'message': 'VLM 模块不可用'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     try:
         import time
 
-        # 获取截图
+        # 鑾峰彇鎴浘
         screenshot = client.request_screenshot()
         if not screenshot:
-            return jsonify({'success': False, 'message': '截图失败'}), 400
+            return jsonify({'success': False, 'message': '鎴浘澶辫触'}), 400
 
-        # VLM 推理
+        # VLM 鎺ㄧ悊
         engine = VLMEngine()
         start = time.time()
         result = engine.infer(screenshot)
         elapsed = (time.time() - start) * 1000
 
-        # 序列化结果
-        detections = []
+        # 搴忓垪鍖栫粨鏋?        detections = []
         for det in result.detections:
             detections.append({
                 'label': det.label,
@@ -3887,7 +4257,7 @@ def debug_vlm_test():
 
         return jsonify({
             'success': True,
-            'message': f'VLM 推理成功: {len(detections)} 个检测, {elapsed:.0f}ms',
+            'message': f'VLM 鎺ㄧ悊鎴愬姛: {len(detections)} 涓娴? {elapsed:.0f}ms',
             'response': {
                 'page_caption': result.page_caption,
                 'detections': detections,
@@ -3906,7 +4276,7 @@ def debug_vlm_test():
 
 @app.route('/api/debug/analyze_page', methods=['POST'])
 def debug_analyze_page():
-    """分析当前页面 (VLM + XML 融合)"""
+    """鍒嗘瀽褰撳墠椤甸潰 (VLM + XML 铻嶅悎)"""
     global client
 
     error_response = _require_client_response()
@@ -3914,46 +4284,42 @@ def debug_analyze_page():
         return error_response
 
     if not VLM_AVAILABLE:
-        return jsonify({'success': False, 'message': 'VLM 模块不可用'}), 400
+        return jsonify({'success': False, 'message': 'request failed'}), 400
 
     try:
         import time
 
-        # 获取基础信息
+        # 鑾峰彇鍩虹淇℃伅
         success, package, activity = client.get_activity()
         if not success:
-            return jsonify({'success': False, 'message': '获取 Activity 失败'}), 400
+            return jsonify({'success': False, 'message': '鑾峰彇 Activity 澶辫触'}), 400
 
-        # 先获取 XML 节点（确保和截图是同一页面）
-        actions = client.dump_actions()
+        # 鍏堣幏鍙?XML 鑺傜偣锛堢‘淇濆拰鎴浘鏄悓涓€椤甸潰锛?        actions = client.dump_actions()
         raw_nodes = actions.get('nodes', [])
 
-        # 短暂延迟确保同步
+        # 鐭殏寤惰繜纭繚鍚屾
         time.sleep(0.1)
 
-        # 获取截图
+        # 鑾峰彇鎴浘
         screenshot = client.request_screenshot()
 
-        # VLM 推理 - 使用并发推理（如果已配置）
-        vlm_engine = VLMEngine()
+        # VLM 鎺ㄧ悊 - 浣跨敤骞跺彂鎺ㄧ悊锛堝鏋滃凡閰嶇疆锛?        vlm_engine = VLMEngine()
         start = time.time()
         vlm_result = vlm_engine.infer_concurrent(screenshot)
         vlm_time = (time.time() - start) * 1000
 
-        # XML 解析
+        # XML 瑙ｆ瀽
         xml_nodes = parse_xml_nodes(raw_nodes)
 
-        # 融合 - 降低阈值便于调试
-        fusion_engine = FusionEngine(iou_threshold=0.2)
+        # 铻嶅悎 - 闄嶄綆闃堝€间究浜庤皟璇?        fusion_engine = FusionEngine(iou_threshold=0.2)
         fused_nodes = fusion_engine.fuse(xml_nodes, vlm_result)
 
-        # 计算哈希
+        # 璁＄畻鍝堝笇
         page_manager = PageManager()
         structure_hash = page_manager.compute_structure_hash(fused_nodes)
         page_id = page_manager.generate_page_id(activity, structure_hash)
 
-        # 序列化融合结果
-        nodes_data = []
+        # 搴忓垪鍖栬瀺鍚堢粨鏋?        nodes_data = []
         for node in fused_nodes:
             nodes_data.append({
                 'node_id': node.node_id,
@@ -3969,19 +4335,19 @@ def debug_analyze_page():
                 'iou_score': round(node.iou_score, 3)
             })
 
-        # VLM 原始检测结果（用于调试）
+        # Raw VLM detections (for debugging)
         vlm_raw = []
-        for det in vlm_result.detections[:20]:  # 只返回前 20 个
+        for det in vlm_result.detections[:20]:
             vlm_raw.append({
                 'label': det.label,
                 'bbox': list(det.bbox),
                 'text': det.ocr_text
             })
 
-        # 获取融合统计
+        # 鑾峰彇铻嶅悎缁熻
         fusion_stats = fusion_engine.get_stats()
 
-        # XML 节点样本（用于调试）
+        # XML 鑺傜偣鏍锋湰锛堢敤浜庤皟璇曪級
         xml_sample = []
         for node in xml_nodes[:5]:
             xml_sample.append({
@@ -3993,7 +4359,7 @@ def debug_analyze_page():
 
         return jsonify({
             'success': True,
-            'message': f'分析完成: VLM 检测 {len(vlm_result.detections)} 个, 匹配 {len(fused_nodes)} 个',
+            'message': 'message',
             'response': {
                 'page_id': page_id,
                 'activity': activity,
@@ -4004,7 +4370,7 @@ def debug_analyze_page():
                 'node_count': len(fused_nodes),
                 'clickable_count': len([n for n in fused_nodes if n.clickable]),
                 'image_size': list(vlm_result.image_size),
-                # 并发推理信息
+                # 骞跺彂鎺ㄧ悊淇℃伅
                 'concurrent_enabled': vlm_result.concurrent_enabled,
                 'concurrent_requests': vlm_result.concurrent_requests,
                 'concurrent_results': vlm_result.concurrent_results,
@@ -4015,9 +4381,8 @@ def debug_analyze_page():
                     'matched': fusion_stats.get("matched_count", 0),
                     'unmatched_vlm': fusion_stats.get("unmatched_vlm", 0)
                 },
-                'vlm_raw': vlm_raw,  # VLM 原始检测（调试用）
-                'xml_sample': xml_sample,  # XML 节点样本（调试用）
-                'nodes': nodes_data
+                'vlm_raw': vlm_raw,  # VLM 鍘熷妫€娴嬶紙璋冭瘯鐢級
+                'xml_sample': xml_sample,  # XML 鑺傜偣鏍锋湰锛堣皟璇曠敤锛?                'nodes': nodes_data
             }
         })
 
@@ -4031,7 +4396,7 @@ def debug_analyze_page():
 
 
 def cmd_cortex_fsm_run():
-    """端侧 Cortex FSM：INIT -> APP_RESOLVE -> ROUTE_PLAN -> ROUTING -> VISION_ACT。"""
+    """Run device-side Cortex FSM: INIT -> APP_RESOLVE -> ROUTE_PLAN -> ROUTING -> VISION_ACT."""
     error_response = _require_client_response()
     if error_response:
         return error_response
@@ -4055,9 +4420,9 @@ def cmd_cortex_fsm_run():
         ok = bool(result.get('ok')) and result.get('status') == 'submitted'
         task_id = (result.get('task_id') or '').strip()
         if ok:
-            msg = f'CORTEX_FSM_RUN 已提交: task_id={task_id or "<unknown>"}'
+            msg = f'CORTEX_FSM_RUN 宸叉彁浜? task_id={task_id or "<unknown>"}'
         else:
-            msg = f'CORTEX_FSM_RUN 提交失败: {result}'
+            msg = f'CORTEX_FSM_RUN 鎻愪氦澶辫触: {result}'
         return jsonify({
             'success': ok,
             'message': msg,
@@ -4071,12 +4436,16 @@ if __name__ == '__main__':
     print("=" * 60)
     print("LXB Web Console")
     print("=" * 60)
-    print("访问地址: http://localhost:5000")
+    print("璁块棶鍦板潃: http://localhost:5000")
     if VLM_AVAILABLE:
-        print("VLM 模块: 可用")
+        print("VLM 妯″潡: 鍙敤")
     else:
-        print("VLM 模块: 不可用 (需要安装 torch, transformers)")
-    print("按 Ctrl+C 停止服务")
+        print("VLM 妯″潡: 涓嶅彲鐢?(闇€瑕佸畨瑁?torch, transformers)")
+    print("鎸?Ctrl+C 鍋滄鏈嶅姟")
     print("=" * 60)
 
     app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
+
+
+
+

@@ -520,19 +520,33 @@
             <div class="card">
                 <h3>⚙️ 配置</h3>
 
-                <!-- 应用选择 -->
+                <!-- 应用选择 + 队列 -->
                 <div class="form-group">
                     <label>选择应用</label>
                     <div style="display: flex; gap: 6px;">
-                        <select id="app-select" style="flex: 1;" onchange="onAppSelect()">
-                            <option value="">-- 刷新获取列表 --</option>
-                        </select>
+                        <select id="app-select" style="flex: 1;" multiple size="8" onchange="onAppSelect()"></select>
                         <button class="btn btn-secondary" onclick="refreshAppList()" title="刷新" style="padding: 6px 10px;">🔄</button>
+                    </div>
+                    <div style="margin-top: 6px; display: flex; gap: 6px;">
+                        <button class="btn btn-secondary" style="padding: 6px 10px; flex: 1;" onclick="addSelectedAppsToQueue()">+ 添加所选</button>
+                        <button class="btn btn-secondary" style="padding: 6px 10px; flex: 1;" onclick="clearPackageQueue()">清空队列</button>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>包名</label>
                     <input type="text" id="package-name" placeholder="com.example.app">
+                    <div style="margin-top: 6px;">
+                        <button class="btn btn-secondary" style="padding: 6px 10px; width: 100%;" onclick="addTypedPackageToQueue()">+ 添加手输包名</button>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>包名队列 (<span id="queue-count">0</span>)</label>
+                    <div id="package-queue" style="max-height: 120px; overflow-y: auto; border: 1px solid #334155; border-radius: 6px; padding: 6px; background: #0b1220;">
+                        <div style="font-size: 11px; color: #64748b;">队列为空</div>
+                    </div>
+                    <div id="queue-runtime" style="margin-top: 6px; font-size: 11px; color: #64748b;">
+                        队列空闲
+                    </div>
                 </div>
 
                 <!-- 探索参数 -->
@@ -682,6 +696,9 @@
         let pollInterval = null;
         let realtimeInterval = null;
         let allLogs = [];
+        let packageQueue = [];
+        let activeRunMode = '';
+        let runActive = false;
         const LOG_MAX = 2000;
 
         // 页面加载时初始化
@@ -691,6 +708,8 @@
             setInterval(checkConnection, 5000);
             document.getElementById('vlm-concurrent-enabled').addEventListener('change', updateConcurrentConfigVisibility);
             setupLogFilters();
+            renderPackageQueue();
+            refreshAppList();
         });
 
         // VLM 配置折叠
@@ -1014,13 +1033,13 @@
             }
         }
 
-        // ========== 应用列表功能 ==========
+        // ========== 应用列表 + 队列 ==========
         let appList = [];
 
         // 刷新应用列表
         async function refreshAppList() {
             const select = document.getElementById('app-select');
-            select.innerHTML = '<option value="">加载中...</option>';
+            select.innerHTML = '';
             select.disabled = true;
 
             try {
@@ -1031,8 +1050,8 @@
                 });
                 const data = await res.json();
 
-                if (data.success && data.response.apps) {
-                    appList = data.response.apps;
+                if (data.success && data.response && Array.isArray(data.response.apps)) {
+                    appList = data.response.apps.slice();
 
                     // 优先按可读名称排序，再按包名排序
                     appList.sort((a, b) => {
@@ -1043,7 +1062,6 @@
                     });
 
                     // 构建选项
-                    select.innerHTML = '<option value="">-- 选择应用 (' + appList.length + ' 个) --</option>';
                     appList.forEach(app => {
                         const option = document.createElement('option');
                         option.value = app.package;
@@ -1061,25 +1079,143 @@
 
                     addLog('info', `获取到 ${appList.length} 个用户应用`);
                 } else {
-                    select.innerHTML = '<option value="">获取失败，请重试</option>';
                     addLog('error', data.message || '获取应用列表失败');
                 }
             } catch (e) {
-                select.innerHTML = '<option value="">获取失败，请重试</option>';
                 addLog('error', `获取应用列表失败: ${e.message}`);
             }
 
             select.disabled = false;
         }
 
-        // 选择应用
+        // 选择应用（多选时用首个同步到输入框）
         function onAppSelect() {
             const select = document.getElementById('app-select');
             const packageInput = document.getElementById('package-name');
-
-            if (select.value) {
-                packageInput.value = select.value;
+            if (select.selectedOptions && select.selectedOptions.length > 0) {
+                packageInput.value = select.selectedOptions[0].value;
             }
+        }
+
+        function addPackageToQueue(pkg) {
+            const value = String(pkg || '').trim();
+            if (!value) return;
+            if (packageQueue.includes(value)) return;
+            packageQueue.push(value);
+            renderPackageQueue();
+            renderQueueRuntime();
+        }
+
+        function addSelectedAppsToQueue() {
+            const select = document.getElementById('app-select');
+            if (!select || !select.selectedOptions || select.selectedOptions.length === 0) {
+                addLog('warn', '请先选择应用');
+                return;
+            }
+            for (const opt of select.selectedOptions) {
+                addPackageToQueue(opt.value);
+            }
+            addLog('info', `队列大小: ${packageQueue.length}`);
+        }
+
+        function addTypedPackageToQueue() {
+            const input = document.getElementById('package-name');
+            const pkg = String(input.value || '').trim();
+            if (!pkg) {
+                addLog('warn', '请先输入包名');
+                return;
+            }
+            addPackageToQueue(pkg);
+            addLog('info', `已添加: ${pkg}`);
+        }
+
+        function removePackageFromQueue(index) {
+            if (index < 0 || index >= packageQueue.length) return;
+            const removed = packageQueue.splice(index, 1);
+            renderPackageQueue();
+            renderQueueRuntime();
+            if (removed.length > 0) {
+                addLog('info', `已移除: ${removed[0]}`);
+            }
+        }
+
+        function clearPackageQueue() {
+            packageQueue = [];
+            renderPackageQueue();
+            renderQueueRuntime();
+            addLog('info', '队列已清空');
+        }
+
+        function renderPackageQueue() {
+            const container = document.getElementById('package-queue');
+            const countEl = document.getElementById('queue-count');
+            if (!container || !countEl) return;
+            countEl.textContent = String(packageQueue.length);
+
+            if (packageQueue.length === 0) {
+                container.innerHTML = '<div style="font-size: 11px; color: #64748b;">队列为空</div>';
+                return;
+            }
+
+            container.innerHTML = packageQueue.map((pkg, idx) => `
+                <div style="display:flex;align-items:center;gap:6px;padding:4px 2px;border-bottom:1px solid #1e293b;">
+                    <span style="font-size:11px;color:#cbd5e1;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${pkg}</span>
+                    <button class="btn btn-secondary" style="padding:2px 6px;font-size:11px;" onclick="removePackageFromQueue(${idx})">x</button>
+                </div>
+            `).join('');
+        }
+
+        function setRunUi(running, mode = '') {
+            const btnStart = document.getElementById('btn-start');
+            const btnPause = document.getElementById('btn-pause');
+            const btnResume = document.getElementById('btn-resume');
+            const btnStop = document.getElementById('btn-stop');
+            if (!btnStart || !btnPause || !btnResume || !btnStop) return;
+
+            if (!running) {
+                btnStart.classList.remove('hidden');
+                btnPause.classList.add('hidden');
+                btnResume.classList.add('hidden');
+                btnStop.classList.add('hidden');
+                return;
+            }
+
+            btnStart.classList.add('hidden');
+            btnStop.classList.remove('hidden');
+            if (mode === 'queue') {
+                btnPause.classList.add('hidden');
+                btnResume.classList.add('hidden');
+            } else {
+                btnPause.classList.remove('hidden');
+                btnResume.classList.add('hidden');
+            }
+        }
+
+        function stopRunPolling() {
+            if (pollInterval) {
+                clearInterval(pollInterval);
+                pollInterval = null;
+            }
+            stopRealtimePolling();
+        }
+
+        function renderQueueRuntime(queue) {
+            const el = document.getElementById('queue-runtime');
+            if (!el) return;
+
+            const q = queue || {};
+            const pending = Array.isArray(q.pending) ? q.pending.length : 0;
+            const completed = Array.isArray(q.completed) ? q.completed.length : 0;
+            const failed = Array.isArray(q.failed) ? q.failed.length : 0;
+            const current = q.current && q.current.package ? q.current.package : '-';
+
+            if (!q.running && !runActive) {
+                el.textContent = '队列空闲';
+                return;
+            }
+
+            const status = q.running ? '运行中' : '已停止';
+            el.textContent = `队列${status} | 当前: ${current} | 待处理: ${pending} | 成功: ${completed} | 失败: ${failed}`;
         }
 
         // 获取截图
@@ -1400,65 +1536,84 @@
             document.querySelector(`.ui-element[data-index="${idx}"]`)?.classList.add('highlight');
         }
 
-        // 开始探索
+        // 开始探索（单包 或 Node 队列）
         async function startExploration() {
+            const version = document.getElementById('explore-version').value;
             const packageName = document.getElementById('package-name').value.trim();
-            if (!packageName) {
+            const useQueueRun = version === 'node' && packageQueue.length > 0;
+
+            if (!useQueueRun && !packageName) {
                 alert('请输入应用包名');
                 return;
             }
+            if (runActive) {
+                addLog('warn', '已有任务在运行');
+                return;
+            }
 
-            const version = document.getElementById('explore-version').value;
             const exploreMode = document.getElementById('explore-mode').value;
             const clickDelay = parseFloat(document.getElementById('click-delay').value) || 1.5;
-            const config = {
+            const baseConfig = {
                 package: packageName,
                 max_pages: parseInt(document.getElementById('max-pages').value),
                 max_depth: parseInt(document.getElementById('max-depth').value),
-                // 探索模式配置
                 explore_mode: exploreMode,
                 click_delay: clickDelay,
-                // VLM 并发配置 (v2)
                 vlm_concurrent_enabled: document.getElementById('vlm-concurrent-enabled').checked,
                 vlm_concurrent_requests: parseInt(document.getElementById('vlm-concurrent-requests').value) || 5,
                 vlm_occurrence_threshold: parseInt(document.getElementById('vlm-occurrence-threshold').value) || 2
             };
 
-            // 更新按钮状态
-            document.getElementById('btn-start').classList.add('hidden');
-            document.getElementById('btn-pause').classList.remove('hidden');
-            document.getElementById('btn-resume').classList.add('hidden');
-            document.getElementById('btn-stop').classList.remove('hidden');
+            allLogs = [];
             document.getElementById('logs').innerHTML = '';
             logIndex = 0;
+            document.getElementById('progress-fill').style.width = '0%';
 
-            addLog('info', `[${version}] 开始探索: ${packageName}`);
-
-            // 显示版本特性
-            if (version === 'node') {
-                const modeStr = exploreMode === 'parallel' ? '并行' : '串行';
-                addLog('info', `🎯 Node驱动 (${modeStr}模式): 以节点为单位探索，每次从首页开始`);
-                if (exploreMode === 'parallel') {
-                    addLog('info', `⚡ 并行模式: VLM 后台推理，点击延迟 ${clickDelay}s`);
-                }
-            } else if (version === 'coord') {
-                addLog('info', `📍 坐标驱动: VLM 输出坐标 → 映射 XML → 点击`);
-            } else if (version === 'som') {
-                addLog('info', `📸 SoM 模式: 截图标注 + VLM 选择编号`);
-            } else if (version === 'v3') {
-                addLog('info', `🧠 语义 ID 去重 + 精确路径记录`);
-            } else {
-                if (config.vlm_concurrent_enabled) {
-                    addLog('info', `🚀 VLM 并发模式: ${config.vlm_concurrent_requests} 次并发`);
-                }
-            }
-
-            // 切换到探索模式
+            activeRunMode = useQueueRun ? 'queue' : 'single';
+            runActive = true;
+            setRunUi(true, activeRunMode);
+            renderQueueRuntime();
             startRealtimePolling();
-
+            if (pollInterval) clearInterval(pollInterval);
             pollInterval = setInterval(pollLogs, 1000);
 
-            // 根据版本选择 API
+            if (useQueueRun) {
+                const queuePayload = {
+                    ...baseConfig,
+                    packages: packageQueue.slice(),
+                    retry_max: 2,
+                    auto_save: true,
+                    output_root: 'map_repo'
+                };
+                addLog('info', `[node-queue] 启动，包数量: ${queuePayload.packages.length}`);
+                try {
+                    const res = await fetch(`${API_BASE}/api/explore/node/queue/start`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(queuePayload)
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        addLog('info', data.message || '队列已提交');
+                    } else {
+                        addLog('error', data.message || '队列启动失败');
+                        runActive = false;
+                        activeRunMode = '';
+                        stopRunPolling();
+                        setRunUi(false);
+                        renderQueueRuntime();
+                    }
+                } catch (e) {
+                    addLog('error', `队列启动失败: ${e.message}`);
+                    runActive = false;
+                    activeRunMode = '';
+                    stopRunPolling();
+                    setRunUi(false);
+                    renderQueueRuntime();
+                }
+                return;
+            }
+
             let apiUrl;
             if (version === 'node') {
                 apiUrl = `${API_BASE}/api/explore/node/start`;
@@ -1472,33 +1627,28 @@
                 apiUrl = `${API_BASE}/api/explore/start`;
             }
 
+            addLog('info', `[${version}] 开始探索: ${packageName}`);
             try {
                 const res = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(config)
+                    body: JSON.stringify(baseConfig)
                 });
                 const data = await res.json();
-
-                clearInterval(pollInterval);
-                stopRealtimePolling();
-
                 if (data.success) {
-                    addLog('info', data.message);
+                    addLog('info', data.message || '任务完成');
                 } else {
-                    addLog('error', data.message);
+                    addLog('error', data.message || '任务失败');
                 }
             } catch (e) {
-                clearInterval(pollInterval);
-                stopRealtimePolling();
                 addLog('error', `探索失败: ${e.message}`);
+            } finally {
+                runActive = false;
+                activeRunMode = '';
+                stopRunPolling();
+                setRunUi(false);
+                renderQueueRuntime();
             }
-
-            // 恢复按钮状态
-            document.getElementById('btn-start').classList.remove('hidden');
-            document.getElementById('btn-pause').classList.add('hidden');
-            document.getElementById('btn-resume').classList.add('hidden');
-            document.getElementById('btn-stop').classList.add('hidden');
         }
 
         // 暂停探索
@@ -1553,7 +1703,7 @@
             }
         }
 
-        // 轮询日志
+        // 轮询日志 + 状态
         async function pollLogs() {
             try {
                 const res = await fetch(`${API_BASE}/api/explore/logs?since=${logIndex}`);
@@ -1568,12 +1718,24 @@
 
                 const statusRes = await fetch(`${API_BASE}/api/explore/status`);
                 const status = await statusRes.json();
+                const queueState = status.queue || {};
+                renderQueueRuntime(queueState);
 
                 if (status.progress) {
                     const pages = status.progress.pages_discovered || 0;
-                    const maxPages = parseInt(document.getElementById('max-pages').value);
+                    const maxPages = Math.max(1, parseInt(document.getElementById('max-pages').value) || 1);
                     const percent = Math.min(100, (pages / maxPages) * 100);
                     document.getElementById('progress-fill').style.width = `${percent}%`;
+                }
+
+                if (runActive && activeRunMode === 'queue' && !queueState.running) {
+                    runActive = false;
+                    activeRunMode = '';
+                    stopRunPolling();
+                    setRunUi(false);
+                    const completed = Array.isArray(queueState.completed) ? queueState.completed.length : 0;
+                    const failed = Array.isArray(queueState.failed) ? queueState.failed.length : 0;
+                    addLog('info', `[queue] 完成: success=${completed}, failed=${failed}`);
                 }
             } catch (e) {
                 console.error('Poll error:', e);

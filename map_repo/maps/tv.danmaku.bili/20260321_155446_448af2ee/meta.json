@@ -1,0 +1,31 @@
+{
+  "schema_version": "lxb.map.meta.v1",
+  "package": "tv.danmaku.bili",
+  "map_id": "20260321_155446_448af2ee",
+  "generated_at": "2026-03-21T07:54:46.635538+00:00",
+  "source": "queue_auto",
+  "builder": {
+    "name": "LXB-MapBuilder",
+    "track": "node_v5"
+  },
+  "config": {
+    "max_pages": 100,
+    "max_depth": 4,
+    "max_time_seconds": 1800,
+    "action_delay_ms": 800,
+    "explore_mode": "parallel",
+    "click_delay": 3.0
+  },
+  "stats": {
+    "total_pages": 64,
+    "total_transitions": 67,
+    "total_actions": 210,
+    "exploration_time_seconds": 1811.0528292655945
+  },
+  "artifacts": {
+    "map_path": "maps/tv.danmaku.bili/20260321_155446_448af2ee/nav_map.json.gz",
+    "sha256": "448af2ee2d5d241d62f9f42c2392f8ea880e0924bafbd3c9df53962899407f02",
+    "bytes_gzip": 6799,
+    "bytes_json": 46703
+  }
+}

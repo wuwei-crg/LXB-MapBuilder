@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LXB Map Viewer</title>
     <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <script src="https://unpkg.com/pako@2.1.0/dist/pako.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body {
@@ -392,7 +393,7 @@
             <div class="card">
                 <h3>📂 加载 Map</h3>
                 <div class="file-upload" onclick="document.getElementById('file-input').click()">
-                    <input type="file" id="file-input" accept=".json" onchange="loadMapFile(event)">
+                    <input type="file" id="file-input" accept=".json,.json.gz,.gz" onchange="loadMapFile(event)">
                     <div class="file-upload-icon">📄</div>
                     <div class="file-upload-text">点击选择 JSON 文件<br>或拖拽到此处</div>
                 </div>
@@ -557,21 +558,52 @@
             renderMap();
         }
 
-        // 加载本地文件
-        function loadMapFile(event) {
-            const file = event.target.files[0];
+        // 加载本地文件（支持 .json / .json.gz）
+        async function loadMapFile(event) {
+            const input = event.target;
+            const file = input.files[0];
             if (!file) return;
 
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    mapData = JSON.parse(e.target.result);
-                    renderMap();
-                } catch (err) {
-                    alert('JSON 解析失败: ' + err.message);
-                }
-            };
-            reader.readAsText(file);
+            try {
+                mapData = await parseMapFile(file);
+                renderMap();
+            } catch (err) {
+                alert('加载文件失败: ' + err.message);
+            } finally {
+                // 允许重复选择同一个文件再次触发 change
+                input.value = '';
+            }
+        }
+
+        function isGzipBytes(bytes) {
+            return bytes && bytes.length >= 2 && bytes[0] === 0x1f && bytes[1] === 0x8b;
+        }
+
+        async function gunzipToText(arrayBuffer) {
+            if (typeof DecompressionStream !== 'undefined') {
+                const stream = new Blob([arrayBuffer]).stream().pipeThrough(new DecompressionStream('gzip'));
+                return await new Response(stream).text();
+            }
+            if (window.pako && typeof window.pako.ungzip === 'function') {
+                return window.pako.ungzip(new Uint8Array(arrayBuffer), { to: 'string' });
+            }
+            throw new Error('当前浏览器不支持 gzip 解压');
+        }
+
+        async function parseMapFile(file) {
+            const ab = await file.arrayBuffer();
+            const bytes = new Uint8Array(ab);
+            const byName = String(file.name || '').toLowerCase().endsWith('.gz');
+            const byMagic = isGzipBytes(bytes);
+
+            let text;
+            if (byName || byMagic) {
+                text = await gunzipToText(ab);
+            } else {
+                text = new TextDecoder('utf-8').decode(bytes);
+            }
+
+            return JSON.parse(text);
         }
 
         // 从服务器加载

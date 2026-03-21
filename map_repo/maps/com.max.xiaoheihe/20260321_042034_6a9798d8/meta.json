@@ -1,0 +1,31 @@
+{
+  "schema_version": "lxb.map.meta.v1",
+  "package": "com.max.xiaoheihe",
+  "map_id": "20260321_042034_6a9798d8",
+  "generated_at": "2026-03-20T20:20:34.530779+00:00",
+  "source": "queue_auto",
+  "builder": {
+    "name": "LXB-MapBuilder",
+    "track": "node_v5"
+  },
+  "config": {
+    "max_pages": 100,
+    "max_depth": 4,
+    "max_time_seconds": 1800,
+    "action_delay_ms": 800,
+    "explore_mode": "parallel",
+    "click_delay": 3.0
+  },
+  "stats": {
+    "total_pages": 83,
+    "total_transitions": 86,
+    "total_actions": 216,
+    "exploration_time_seconds": 1820.478512763977
+  },
+  "artifacts": {
+    "map_path": "maps/com.max.xiaoheihe/20260321_042034_6a9798d8/nav_map.json.gz",
+    "sha256": "6a9798d85b288c9cea67c5c8656d24da4c454612055e69d2b5b37a7d64bea65a",
+    "bytes_gzip": 9650,
+    "bytes_json": 63169
+  }
+}
