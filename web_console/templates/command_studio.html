@@ -181,21 +181,21 @@
             <h1>LXB Command Studio</h1>
             <p>LXB-Link protocol command debugger</p>
         </div>
-        <div id="connection-status" class="status-pill">未连接</div>
+        <div id="connection-status" class="status-pill" data-i18n="cs.unconnected">未连接</div>
     </header>
 
     <div class="main">
         <aside class="panel left">
             <div class="left-scroll">
                 <div class="card connection-card">
-                    <h3>设备连接</h3>
+                    <h3 data-i18n="cs.device_connection">设备连接</h3>
                     <div class="row">
-                        <input type="text" id="host" value="192.168.1.100" placeholder="Android WiFi IP">
-                        <input type="number" id="port" value="12345" placeholder="端口" style="max-width: 120px;">
+                        <input type="text" id="host" value="192.168.1.100" placeholder="Android WiFi IP" data-i18n-placeholder="cs.host_placeholder">
+                        <input type="number" id="port" value="12345" placeholder="端口" style="max-width: 120px;" data-i18n-placeholder="cs.port_placeholder">
                     </div>
                     <div class="row">
-                        <button id="btn-connect" class="btn btn-primary">连接</button>
-                        <button id="btn-disconnect" class="btn btn-secondary" disabled>断开</button>
+                        <button id="btn-connect" class="btn btn-primary" data-i18n="cs.connect">连接</button>
+                        <button id="btn-disconnect" class="btn btn-secondary" disabled data-i18n="cs.disconnect">断开</button>
                     </div>
                 </div>
 
@@ -236,7 +236,7 @@
                 <div class="card">
                     <h3>Input Extension</h3>
                     <div class="row">
-                        <input type="text" id="input-text" value="Hello LXB" placeholder="输入文本">
+                        <input type="text" id="input-text" value="Hello LXB" placeholder="输入文本" data-i18n-placeholder="cs.input_text_placeholder">
                         <button class="btn btn-cmd" data-cmd="input_text">INPUT_TEXT</button>
                     </div>
                     <div class="row" style="margin-top:8px;">
@@ -263,7 +263,7 @@
                         <button class="btn btn-cmd btn-highlight" data-cmd="dump_actions">DUMP_ACTIONS</button>
                     </div>
                     <div class="row" style="margin-top:8px;">
-                        <input type="text" id="find-query" placeholder="查找文本/ID">
+                        <input type="text" id="find-query" placeholder="查找文本/ID" data-i18n-placeholder="cs.find_query_placeholder">
                         <button class="btn btn-cmd" data-cmd="find_node">FIND_NODE</button>
                     </div>
                 </div>
@@ -287,9 +287,9 @@
                     </div>
                     <div class="row" style="margin-top:8px;">
                         <select id="app-filter" style="max-width: 130px;">
-                            <option value="user">用户应用</option>
-                            <option value="system">系统应用</option>
-                            <option value="all">全部</option>
+                            <option value="user" data-i18n="cs.app_filter_user">用户应用</option>
+                            <option value="system" data-i18n="cs.app_filter_system">系统应用</option>
+                            <option value="all" data-i18n="cs.app_filter_all">全部</option>
                         </select>
                         <button class="btn btn-cmd btn-highlight" data-cmd="list_apps">LIST_APPS</button>
                     </div>
@@ -303,11 +303,11 @@
                 <div class="card" style="margin-top:10px;">
                     <h3>Map Debug</h3>
                     <div class="row">
-                        <input type="text" id="map-package" placeholder="包名 (map_set/map_info 用)" class="mono">
+                        <input type="text" id="map-package" placeholder="包名 (map_set/map_info 用)" class="mono" data-i18n-placeholder="cs.map_package_placeholder">
                         <button class="btn btn-cmd btn-small" data-cmd="map_get_info" style="max-width:130px;">MAP_GET_INFO</button>
                     </div>
                     <div class="row" style="margin-top:8px;">
-                        <textarea id="map-json" rows="4" placeholder="可选：粘贴 nav_map_*.json 内容；留空时后端会按包名自动读取本地最新 map" class="mono" style="width:100%; resize:vertical;"></textarea>
+                        <textarea id="map-json" rows="4" placeholder="可选：粘贴 nav_map_*.json 内容；留空时后端会按包名自动读取本地最新 map" data-i18n-placeholder="cs.map_json_placeholder" class="mono" style="width:100%; resize:vertical;"></textarea>
                     </div>
                     <div class="row" style="margin-top:6px;">
                         <button class="btn btn-cmd btn-small btn-highlight" data-cmd="map_set_gz">MAP_SET_GZ (burn)</button>
@@ -318,17 +318,17 @@
 
         <section class="panel right">
             <div class="log-header">
-                <h2>执行日志</h2>
-                <button id="btn-clear-log" class="btn btn-secondary btn-small">清空</button>
+                <h2 data-i18n="cs.exec_logs">执行日志</h2>
+                <button id="btn-clear-log" class="btn btn-secondary btn-small" data-i18n="cs.clear">清空</button>
             </div>
             <div id="log-container" class="log-container mono">
-                <div>控制台已启动，请连接设备...</div>
+                <div data-i18n="cs.console_started">控制台已启动，请连接设备...</div>
             </div>
 
             <div id="screenshot-preview" class="screenshot-preview" style="display: none;">
                 <div class="screenshot-header">
-                    <h3>截图预览</h3>
-                    <button id="btn-close-preview" class="btn btn-secondary btn-small">关闭</button>
+                    <h3 data-i18n="cs.screenshot_preview">截图预览</h3>
+                    <button id="btn-close-preview" class="btn btn-secondary btn-small" data-i18n="common.close">关闭</button>
                 </div>
                 <img id="screenshot-image" src="" alt="Screenshot">
             </div>
@@ -340,18 +340,18 @@
             <div class="modal-header">
                 <div class="modal-title">
                     <span class="modal-icon">🌳</span>
-                    <h2>UI 层级结构</h2>
+                    <h2 data-i18n="cs.ui_hierarchy">UI 层级结构</h2>
                 </div>
                 <div class="modal-stats" id="hierarchy-stats"></div>
                 <button id="btn-close-hierarchy" class="modal-close">&times;</button>
             </div>
             <div class="modal-toolbar">
-                <input type="text" id="hierarchy-search" class="search-input" placeholder="搜索节点 (类名/文本/ID)">
+                <input type="text" id="hierarchy-search" class="search-input" placeholder="搜索节点 (类名/文本/ID)" data-i18n-placeholder="cs.hierarchy_search_placeholder">
                 <div class="toolbar-actions">
-                    <button id="btn-view-tree" class="toolbar-btn active">🌳 树形</button>
-                    <button id="btn-view-flat" class="toolbar-btn">📋 扁平</button>
-                    <button id="btn-expand-all" class="toolbar-btn">▼ 展开</button>
-                    <button id="btn-collapse-all" class="toolbar-btn">▶ 折叠</button>
+                    <button id="btn-view-tree" class="toolbar-btn active" data-i18n="cs.view_tree">🌳 树形</button>
+                    <button id="btn-view-flat" class="toolbar-btn" data-i18n="cs.view_flat">📋 扁平</button>
+                    <button id="btn-expand-all" class="toolbar-btn" data-i18n="cs.expand_all">▼ 展开</button>
+                    <button id="btn-collapse-all" class="toolbar-btn" data-i18n="cs.collapse_all">▶ 折叠</button>
                 </div>
             </div>
             <div id="hierarchy-tree" class="modal-tree"></div>
@@ -363,13 +363,13 @@
             <div class="modal-header">
                 <div class="modal-title">
                     <span class="modal-icon">📱</span>
-                    <h2>已安装应用</h2>
+                    <h2 data-i18n="cs.installed_apps">已安装应用</h2>
                 </div>
                 <div class="modal-stats" id="apps-stats"></div>
                 <button id="btn-close-apps" class="modal-close">&times;</button>
             </div>
             <div class="modal-toolbar">
-                <input type="text" id="apps-search" class="search-input" placeholder="搜索应用包名...">
+                <input type="text" id="apps-search" class="search-input" placeholder="搜索应用包名..." data-i18n-placeholder="cs.apps_search_placeholder">
             </div>
             <div id="apps-list" class="modal-tree apps-list"></div>
         </div>
@@ -399,9 +399,9 @@
 
     <footer class="footer">
         <div class="stats">
-            <span>已发送: <strong id="stats-sent">0</strong></span>
-            <span>成功: <strong id="stats-success">0</strong></span>
-            <span>失败: <strong id="stats-failed">0</strong></span>
+            <span><span data-i18n="cs.sent_prefix">已发送:</span> <strong id="stats-sent">0</strong></span>
+            <span><span data-i18n="cs.success_prefix">成功:</span> <strong id="stats-success">0</strong></span>
+            <span><span data-i18n="cs.failed_prefix">失败:</span> <strong id="stats-failed">0</strong></span>
         </div>
         <div>LXB-Link v1.0</div>
     </footer>
@@ -411,6 +411,7 @@
 <script>
     if (window.LXBI18N) {
         window.LXBI18N.init();
+        window.addEventListener('lxb-lang-changed', () => window.LXBI18N.apply(document));
     }
 </script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>

@@ -695,6 +695,17 @@
         if (window.LXBI18N) {
             window.LXBI18N.init();
         }
+        const i18n = window.LXBI18N || {
+            t: (_k, fallback, params) => {
+                if (!params) return fallback || _k;
+                return String(fallback || _k).replace(/\{([a-zA-Z0-9_]+)\}/g, (_, name) =>
+                    params[name] == null ? '' : String(params[name])
+                );
+            },
+            literal: (s) => s
+        };
+        const tr = (key, fallback, params) => i18n.t(key, fallback, params);
+        const lt = (text) => i18n.literal(String(text || ''));
         const API_BASE = '';
         let logIndex = 0;
         let pollInterval = null;
@@ -742,19 +753,19 @@
                     statusEl.style.margin = '0';
                     statusEl.style.padding = '6px 12px';
                     statusEl.textContent = `● ${data.host}:${data.port}`;
-                    miniEl.textContent = `● 已连接`;
+                    miniEl.textContent = `● ${tr('mb.connected', 'Connected')}`;
                     miniEl.style.color = '#00d4aa';
                 } else {
                     statusEl.className = 'status error';
                     statusEl.style.margin = '0';
                     statusEl.style.padding = '6px 12px';
-                    statusEl.textContent = '○ 未连接';
-                    miniEl.textContent = '○ 未连接';
+                    statusEl.textContent = `○ ${tr('mb.unconnected', 'Not connected')}`;
+                    miniEl.textContent = `○ ${tr('mb.unconnected', 'Not connected')}`;
                     miniEl.style.color = '#e94560';
                 }
             } catch (e) {
                 document.getElementById('connection-status').className = 'status error';
-                document.getElementById('connection-status').textContent = '○ 连接失败';
+                document.getElementById('connection-status').textContent = `○ ${tr('mb.connection_failed', 'Connection failed')}`;
             }
         }
 
@@ -795,7 +806,7 @@
             };
 
             if (!config.api_base_url || !config.api_key) {
-                alert('请填写完整的 API 配置');
+                alert(tr('mb.need_api_config', 'Please complete API configuration'));
                 return;
             }
 
@@ -816,15 +827,18 @@
                 const data = await res.json();
                 if (data.success) {
                     const concurrentMsg = config.concurrent_enabled
-                        ? ` (并发: ${config.concurrent_requests}次, 阈值${config.occurrence_threshold})`
+                        ? tr('mb.concurrent_suffix', ' (concurrent: {requests}, threshold {threshold})', {
+                            requests: config.concurrent_requests,
+                            threshold: config.occurrence_threshold
+                        })
                         : '';
-                    addLog('info', `✓ 配置已保存（本地+服务器）${concurrentMsg}`);
+                    addLog('info', tr('mb.config_saved_local_server', 'Configuration saved (local + server){suffix}', { suffix: concurrentMsg }));
                     checkVLMStatus();
                 } else {
                     addLog('error', data.message);
                 }
             } catch (e) {
-                addLog('error', `保存失败: ${e.message}`);
+                addLog('error', tr('mb.save_failed', 'Save failed: {msg}', { msg: e.message }));
             }
         }
 
@@ -867,15 +881,15 @@
                     });
                     const data = await res.json();
                     if (data.success) {
-                        addLog('info', '✓ 配置已保存');
+                        addLog('info', tr('mb.config_saved', 'Configuration saved'));
                     } else {
-                        addLog('warn', `配置已保存到本地，但服务器同步失败: ${data.message}`);
+                        addLog('warn', tr('mb.config_saved_local_sync_failed', 'Saved locally, but server sync failed: {msg}', { msg: data.message }));
                     }
                 } catch (e) {
-                    addLog('warn', `配置已保存到本地，但服务器同步失败: ${e.message}`);
+                    addLog('warn', tr('mb.config_saved_local_sync_failed', 'Saved locally, but server sync failed: {msg}', { msg: e.message }));
                 }
             } else {
-                addLog('info', '✓ 配置已保存到本地');
+                addLog('info', tr('mb.config_saved_local', 'Configuration saved locally'));
             }
         }
 
@@ -886,11 +900,11 @@
             const modelName = document.getElementById('vlm-model-name').value.trim();
 
             if (!apiUrl || !apiKey) {
-                alert('请先填写 API URL 和 API Key');
+                alert(tr('mb.need_api_url_key', 'Please fill API URL and API Key first'));
                 return;
             }
 
-            addLog('info', '🧪 测试 VLM API...');
+            addLog('info', tr('mb.testing_vlm_api', 'Testing VLM API...'));
 
             try {
                 const res = await fetch(`${API_BASE}/api/vlm/test`, {
@@ -904,15 +918,15 @@
                 });
                 const data = await res.json();
                 if (data.success) {
-                    addLog('info', `✓ API 测试成功: ${data.message}`);
+                    addLog('info', tr('mb.api_test_success', 'API test success: {msg}', { msg: data.message }));
                     if (data.response) {
-                        addLog('debug', `响应: ${data.response.substring(0, 200)}...`);
+                        addLog('debug', tr('mb.response_prefix', 'Response: {text}', { text: `${data.response.substring(0, 200)}...` }));
                     }
                 } else {
-                    addLog('error', `✗ API 测试失败: ${data.message}`);
+                    addLog('error', tr('mb.api_test_failed', 'API test failed: {msg}', { msg: data.message }));
                 }
             } catch (e) {
-                addLog('error', `✗ API 测试异常: ${e.message}`);
+                addLog('error', tr('mb.api_test_error', 'API test error: {msg}', { msg: e.message }));
             }
         }
 
@@ -989,20 +1003,20 @@
 
                 if (data.success && data.data.available && data.data.api_configured) {
                     statusEl.className = 'status success';
-                    statusEl.textContent = `✓ 已配置 - ${data.data.model_name}`;
+                    statusEl.textContent = tr('mb.vlm_configured', 'Configured - {model}', { model: data.data.model_name });
                 } else {
                     statusEl.className = 'status warning';
-                    statusEl.textContent = '✗ 未配置 API';
+                    statusEl.textContent = tr('mb.vlm_not_configured', 'API not configured');
                 }
             } catch (e) {
                 statusEl.className = 'status error';
-                statusEl.textContent = '✗ 检测失败';
+                statusEl.textContent = tr('mb.detect_failed', 'Detection failed');
             }
         }
 
         // 清除保存的配置
         function clearVLMConfig() {
-            if (confirm('确定要清除保存的配置吗？')) {
+            if (confirm(tr('mb.confirm_clear_config', 'Clear saved configuration?'))) {
                 localStorage.removeItem('vlm_config');
                 document.getElementById('vlm-api-url').value = '';
                 document.getElementById('vlm-api-key').value = '';
@@ -1016,24 +1030,24 @@
                 document.getElementById('vlm-occurrence-threshold').value = 2;
                 updateConcurrentConfigVisibility();
                 document.getElementById('config-badge').style.display = 'none';
-                addLog('info', '配置已清除');
+                addLog('info', tr('mb.config_cleared', 'Configuration cleared'));
                 checkVLMStatus();
             }
         }
 
         // 测试 VLM
         async function testVLM() {
-            addLog('info', '测试 VLM 推理...');
+            addLog('info', tr('mb.testing_vlm_infer', 'Testing VLM inference...'));
             try {
                 const res = await fetch(`${API_BASE}/api/debug/vlm_test`, { method: 'POST' });
                 const data = await res.json();
                 if (data.success) {
-                    addLog('info', `测试成功: ${data.message}`);
+                    addLog('info', tr('mb.test_success', 'Test success: {msg}', { msg: data.message }));
                 } else {
                     addLog('error', data.message);
                 }
             } catch (e) {
-                addLog('error', `测试失败: ${e.message}`);
+                addLog('error', tr('mb.test_failed', 'Test failed: {msg}', { msg: e.message }));
             }
         }
 
@@ -1081,12 +1095,12 @@
                         select.appendChild(option);
                     });
 
-                    addLog('info', `获取到 ${appList.length} 个用户应用`);
+                    addLog('info', tr('mb.user_apps_count', 'Found {count} user apps', { count: appList.length }));
                 } else {
-                    addLog('error', data.message || '获取应用列表失败');
+                    addLog('error', data.message || tr('mb.fetch_apps_failed', 'Failed to fetch app list'));
                 }
             } catch (e) {
-                addLog('error', `获取应用列表失败: ${e.message}`);
+                addLog('error', tr('mb.fetch_apps_failed_with_msg', 'Failed to fetch app list: {msg}', { msg: e.message }));
             }
 
             select.disabled = false;
@@ -1113,24 +1127,24 @@
         function addSelectedAppsToQueue() {
             const select = document.getElementById('app-select');
             if (!select || !select.selectedOptions || select.selectedOptions.length === 0) {
-                addLog('warn', '请先选择应用');
+                addLog('warn', tr('mb.pick_apps_first', 'Please select app(s) first'));
                 return;
             }
             for (const opt of select.selectedOptions) {
                 addPackageToQueue(opt.value);
             }
-            addLog('info', `队列大小: ${packageQueue.length}`);
+            addLog('info', tr('mb.queue_size', 'Queue size: {count}', { count: packageQueue.length }));
         }
 
         function addTypedPackageToQueue() {
             const input = document.getElementById('package-name');
             const pkg = String(input.value || '').trim();
             if (!pkg) {
-                addLog('warn', '请先输入包名');
+                addLog('warn', tr('mb.enter_package_first', 'Please enter package name first'));
                 return;
             }
             addPackageToQueue(pkg);
-            addLog('info', `已添加: ${pkg}`);
+            addLog('info', tr('mb.added_package', 'Added: {pkg}', { pkg }));
         }
 
         function removePackageFromQueue(index) {
@@ -1139,7 +1153,7 @@
             renderPackageQueue();
             renderQueueRuntime();
             if (removed.length > 0) {
-                addLog('info', `已移除: ${removed[0]}`);
+                addLog('info', tr('mb.removed_package', 'Removed: {pkg}', { pkg: removed[0] }));
             }
         }
 
@@ -1147,7 +1161,7 @@
             packageQueue = [];
             renderPackageQueue();
             renderQueueRuntime();
-            addLog('info', '队列已清空');
+            addLog('info', tr('mb.queue_cleared', 'Queue cleared'));
         }
 
         function renderPackageQueue() {
@@ -1157,7 +1171,7 @@
             countEl.textContent = String(packageQueue.length);
 
             if (packageQueue.length === 0) {
-                container.innerHTML = '<div style="font-size: 11px; color: #64748b;">队列为空</div>';
+                container.innerHTML = `<div style="font-size: 11px; color: #64748b;">${tr('mb.queue_empty', 'Queue is empty')}</div>`;
                 return;
             }
 
@@ -1214,12 +1228,18 @@
             const current = q.current && q.current.package ? q.current.package : '-';
 
             if (!q.running && !runActive) {
-                el.textContent = '队列空闲';
+                el.textContent = tr('mb.queue_idle', 'Queue idle');
                 return;
             }
 
-            const status = q.running ? '运行中' : '已停止';
-            el.textContent = `队列${status} | 当前: ${current} | 待处理: ${pending} | 成功: ${completed} | 失败: ${failed}`;
+            const status = q.running ? tr('mb.running', 'Running') : tr('mb.stopped', 'Stopped');
+            el.textContent = tr('mb.queue_runtime', 'Queue {status} | Current: {current} | Pending: {pending} | Success: {completed} | Failed: {failed}', {
+                status,
+                current,
+                pending,
+                completed,
+                failed
+            });
         }
 
         // 获取截图
@@ -1231,10 +1251,10 @@
                     currentScreenshot = data.response.image;
                     displayScreenshot(data.response.image);
                 } else {
-                    addLog('error', '截图失败');
+                    addLog('error', tr('mb.screenshot_failed', 'Screenshot failed'));
                 }
             } catch (e) {
-                addLog('error', `截图失败: ${e.message}`);
+                addLog('error', tr('mb.screenshot_failed_with_msg', 'Screenshot failed: {msg}', { msg: e.message }));
             }
         }
 
@@ -1311,14 +1331,14 @@
 
         // 截图并分析
         async function captureAndAnalyze() {
-            addLog('info', '截图并分析页面...');
+            addLog('info', tr('mb.capture_and_analyze', 'Capturing and analyzing...'));
 
             try {
                 // 先获取截图
                 const res1 = await fetch(`${API_BASE}/api/command/screenshot`, { method: 'POST' });
                 const data1 = await res1.json();
                 if (!data1.success) {
-                    addLog('error', '截图失败');
+                    addLog('error', tr('mb.screenshot_failed', 'Screenshot failed'));
                     return;
                 }
 
@@ -1326,7 +1346,7 @@
                 displayScreenshot(data1.response.image);
 
                 // 然后分析
-                addLog('info', 'VLM 分析中...');
+                addLog('info', tr('mb.vlm_analyzing', 'VLM analyzing...'));
                 const res2 = await fetch(`${API_BASE}/api/debug/analyze_page`, { method: 'POST' });
                 const data2 = await res2.json();
 
@@ -1336,18 +1356,30 @@
 
                     // 显示并发信息
                     if (resp.concurrent_enabled) {
-                        addLog('info', `🚀 并发: ${resp.concurrent_requests}次 → ${resp.concurrent_results}成功 → ${resp.aggregated_count}个检测`);
-                        addLog('info', `📊 融合: ${resp.fusion_stats.xml_nodes}个XML + ${resp.fusion_stats.vlm_detections}个VLM → ${resp.fusion_stats.matched}个匹配`);
+                        addLog('info', tr('mb.concurrent_summary', 'Concurrent: {requests} req -> {ok} success -> {det} detections', {
+                            requests: resp.concurrent_requests,
+                            ok: resp.concurrent_results,
+                            det: resp.aggregated_count
+                        }));
+                        addLog('info', tr('mb.fusion_summary', 'Fusion: {xml} XML + {vlm} VLM -> {matched} matched', {
+                            xml: resp.fusion_stats.xml_nodes,
+                            vlm: resp.fusion_stats.vlm_detections,
+                            matched: resp.fusion_stats.matched
+                        }));
                         if (resp.aggregated_count === 0) {
-                            addLog('warn', '⚠️ 没有有效的 VLM 检测，可能阈值太高，建议降低阈值或关闭并发模式');
+                            addLog('warn', tr('mb.no_valid_vlm', 'No valid VLM detections. Lower threshold or disable concurrency.'));
                         }
                     } else {
-                        addLog('info', `📊 融合: ${resp.fusion_stats.xml_nodes}个XML + ${resp.fusion_stats.vlm_detections}个VLM → ${resp.fusion_stats.matched}个匹配`);
+                        addLog('info', tr('mb.fusion_summary', 'Fusion: {xml} XML + {vlm} VLM -> {matched} matched', {
+                            xml: resp.fusion_stats.xml_nodes,
+                            vlm: resp.fusion_stats.vlm_detections,
+                            matched: resp.fusion_stats.matched
+                        }));
                     }
 
                     // 显示页面描述
                     document.getElementById('page-caption').textContent =
-                        resp.page_description || '暂无描述';
+                        resp.page_description || tr('mb.no_description', 'No description');
                     document.getElementById('analysis-result').classList.remove('hidden');
 
                     // 显示统计
@@ -1379,7 +1411,7 @@
                         }
                     } else {
                         // 没有匹配，直接显示 VLM 原始检测
-                        addLog('warn', '没有匹配到 XML 节点，显示 VLM 原始检测');
+                        addLog('warn', tr('mb.no_xml_match_show_vlm', 'No XML match. Showing raw VLM detections.'));
                         displayVLMRaw(resp.vlm_raw || []);
                         // 绘制 VLM 原始检测框
                         if (resp.image_size && resp.vlm_raw) {
@@ -1398,7 +1430,7 @@
                     }
                 }
             } catch (e) {
-                addLog('error', `分析失败: ${e.message}`);
+                addLog('error', tr('mb.analyze_failed', 'Analyze failed: {msg}', { msg: e.message }));
                 console.error(e);
             }
         }
@@ -1416,7 +1448,7 @@
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">🔍</div>
-                        <p>VLM 未检测到元素</p>
+                        <p>${tr('mb.vlm_no_elements', 'VLM detected no elements')}</p>
                     </div>
                 `;
                 return;
@@ -1428,7 +1460,7 @@
                         <span class="ui-element-type ${det.label}">${det.label}</span>
                         <span style="font-size: 10px; color: #888;">#${idx + 1}</span>
                     </div>
-                    <div class="ui-element-text">${det.text || '(无文本)'}</div>
+                    <div class="ui-element-text">${det.text || tr('mb.no_text', '(no text)')}</div>
                     <div class="ui-element-ocr" style="color: #ff6b6b;">bbox: [${det.bbox.join(', ')}]</div>
                 </div>
             `).join('');
@@ -1468,7 +1500,7 @@
                 ctx.fillText(idx + 1, x1 * scaleX + 10, y1 * scaleY - 4);
             });
 
-            addLog('info', `绘制了 ${vlmRaw.length} 个 VLM 检测框`);
+            addLog('info', tr('mb.draw_vlm_boxes', 'Drew {count} VLM boxes', { count: vlmRaw.length }));
         }
 
         // 显示UI元素
@@ -1484,7 +1516,7 @@
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">🔍</div>
-                        <p>未检测到重要 UI 元素</p>
+                        <p>${tr('mb.no_important_ui', 'No important UI elements detected')}</p>
                     </div>
                 `;
                 return;
@@ -1547,11 +1579,11 @@
             const useQueueRun = version === 'node' && packageQueue.length > 0;
 
             if (!useQueueRun && !packageName) {
-                alert('请输入应用包名');
+                alert(tr('mb.enter_package_name', 'Please enter app package name'));
                 return;
             }
             if (runActive) {
-                addLog('warn', '已有任务在运行');
+                addLog('warn', tr('mb.task_already_running', 'A task is already running'));
                 return;
             }
 
@@ -1589,7 +1621,7 @@
                     auto_save: true,
                     output_root: 'map_repo'
                 };
-                addLog('info', `[node-queue] 启动，包数量: ${queuePayload.packages.length}`);
+                addLog('info', tr('mb.queue_start', '[node-queue] start, packages: {count}', { count: queuePayload.packages.length }));
                 try {
                     const res = await fetch(`${API_BASE}/api/explore/node/queue/start`, {
                         method: 'POST',
@@ -1598,9 +1630,9 @@
                     });
                     const data = await res.json();
                     if (data.success) {
-                        addLog('info', data.message || '队列已提交');
+                        addLog('info', data.message || tr('mb.queue_submitted', 'Queue submitted'));
                     } else {
-                        addLog('error', data.message || '队列启动失败');
+                        addLog('error', data.message || tr('mb.queue_start_failed', 'Queue start failed'));
                         runActive = false;
                         activeRunMode = '';
                         stopRunPolling();
@@ -1608,7 +1640,7 @@
                         renderQueueRuntime();
                     }
                 } catch (e) {
-                    addLog('error', `队列启动失败: ${e.message}`);
+                    addLog('error', tr('mb.queue_start_failed_with_msg', 'Queue start failed: {msg}', { msg: e.message }));
                     runActive = false;
                     activeRunMode = '';
                     stopRunPolling();
@@ -1631,7 +1663,7 @@
                 apiUrl = `${API_BASE}/api/explore/start`;
             }
 
-            addLog('info', `[${version}] 开始探索: ${packageName}`);
+            addLog('info', tr('mb.start_exploring', '[{version}] Start exploring: {pkg}', { version, pkg: packageName }));
             try {
                 const res = await fetch(apiUrl, {
                     method: 'POST',
@@ -1640,12 +1672,12 @@
                 });
                 const data = await res.json();
                 if (data.success) {
-                    addLog('info', data.message || '任务完成');
+                    addLog('info', data.message || tr('mb.task_done', 'Task completed'));
                 } else {
-                    addLog('error', data.message || '任务失败');
+                    addLog('error', data.message || tr('mb.task_failed', 'Task failed'));
                 }
             } catch (e) {
-                addLog('error', `探索失败: ${e.message}`);
+                addLog('error', tr('mb.explore_failed', 'Exploration failed: {msg}', { msg: e.message }));
             } finally {
                 runActive = false;
                 activeRunMode = '';
@@ -1668,7 +1700,7 @@
                     addLog('error', data.message);
                 }
             } catch (e) {
-                addLog('error', `暂停失败: ${e.message}`);
+                addLog('error', tr('mb.pause_failed', 'Pause failed: {msg}', { msg: e.message }));
             }
         }
 
@@ -1685,13 +1717,13 @@
                     addLog('error', data.message);
                 }
             } catch (e) {
-                addLog('error', `恢复失败: ${e.message}`);
+                addLog('error', tr('mb.resume_failed', 'Resume failed: {msg}', { msg: e.message }));
             }
         }
 
         // 停止探索
         async function stopExploration() {
-            if (!confirm('确定要停止探索吗？当前进度将被保存。')) {
+            if (!confirm(tr('mb.confirm_stop', 'Stop exploration? Current progress will be saved.'))) {
                 return;
             }
             try {
@@ -1703,7 +1735,7 @@
                     addLog('error', data.message);
                 }
             } catch (e) {
-                addLog('error', `停止失败: ${e.message}`);
+                addLog('error', tr('mb.stop_failed', 'Stop failed: {msg}', { msg: e.message }));
             }
         }
 
@@ -1739,7 +1771,7 @@
                     setRunUi(false);
                     const completed = Array.isArray(queueState.completed) ? queueState.completed.length : 0;
                     const failed = Array.isArray(queueState.failed) ? queueState.failed.length : 0;
-                    addLog('info', `[queue] 完成: success=${completed}, failed=${failed}`);
+                    addLog('info', tr('mb.queue_done', '[queue] done: success={completed}, failed={failed}', { completed, failed }));
                 }
             } catch (e) {
                 console.error('Poll error:', e);
@@ -1767,12 +1799,12 @@
                 const data = await res.json();
                 if (data.success) {
                     addLog('info', data.message);
-                    alert(`已保存: ${data.filepath || data.path || '成功'}`);
+                    alert(tr('mb.saved_path', 'Saved: {path}', { path: data.filepath || data.path || tr('mb.success', 'success') }));
                 } else {
                     addLog('error', data.message);
                 }
             } catch (e) {
-                addLog('error', `保存失败: ${e.message}`);
+                addLog('error', tr('mb.save_failed', 'Save failed: {msg}', { msg: e.message }));
             }
         }
 
@@ -1827,11 +1859,12 @@
         }
 
         function addLog(level, message, sourceTime = null) {
+            const normalizedMessage = lt(String(message || ''));
             const entry = {
                 level: (level || 'info').toLowerCase(),
-                message: String(message || ''),
+                message: normalizedMessage,
                 time: sourceTime || new Date().toLocaleTimeString(),
-                category: classifyLog(level, message)
+                category: classifyLog(level, normalizedMessage)
             };
             allLogs.push(entry);
             if (allLogs.length > LOG_MAX) {
@@ -1845,12 +1878,12 @@
         // 更新实时监控 UI (简化版)
         function updateRealtimeUI(state) {
             const statusMap = {
-                'idle': '⏳ 空闲',
-                'running': '🟢 运行中',
-                'paused': '🟡 已暂停',
-                'stopping': '🔴 停止中',
-                'stopped': '⚫ 已停止',
-                'completed': '✅ 完成'
+                'idle': `⏳ ${tr('mb.idle', 'Idle')}`,
+                'running': `🟢 ${tr('mb.running', 'Running')}`,
+                'paused': `🟡 ${tr('mb.paused', 'Paused')}`,
+                'stopping': `🔴 ${tr('mb.stopping', 'Stopping')}`,
+                'stopped': `⚫ ${tr('mb.stopped', 'Stopped')}`,
+                'completed': `✅ ${tr('mb.completed', 'Completed')}`
             };
 
             const stats = state.stats || {};
@@ -1866,9 +1899,14 @@
             const actions = stats.total_actions || stats.actions || 0;
             const queue = stats.queue_size || 0;
             const pendingVlm = stats.pending_vlm || 0;
-            let statsText = `节点: ${explored}/${total} | 动作: ${actions} | 队列: ${queue}`;
+            let statsText = tr('mb.stats_line', 'Nodes: {explored}/{total} | Actions: {actions} | Queue: {queue}', {
+                explored,
+                total,
+                actions,
+                queue
+            });
             if (pendingVlm > 0) {
-                statsText += ` | VLM: ${pendingVlm}`;
+                statsText += tr('mb.stats_line_vlm', ' | VLM: {pending}', { pending: pendingVlm });
             }
             document.getElementById('explore-stats-inline').textContent = statsText;
 
@@ -1900,7 +1938,7 @@
                 container.innerHTML = `
                     <div class="empty-state" style="padding: 30px 15px;">
                         <div class="empty-state-icon" style="font-size: 36px;">📋</div>
-                        <p style="font-size: 11px;">暂无节点</p>
+                        <p style="font-size: 11px;">${tr('mb.no_nodes', 'No nodes')}</p>
                     </div>
                 `;
                 return;
@@ -1916,18 +1954,18 @@
                 <div style="display: flex; gap: 6px; margin-bottom: 10px;">
                     <div style="flex: 1; padding: 6px; background: rgba(0, 212, 170, 0.1); border-radius: 5px; text-align: center;">
                         <div style="font-size: 16px; font-weight: bold; color: #00d4aa;">${explored.length}</div>
-                        <div style="font-size: 9px; color: #888;">已探索</div>
+                        <div style="font-size: 9px; color: #888;">${tr('mb.explored', 'Explored')}</div>
                     </div>
                     <div style="flex: 1; padding: 6px; background: rgba(255, 193, 7, 0.1); border-radius: 5px; text-align: center;">
                         <div style="font-size: 16px; font-weight: bold; color: #ffc107;">${pending.length}</div>
-                        <div style="font-size: 9px; color: #888;">待探索</div>
+                        <div style="font-size: 9px; color: #888;">${tr('mb.pending', 'Pending')}</div>
                     </div>
                 </div>
             `;
 
             // 待探索节点
             if (pending.length > 0) {
-                html += `<div style="color: #ffc107; font-size: 10px; margin-bottom: 4px; font-weight: 500;">⏳ 待探索</div>`;
+                html += `<div style="color: #ffc107; font-size: 10px; margin-bottom: 4px; font-weight: 500;">⏳ ${tr('mb.pending', 'Pending')}</div>`;
                 pending.forEach((node, idx) => {
                     html += renderNodeItemV5(node, idx, false);
                 });
@@ -1935,7 +1973,7 @@
 
             // 已探索节点
             if (explored.length > 0) {
-                html += `<div style="color: #00d4aa; font-size: 10px; margin: 8px 0 4px 0; font-weight: 500;">✓ 已探索</div>`;
+                html += `<div style="color: #00d4aa; font-size: 10px; margin: 8px 0 4px 0; font-weight: 500;">✓ ${tr('mb.explored', 'Explored')}</div>`;
                 explored.forEach((node, idx) => {
                     html += renderNodeItemV5(node, idx, true);
                 });

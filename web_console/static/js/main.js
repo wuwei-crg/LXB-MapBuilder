@@ -19,6 +19,7 @@ const i18n = window.LXBI18N || {
     },
     literal: (x) => x
 };
+const tr = (key, fallback, params) => i18n.t(key, fallback, params);
 
 // DOM 元素
 let connectBtn, disconnectBtn, connectionStatus;
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 定期检查连接状态
     setInterval(checkConnectionStatus, 5000);
 
-    addLog('info', '控制台已就绪，请输入 Android 设备 WiFi IP 并连接');
+    addLog('info', tr('cs.console_ready', 'Console ready. Enter Android WiFi IP and connect.'));
 });
 
 /**
@@ -155,7 +156,7 @@ function handleCommand(cmd) {
         case 'find_node':
             const query = document.getElementById('find-query').value;
             if (!query) {
-                addLog('error', '请输入查找文本');
+                addLog('error', tr('cs.enter_find_query', 'Please enter query text'));
                 return;
             }
             sendCommand('/api/command/find_node', { query, multi_match: true }, `FIND_NODE "${query}"`);
@@ -184,7 +185,7 @@ function handleCommand(cmd) {
         case 'launch_app':
             const launchPkg = document.getElementById('app-package').value;
             if (!launchPkg) {
-                addLog('error', '请输入应用包名');
+                addLog('error', tr('cs.enter_package_name', 'Please enter app package name'));
                 return;
             }
             sendCommand('/api/command/launch_app', { package: launchPkg }, `LAUNCH_APP ${launchPkg}`);
@@ -193,7 +194,7 @@ function handleCommand(cmd) {
         case 'stop_app':
             const stopPkg = document.getElementById('app-package').value;
             if (!stopPkg) {
-                addLog('error', '请输入应用包名');
+                addLog('error', tr('cs.enter_package_name', 'Please enter app package name'));
                 return;
             }
             sendCommand('/api/command/stop_app', { package: stopPkg }, `STOP_APP ${stopPkg}`);
@@ -218,7 +219,7 @@ function handleCommand(cmd) {
             const fallbackPkg = document.getElementById('app-package');
             const pkg = (pkgInput && pkgInput.value.trim()) || (fallbackPkg && fallbackPkg.value.trim());
             if (!pkg) {
-                addLog('error', '请先填写包名 (map-package 或 app-package)');
+                addLog('error', tr('cs.need_map_or_app_package', 'Please fill package first (map-package or app-package)'));
                 return;
             }
             sendCommand('/api/command/map_get_info', { package: pkg }, `MAP_GET_INFO ${pkg}`);
@@ -233,11 +234,11 @@ function handleCommand(cmd) {
             const mapJson = mapTextEl ? mapTextEl.value : '';
 
             if (!pkg) {
-                addLog('error', 'MAP_SET_GZ: 需要包名 (map-package 或 app-package)');
+                addLog('error', tr('cs.map_set_need_package', 'MAP_SET_GZ: package is required (map-package or app-package)'));
                 return;
             }
             if (!mapJson || !mapJson.trim()) {
-                addLog('error', 'MAP_SET_GZ: 请在文本框中粘贴 nav_map_*.json 内容');
+                addLog('error', tr('cs.map_set_need_json', 'MAP_SET_GZ: please paste nav_map_*.json content in the text area'));
                 return;
             }
 
@@ -256,11 +257,11 @@ async function handleConnect() {
     const port = parseInt(document.getElementById('port').value);
 
     if (!host || !port) {
-        addLog('error', '请输入主机地址和端口');
+        addLog('error', tr('cs.enter_host_port', 'Please enter host and port'));
         return;
     }
 
-    addLog('info', `正在连接到 ${host}:${port}...`);
+    addLog('info', tr('cs.connecting_to', 'Connecting to {host}:{port}...', { host, port }));
 
     try {
         const response = await fetch('/api/connect', {
@@ -279,7 +280,7 @@ async function handleConnect() {
             addLog('error', result.message);
         }
     } catch (error) {
-        addLog('error', `连接失败: ${error.message}`);
+        addLog('error', tr('cs.connect_failed', 'Connect failed: {msg}', { msg: error.message }));
     }
 }
 
@@ -287,7 +288,7 @@ async function handleConnect() {
  * 处理断开连接
  */
 async function handleDisconnect() {
-    addLog('info', '正在断开连接...');
+    addLog('info', tr('cs.disconnecting', 'Disconnecting...'));
 
     try {
         const response = await fetch('/api/disconnect', {
@@ -304,7 +305,7 @@ async function handleDisconnect() {
             addLog('error', result.message);
         }
     } catch (error) {
-        addLog('error', `断开失败: ${error.message}`);
+        addLog('error', tr('cs.disconnect_failed', 'Disconnect failed: {msg}', { msg: error.message }));
     }
 }
 
@@ -313,7 +314,7 @@ async function handleDisconnect() {
  */
 async function sendCommand(endpoint, params, displayName) {
     if (!state.connected) {
-        addLog('error', '未连接到设备');
+        addLog('error', tr('cs.not_connected_device', 'Device not connected'));
         return { success: false, message: 'not_connected' };
     }
 
@@ -346,7 +347,7 @@ async function sendCommand(endpoint, params, displayName) {
         return result;
     } catch (error) {
         state.stats.failed++;
-        addLog('error', `X 请求失败: ${error.message}`);
+        addLog('error', tr('cs.request_failed', 'X request failed: {msg}', { msg: error.message }));
         updateStats();
         return { success: false, message: error.message || 'request_failed' };
     }
@@ -360,11 +361,11 @@ async function sendPinDigitsByKeyEvent() {
     const intervalMs = Number.isFinite(intervalMsRaw) ? Math.max(0, intervalMsRaw) : 120;
 
     if (!pin || !/^\d+$/.test(pin)) {
-        addLog('error', 'KEY_PIN 仅支持 0-9 数字');
+        addLog('error', tr('cs.key_pin_digits_only', 'KEY_PIN only supports digits 0-9'));
         return;
     }
     if (!state.connected) {
-        addLog('error', '未连接到设备');
+        addLog('error', tr('cs.not_connected_device', 'Device not connected'));
         return;
     }
 
@@ -423,12 +424,12 @@ function sleepMs(ms) {
       if (typeof response.trace === 'string') {
           try {
               const events = parseTraceJsonl(response.trace);
-              addLog('info', `Trace: ${events.length} 条事件 (弹出窗口可用 ESC / 点击空白关闭)`);
+              addLog('info', tr('cs.trace_events_count', 'Trace: {count} events (press ESC / click backdrop to close)', { count: events.length }));
               if (events.length > 0) {
                   showTraceViewer(events);
               }
           } catch (e) {
-              addLog('error', `Trace 解析失败: ${e && e.message ? e.message : e}`);
+              addLog('error', tr('cs.trace_parse_failed', 'Trace parse failed: {msg}', { msg: e && e.message ? e.message : e }));
           }
       }
   }
@@ -446,7 +447,7 @@ function sleepMs(ms) {
             updateConnectionUI(status.connected);
 
             if (!status.connected) {
-                addLog('error', '连接已丢失');
+                addLog('error', tr('cs.connection_lost', 'Connection lost'));
             }
         }
     } catch (error) {
@@ -459,7 +460,7 @@ function sleepMs(ms) {
  */
 function updateConnectionUI(connected) {
     if (connected) {
-        connectionStatus.textContent = i18n.literal('已连接');
+        connectionStatus.textContent = tr('cs.connected', 'Connected');
         connectionStatus.className = 'status-connected';
         connectBtn.disabled = true;
         disconnectBtn.disabled = false;
@@ -468,7 +469,7 @@ function updateConnectionUI(connected) {
             btn.disabled = false;
         });
     } else {
-        connectionStatus.textContent = i18n.literal('未连接');
+        connectionStatus.textContent = tr('cs.unconnected', 'Not connected');
         connectionStatus.className = 'status-disconnected';
         connectBtn.disabled = false;
         disconnectBtn.disabled = true;
@@ -514,7 +515,7 @@ function addLog(type, message) {
  */
 function clearLog() {
     logContainer.innerHTML = '';
-    addLog('info', '日志已清空');
+    addLog('info', tr('cs.logs_cleared', 'Logs cleared'));
 }
 
 /**
@@ -531,7 +532,7 @@ function updateStats() {
  */
 async function takeScreenshot() {
     if (!state.connected) {
-        addLog('error', '未连接到设备');
+        addLog('error', tr('cs.not_connected_device', 'Device not connected'));
         return;
     }
 
@@ -562,7 +563,7 @@ async function takeScreenshot() {
         }
     } catch (error) {
         state.stats.failed++;
-        addLog('error', `X 请求失败: ${error.message}`);
+        addLog('error', tr('cs.request_failed', 'X request failed: {msg}', { msg: error.message }));
     }
 
       updateStats();
@@ -605,14 +606,14 @@ async function takeScreenshot() {
       const btnLocator = document.getElementById('btn-trace-filter-locator');
 
       if (!modal || !table) {
-          addLog('error', 'Trace Viewer DOM 未找到');
+          addLog('error', tr('cs.trace_viewer_dom_not_found', 'Trace viewer DOM not found'));
           return;
       }
 
       let currentFilter = 'all';
       let currentQuery = '';
 
-      statsDiv.textContent = `${events.length} 条事件`;
+      statsDiv.textContent = tr('cs.trace_stats_total', '{count} events', { count: events.length });
 
       function applyFilter(ev) {
           if (currentFilter === 'route') {
@@ -668,11 +669,11 @@ async function takeScreenshot() {
           table.innerHTML = '';
           const filtered = events.filter(applyFilter).filter(applyQuery);
           if (!filtered.length) {
-              table.innerHTML = '<div class="flat-empty">没有匹配的 trace 事件</div>';
-              statsDiv.textContent = `${events.length} 条事件 · 0 条匹配当前过滤`;
+              table.innerHTML = `<div class="flat-empty">${tr('cs.trace_no_match', 'No matching trace events')}</div>`;
+              statsDiv.textContent = tr('cs.trace_stats_filtered_zero', '{total} events · 0 match current filter', { total: events.length });
               return;
           }
-          statsDiv.textContent = `${events.length} 条事件 · 显示 ${filtered.length} 条`;
+          statsDiv.textContent = tr('cs.trace_stats_filtered', '{total} events · showing {shown}', { total: events.length, shown: filtered.length });
 
           filtered.forEach((ev) => {
               const row = document.createElement('div');
@@ -800,7 +801,7 @@ function showScreenshotPreview(base64Image, size) {
         preview.style.display = 'none';
     };
 
-    addLog('info', `截图大小: ${(size / 1024).toFixed(1)} KB`);
+    addLog('info', tr('cs.screenshot_size', 'Screenshot size: {kb} KB', { kb: (size / 1024).toFixed(1) }));
 }
 
 /**
@@ -808,7 +809,7 @@ function showScreenshotPreview(base64Image, size) {
  */
 async function dumpHierarchy() {
     if (!state.connected) {
-        addLog('error', '未连接到设备');
+        addLog('error', tr('cs.not_connected_device', 'Device not connected'));
         return;
     }
 
@@ -832,7 +833,11 @@ async function dumpHierarchy() {
             // 显示统计信息
             if (result.response) {
                 const r = result.response;
-                addLog('response', `   可点击: ${r.clickable_count} | 可编辑: ${r.editable_count} | 可滚动: ${r.scrollable_count}`);
+                addLog('response', tr('cs.hierarchy_stats', '   Clickable: {clickable} | Editable: {editable} | Scrollable: {scrollable}', {
+                    clickable: r.clickable_count,
+                    editable: r.editable_count,
+                    scrollable: r.scrollable_count
+                }));
 
                 // 显示 UI 树查看器
                 if (r.nodes && r.nodes.length > 0) {
@@ -845,7 +850,7 @@ async function dumpHierarchy() {
         }
     } catch (error) {
         state.stats.failed++;
-        addLog('error', `X 请求失败: ${error.message}`);
+        addLog('error', tr('cs.request_failed', 'X request failed: {msg}', { msg: error.message }));
     }
 
     updateStats();
@@ -871,7 +876,7 @@ function showHierarchyViewer(nodes, stats) {
 
     // 显示统计信息
     statsDiv.innerHTML = `
-        <span class="stat-badge">${stats.node_count} 节点</span>
+        <span class="stat-badge">${tr('cs.nodes_count', '{count} nodes', { count: stats.node_count })}</span>
         <span class="stat-badge stat-clickable">● ${stats.clickable_count}</span>
         <span class="stat-badge stat-editable">✎ ${stats.editable_count}</span>
         <span class="stat-badge stat-scrollable">↕ ${stats.scrollable_count}</span>`;
@@ -919,27 +924,27 @@ function showHierarchyViewer(nodes, stats) {
 
         // 可点击节点
         if (clickableNodes.length > 0) {
-            tree.appendChild(createFlatSection('● 可点击', clickableNodes, 'clickable'));
+            tree.appendChild(createFlatSection(`● ${tr('cs.clickable', 'Clickable')}`, clickableNodes, 'clickable'));
         }
 
         // 可编辑节点
         if (editableNodes.length > 0) {
-            tree.appendChild(createFlatSection('✎ 可编辑', editableNodes, 'editable'));
+            tree.appendChild(createFlatSection(`✎ ${tr('cs.editable', 'Editable')}`, editableNodes, 'editable'));
         }
 
         // 可滚动节点
         if (scrollableNodes.length > 0) {
-            tree.appendChild(createFlatSection('↕ 可滚动', scrollableNodes, 'scrollable'));
+            tree.appendChild(createFlatSection(`↕ ${tr('cs.scrollable', 'Scrollable')}`, scrollableNodes, 'scrollable'));
         }
 
         // 文本节点
         if (textNodes.length > 0) {
-            tree.appendChild(createFlatSection('📝 文本节点', textNodes, 'text'));
+            tree.appendChild(createFlatSection(`📝 ${tr('cs.text_nodes', 'Text nodes')}`, textNodes, 'text'));
         }
 
         if (clickableNodes.length === 0 && editableNodes.length === 0 &&
             scrollableNodes.length === 0 && textNodes.length === 0) {
-            tree.innerHTML = '<div class="flat-empty">没有找到有意义的节点</div>';
+            tree.innerHTML = `<div class="flat-empty">${tr('cs.no_meaningful_nodes', 'No meaningful nodes found')}</div>`;
         }
     }
 
@@ -1019,9 +1024,9 @@ function showHierarchyViewer(nodes, stats) {
             const centerX = Math.floor((bounds[0] + bounds[2]) / 2);
             const centerY = Math.floor((bounds[1] + bounds[3]) / 2);
             navigator.clipboard.writeText(`${centerX}, ${centerY}`).then(() => {
-                addLog('info', `已复制坐标: (${centerX}, ${centerY}) - ${className}`);
+                addLog('info', tr('cs.coords_copied', 'Copied coords: ({x}, {y}) - {name}', { x: centerX, y: centerY, name: className }));
             }).catch(() => {
-                addLog('info', `坐标: (${centerX}, ${centerY}) - ${className}`);
+                addLog('info', tr('cs.coords_value', 'Coords: ({x}, {y}) - {name}', { x: centerX, y: centerY, name: className }));
             });
         });
 
@@ -1209,9 +1214,9 @@ function renderTreeNode(node) {
         const centerX = Math.floor((bounds[0] + bounds[2]) / 2);
         const centerY = Math.floor((bounds[1] + bounds[3]) / 2);
         navigator.clipboard.writeText(`${centerX}, ${centerY}`).then(() => {
-            addLog('info', `已复制坐标: (${centerX}, ${centerY}) - ${className}`);
+            addLog('info', tr('cs.coords_copied', 'Copied coords: ({x}, {y}) - {name}', { x: centerX, y: centerY, name: className }));
         }).catch(() => {
-            addLog('info', `坐标: (${centerX}, ${centerY}) - ${className}`);
+            addLog('info', tr('cs.coords_value', 'Coords: ({x}, {y}) - {name}', { x: centerX, y: centerY, name: className }));
         });
     });
 
@@ -1244,7 +1249,7 @@ function renderTreeNode(node) {
  */
 async function dumpActions() {
     if (!state.connected) {
-        addLog('error', '未连接到设备');
+        addLog('error', tr('cs.not_connected_device', 'Device not connected'));
         return;
     }
 
@@ -1268,7 +1273,12 @@ async function dumpActions() {
             // 显示统计信息
             if (result.response) {
                 const r = result.response;
-                addLog('response', `   可点击: ${r.clickable_count} | 可编辑: ${r.editable_count} | 可滚动: ${r.scrollable_count} | 仅文本: ${r.text_only_count}`);
+                addLog('response', tr('cs.actions_stats', '   Clickable: {clickable} | Editable: {editable} | Scrollable: {scrollable} | Text-only: {textOnly}', {
+                    clickable: r.clickable_count,
+                    editable: r.editable_count,
+                    scrollable: r.scrollable_count,
+                    textOnly: r.text_only_count
+                }));
 
                 // 显示 Actions 查看器
                 if (r.nodes && r.nodes.length > 0) {
@@ -1281,7 +1291,7 @@ async function dumpActions() {
         }
     } catch (error) {
         state.stats.failed++;
-        addLog('error', `X 请求失败: ${error.message}`);
+        addLog('error', tr('cs.request_failed', 'X request failed: {msg}', { msg: error.message }));
     }
 
     updateStats();
@@ -1303,13 +1313,13 @@ function showActionsViewer(nodes, stats) {
 
     // 更新标题
     const titleEl = modal.querySelector('.modal-title h2');
-    if (titleEl) titleEl.textContent = '可交互节点 (Actions)';
+    if (titleEl) titleEl.textContent = tr('cs.interactive_nodes_actions', 'Interactive Nodes (Actions)');
     const iconEl = modal.querySelector('.modal-title .modal-icon');
     if (iconEl) iconEl.textContent = '⚡';
 
     // 显示统计信息
     statsDiv.innerHTML = `
-        <span class="stat-badge">${stats.node_count} 节点</span>
+        <span class="stat-badge">${tr('cs.nodes_count', '{count} nodes', { count: stats.node_count })}</span>
         <span class="stat-badge stat-clickable">● ${stats.clickable_count}</span>
         <span class="stat-badge stat-editable">✎ ${stats.editable_count}</span>
         <span class="stat-badge stat-scrollable">↕ ${stats.scrollable_count}</span>
@@ -1332,26 +1342,26 @@ function showActionsViewer(nodes, stats) {
 
     // 可点击节点
     if (clickableNodes.length > 0) {
-        tree.appendChild(createActionsSection('● 可点击', clickableNodes, 'clickable'));
+        tree.appendChild(createActionsSection(`● ${tr('cs.clickable', 'Clickable')}`, clickableNodes, 'clickable'));
     }
 
     // 可编辑节点
     if (editableNodes.length > 0) {
-        tree.appendChild(createActionsSection('✎ 可编辑', editableNodes, 'editable'));
+        tree.appendChild(createActionsSection(`✎ ${tr('cs.editable', 'Editable')}`, editableNodes, 'editable'));
     }
 
     // 可滚动节点
     if (scrollableNodes.length > 0) {
-        tree.appendChild(createActionsSection('↕ 可滚动', scrollableNodes, 'scrollable'));
+        tree.appendChild(createActionsSection(`↕ ${tr('cs.scrollable', 'Scrollable')}`, scrollableNodes, 'scrollable'));
     }
 
     // 仅文本节点
     if (textOnlyNodes.length > 0) {
-        tree.appendChild(createActionsSection('📝 仅文本', textOnlyNodes, 'text'));
+        tree.appendChild(createActionsSection(`📝 ${tr('cs.text_only', 'Text-only')}`, textOnlyNodes, 'text'));
     }
 
     if (nodes.length === 0) {
-        tree.innerHTML = '<div class="flat-empty">没有找到可交互节点</div>';
+        tree.innerHTML = `<div class="flat-empty">${tr('cs.no_interactive_nodes', 'No interactive nodes found')}</div>`;
     }
 
     // 显示模态对话框
@@ -1361,7 +1371,7 @@ function showActionsViewer(nodes, stats) {
     closeBtn.onclick = () => {
         modal.style.display = 'none';
         // 恢复标题
-        if (titleEl) titleEl.textContent = 'UI 层级结构';
+        if (titleEl) titleEl.textContent = tr('cs.ui_hierarchy', 'UI Hierarchy');
         if (iconEl) iconEl.textContent = '🌳';
         viewTreeBtn.style.display = '';
         viewFlatBtn.style.display = '';
@@ -1371,7 +1381,7 @@ function showActionsViewer(nodes, stats) {
     modal.onclick = (e) => {
         if (e.target === modal) {
             modal.style.display = 'none';
-            if (titleEl) titleEl.textContent = 'UI 层级结构';
+            if (titleEl) titleEl.textContent = tr('cs.ui_hierarchy', 'UI Hierarchy');
             if (iconEl) iconEl.textContent = '🌳';
             viewTreeBtn.style.display = '';
             viewFlatBtn.style.display = '';
@@ -1382,7 +1392,7 @@ function showActionsViewer(nodes, stats) {
     const escHandler = (e) => {
         if (e.key === 'Escape') {
             modal.style.display = 'none';
-            if (titleEl) titleEl.textContent = 'UI 层级结构';
+            if (titleEl) titleEl.textContent = tr('cs.ui_hierarchy', 'UI Hierarchy');
             if (iconEl) iconEl.textContent = '🌳';
             viewTreeBtn.style.display = '';
             viewFlatBtn.style.display = '';
@@ -1467,9 +1477,9 @@ function renderActionNode(node, type) {
         const centerX = Math.floor((bounds[0] + bounds[2]) / 2);
         const centerY = Math.floor((bounds[1] + bounds[3]) / 2);
         navigator.clipboard.writeText(`${centerX}, ${centerY}`).then(() => {
-            addLog('info', `已复制坐标: (${centerX}, ${centerY}) - ${className}`);
+            addLog('info', tr('cs.coords_copied', 'Copied coords: ({x}, {y}) - {name}', { x: centerX, y: centerY, name: className }));
         }).catch(() => {
-            addLog('info', `坐标: (${centerX}, ${centerY}) - ${className}`);
+            addLog('info', tr('cs.coords_value', 'Coords: ({x}, {y}) - {name}', { x: centerX, y: centerY, name: className }));
         });
     });
 
@@ -1481,12 +1491,16 @@ function renderActionNode(node, type) {
  */
 async function listApps() {
     if (!state.connected) {
-        addLog('error', '未连接到设备');
+        addLog('error', tr('cs.not_connected_device', 'Device not connected'));
         return;
     }
 
     const filter = document.getElementById('app-filter').value;
-    const filterNames = { 'user': '用户应用', 'system': '系统应用', 'all': '全部应用' };
+    const filterNames = {
+        user: tr('cs.app_filter_user', 'User apps'),
+        system: tr('cs.app_filter_system', 'System apps'),
+        all: tr('cs.app_filter_all_with_apps', 'All apps')
+    };
 
     addLog('command', `-> LIST_APPS (${filterNames[filter]})`);
     state.stats.sent++;
@@ -1515,7 +1529,7 @@ async function listApps() {
         }
     } catch (error) {
         state.stats.failed++;
-        addLog('error', `X 请求失败: ${error.message}`);
+        addLog('error', tr('cs.request_failed', 'X request failed: {msg}', { msg: error.message }));
     }
 
     updateStats();
@@ -1531,11 +1545,15 @@ function showAppsViewer(apps, filter) {
     const closeBtn = document.getElementById('btn-close-apps');
     const searchInput = document.getElementById('apps-search');
 
-    const filterNames = { 'user': '用户应用', 'system': '系统应用', 'all': '全部应用' };
+    const filterNames = {
+        user: tr('cs.app_filter_user', 'User apps'),
+        system: tr('cs.app_filter_system', 'System apps'),
+        all: tr('cs.app_filter_all_with_apps', 'All apps')
+    };
 
     // 显示统计信息
     statsDiv.innerHTML = `
-        <span class="stat-badge">${apps.length} 个应用</span>
+        <span class="stat-badge">${tr('cs.apps_count', '{count} apps', { count: apps.length })}</span>
         <span class="stat-badge">${filterNames[filter] || filter}</span>`;
 
     // 清空并渲染列表
@@ -1548,16 +1566,16 @@ function showAppsViewer(apps, filter) {
             <span class="app-index">${index + 1}</span>
             <span class="app-package">${pkg}</span>
             <div class="app-actions">
-                <button class="btn btn-tiny btn-primary" data-action="launch" data-pkg="${pkg}">启动</button>
-                <button class="btn btn-tiny btn-danger" data-action="stop" data-pkg="${pkg}">停止</button>
+                <button class="btn btn-tiny btn-primary" data-action="launch" data-pkg="${pkg}">${tr('cs.launch', 'Launch')}</button>
+                <button class="btn btn-tiny btn-danger" data-action="stop" data-pkg="${pkg}">${tr('cs.stop', 'Stop')}</button>
             </div>`;
 
         // 点击复制包名
         item.querySelector('.app-package').addEventListener('click', () => {
             navigator.clipboard.writeText(pkg).then(() => {
-                addLog('info', `已复制包名: ${pkg}`);
+                addLog('info', tr('cs.package_copied', 'Copied package: {pkg}', { pkg }));
             }).catch(() => {
-                addLog('info', `包名: ${pkg}`);
+                addLog('info', tr('cs.package_name_is', 'Package: {pkg}', { pkg }));
             });
         });
 
@@ -1579,7 +1597,7 @@ function showAppsViewer(apps, filter) {
     });
 
     if (apps.length === 0) {
-        listContainer.innerHTML = '<div class="flat-empty">没有找到应用</div>';
+        listContainer.innerHTML = `<div class="flat-empty">${tr('cs.no_apps_found', 'No apps found')}</div>`;
     }
 
     // 显示模态对话框

@@ -383,7 +383,7 @@
     <div class="header">
         <h1>LXB Map Viewer</h1>
         <div style="display: flex; gap: 12px; align-items: center;">
-            <span id="package-name" style="color: #94a3b8; font-size: 12px;">未加载</span>
+            <span id="package-name" style="color: #94a3b8; font-size: 12px;" data-i18n="mv.not_loaded">未加载</span>
         </div>
     </div>
 
@@ -392,71 +392,71 @@
         <div class="left-panel">
             <!-- 文件上传 -->
             <div class="card">
-                <h3>📂 加载 Map</h3>
+                <h3 data-i18n="mv.load_map">📂 加载 Map</h3>
                 <div class="file-upload" onclick="document.getElementById('file-input').click()">
                     <input type="file" id="file-input" accept=".json,.json.gz,.gz" onchange="loadMapFile(event)">
                     <div class="file-upload-icon">📄</div>
                     <div class="file-upload-text">点击选择 JSON 文件<br>或拖拽到此处</div>
                 </div>
                 <div style="margin-top: 10px; display: flex; gap: 8px;">
-                    <button class="btn btn-secondary" style="flex: 1;" onclick="loadFromServer()">加载最新</button>
-                    <button class="btn btn-secondary" style="flex: 1;" onclick="showMapList()">浏览列表</button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="loadFromServer()" data-i18n="mv.load_latest">加载最新</button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="showMapList()" data-i18n="mv.browse_list">浏览列表</button>
                 </div>
                 <div style="margin-top: 8px;">
-                    <button class="btn btn-secondary" style="width: 100%; font-size: 11px; padding: 6px;" onclick="loadDemoData()">加载示例数据</button>
+                    <button class="btn btn-secondary" style="width: 100%; font-size: 11px; padding: 6px;" onclick="loadDemoData()" data-i18n="mv.load_demo">加载示例数据</button>
                 </div>
             </div>
 
             <!-- 已保存的 Map 列表 -->
             <div class="card" id="map-list-card" style="display: none;">
-                <h3>📁 已保存的 Map</h3>
+                <h3 data-i18n="mv.saved_maps">📁 已保存的 Map</h3>
                 <div class="map-list" id="map-list"></div>
             </div>
 
             <!-- 统计信息 -->
             <div class="card" id="stats-card" style="display: none;">
-                <h3>📊 统计</h3>
+                <h3 data-i18n="mv.stats">📊 统计</h3>
                 <div class="stats-grid">
                     <div class="stat-item">
                         <div class="stat-value" id="stat-pages">0</div>
-                        <div class="stat-label">页面</div>
+                        <div class="stat-label" data-i18n="mv.pages">页面</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value" id="stat-transitions">0</div>
-                        <div class="stat-label">跳转</div>
+                        <div class="stat-label" data-i18n="mv.transitions">跳转</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value" id="stat-popups" style="color: #f5a623;">0</div>
-                        <div class="stat-label">弹窗</div>
+                        <div class="stat-label" data-i18n="mv.popups">弹窗</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value" id="stat-blocks" style="color: #f55;">0</div>
-                        <div class="stat-label">异常页</div>
+                        <div class="stat-label" data-i18n="mv.blocks">异常页</div>
                     </div>
                 </div>
             </div>
 
             <!-- 页面列表 -->
             <div class="card" id="pages-card" style="display: none;">
-                <h3>📑 页面列表</h3>
+                <h3 data-i18n="mv.page_list">📑 页面列表</h3>
                 <div class="page-list" id="page-list"></div>
             </div>
 
             <!-- 跳转列表 -->
             <div class="card" id="transitions-card" style="display: none;">
-                <h3>🔗 跳转关系</h3>
+                <h3 data-i18n="mv.transition_list">🔗 跳转关系</h3>
                 <div class="transition-list" id="transition-list"></div>
             </div>
 
             <!-- 弹窗列表 -->
             <div class="card" id="popups-card" style="display: none;">
-                <h3>🚫 弹窗/广告</h3>
+                <h3 data-i18n="mv.popup_list">🚫 弹窗/广告</h3>
                 <div class="popup-list" id="popup-list"></div>
             </div>
 
             <!-- 异常页面列表 -->
             <div class="card" id="blocks-card" style="display: none;">
-                <h3>⚠️ 异常页面</h3>
+                <h3 data-i18n="mv.block_list">⚠️ 异常页面</h3>
                 <div class="block-list" id="block-list"></div>
             </div>
         </div>
@@ -468,32 +468,32 @@
             <!-- 详情面板 -->
             <div class="detail-panel" id="detail-panel">
                 <button class="detail-close" onclick="hideDetail()">×</button>
-                <div class="detail-title" id="detail-title">页面详情</div>
+                <div class="detail-title" id="detail-title" data-i18n="mv.page_detail">页面详情</div>
                 <div class="detail-section">
-                    <div class="detail-label">页面ID</div>
+                    <div class="detail-label" data-i18n="mv.page_id">页面ID</div>
                     <div class="detail-value" id="detail-id">-</div>
                 </div>
                 <div class="detail-section">
-                    <div class="detail-label">描述</div>
+                    <div class="detail-label" data-i18n="mv.desc">描述</div>
                     <div class="detail-value" id="detail-desc">-</div>
                 </div>
                 <div class="detail-section">
-                    <div class="detail-label">功能</div>
+                    <div class="detail-label" data-i18n="mv.features">功能</div>
                     <div class="detail-features" id="detail-features"></div>
                 </div>
                 <div class="detail-section">
-                    <div class="detail-label">出边 (可跳转到)</div>
+                    <div class="detail-label" data-i18n="mv.outgoing">出边 (可跳转到)</div>
                     <div class="detail-value" id="detail-outgoing">-</div>
                 </div>
                 <div class="detail-section">
-                    <div class="detail-label">入边 (可从哪来)</div>
+                    <div class="detail-label" data-i18n="mv.incoming">入边 (可从哪来)</div>
                     <div class="detail-value" id="detail-incoming">-</div>
                 </div>
             </div>
 
             <!-- 工具栏 -->
             <div class="toolbar">
-                <button onclick="fitGraph()">适应窗口</button>
+                <button onclick="fitGraph()" data-i18n="mv.fit_view">适应窗口</button>
             </div>
         </div>
     </div>
@@ -501,11 +501,23 @@
     <script>
         if (window.LXBI18N) {
             window.LXBI18N.init();
+            window.addEventListener('lxb-lang-changed', () => window.LXBI18N.apply(document));
         }
+        const i18n = window.LXBI18N || {
+            t: (_k, fallback, params) => {
+                if (!params) return fallback || _k;
+                return String(fallback || _k).replace(/\{([a-zA-Z0-9_]+)\}/g, (_, name) =>
+                    params[name] == null ? '' : String(params[name])
+                );
+            },
+            literal: (x) => x
+        };
+        const tr = (key, fallback, params) => i18n.t(key, fallback, params);
+        const lt = (text) => i18n.literal(String(text || ''));
         // 检查 vis 库是否加载
         if (typeof vis === 'undefined') {
-            console.error('vis-network 库未加载');
-            document.body.innerHTML = '<div style="padding: 50px; color: #f66; text-align: center;">vis-network 库加载失败，请检查网络连接</div>';
+            console.error('vis-network library not loaded');
+            document.body.innerHTML = `<div style="padding: 50px; color: #f66; text-align: center;">${tr('mv.vis_load_failed', 'vis-network failed to load. Please check network connection.')}</div>`;
         }
 
         let mapData = null;
@@ -572,7 +584,7 @@
                 mapData = await parseMapFile(file);
                 renderMap();
             } catch (err) {
-                alert('加载文件失败: ' + err.message);
+                alert(tr('mv.load_file_failed', 'Failed to load file: {msg}', { msg: err.message }));
             } finally {
                 // 允许重复选择同一个文件再次触发 change
                 input.value = '';
@@ -591,7 +603,7 @@
             if (window.pako && typeof window.pako.ungzip === 'function') {
                 return window.pako.ungzip(new Uint8Array(arrayBuffer), { to: 'string' });
             }
-            throw new Error('当前浏览器不支持 gzip 解压');
+            throw new Error(tr('mv.gzip_unsupported', 'Current browser does not support gzip decompression'));
         }
 
         async function parseMapFile(file) {
@@ -619,10 +631,10 @@
                     mapData = data.data;
                     renderMap();
                 } else {
-                    alert(data.message || '没有可用的 Map');
+                    alert(data.message || tr('mv.no_available_map', 'No available map'));
                 }
             } catch (e) {
-                alert('加载失败: ' + e.message);
+                alert(tr('mv.load_failed', 'Load failed: {msg}', { msg: e.message }));
             }
         }
 
@@ -635,10 +647,10 @@
                     renderMapList(data.data);
                     document.getElementById('map-list-card').style.display = 'block';
                 } else {
-                    alert(data.message || '获取列表失败');
+                    alert(data.message || tr('mv.fetch_list_failed', 'Failed to fetch map list'));
                 }
             } catch (e) {
-                alert('获取列表失败: ' + e.message);
+                alert(tr('mv.fetch_list_failed_with_msg', 'Failed to fetch map list: {msg}', { msg: e.message }));
             }
         }
 
@@ -648,7 +660,7 @@
             container.innerHTML = '';
 
             if (maps.length === 0) {
-                container.innerHTML = '<div style="color: #666; text-align: center; padding: 20px;">暂无保存的 Map</div>';
+                container.innerHTML = `<div style="color: #666; text-align: center; padding: 20px;">${tr('mv.no_saved_maps', 'No saved maps')}</div>`;
                 return;
             }
 
@@ -682,10 +694,10 @@
                     renderMap();
                     document.getElementById('map-list-card').style.display = 'none';
                 } else {
-                    alert(data.message || '加载失败');
+                    alert(data.message || tr('mv.load_failed_simple', 'Load failed'));
                 }
             } catch (e) {
-                alert('加载失败: ' + e.message);
+                alert(tr('mv.load_failed', 'Load failed: {msg}', { msg: e.message }));
             }
         }
 
@@ -694,7 +706,7 @@
             if (!mapData) return;
 
             // 更新包名
-            document.getElementById('package-name').textContent = mapData.package || '未知应用';
+            document.getElementById('package-name').textContent = mapData.package || tr('mv.unknown_app', 'Unknown app');
 
             // 显示卡片
             document.getElementById('stats-card').style.display = 'block';
@@ -808,12 +820,12 @@
 
         // 弹窗类型映射
         const popupTypeLabels = {
-            'splash_ad': '开屏广告',
-            'update': '更新提示',
-            'teen_mode': '青少年模式',
-            'permission': '权限请求',
-            'rating': '评价提示',
-            'dialog': '弹窗对话框'
+            'splash_ad': () => tr('mv.popup_type_splash_ad', 'Splash ad'),
+            'update': () => tr('mv.popup_type_update', 'Update hint'),
+            'teen_mode': () => tr('mv.popup_type_teen_mode', 'Teen mode'),
+            'permission': () => tr('mv.popup_type_permission', 'Permission request'),
+            'rating': () => tr('mv.popup_type_rating', 'Rating prompt'),
+            'dialog': () => tr('mv.popup_type_dialog', 'Dialog')
         };
 
         // 渲染弹窗列表
@@ -825,7 +837,7 @@
                 const item = document.createElement('div');
                 item.className = 'popup-item';
 
-                const typeLabel = popupTypeLabels[popup.type] || popup.type;
+                const typeLabel = popupTypeLabels[popup.type] ? popupTypeLabels[popup.type]() : popup.type;
                 const locator = popup.close_locator || {};
                 const locatorStr = Object.entries(locator)
                     .filter(([k, v]) => v)
@@ -836,8 +848,8 @@
                     <span class="popup-type">${typeLabel}</span>
                     <div class="popup-desc">${popup.description || '-'}</div>
                     <div class="popup-meta">
-                        首次出现: ${popup.first_seen_page || '-'}
-                        ${popup.hit_count ? ` · 命中 ${popup.hit_count} 次` : ''}
+                        ${tr('mv.first_seen', 'First seen')}: ${popup.first_seen_page || '-'}
+                        ${popup.hit_count ? ` · ${tr('mv.hits_n', 'hits {count}', { count: popup.hit_count })}` : ''}
                     </div>
                     ${locatorStr ? `<div class="locator-info">${locatorStr}</div>` : ''}
                 `;
@@ -847,11 +859,11 @@
 
         // Block 类型映射
         const blockTypeLabels = {
-            'captcha': '人机验证',
-            'risk_control': '风控拦截',
-            'login_required': '强制登录',
-            'network_error': '网络错误',
-            'crash': '应用崩溃'
+            'captcha': () => tr('mv.block_type_captcha', 'Captcha'),
+            'risk_control': () => tr('mv.block_type_risk_control', 'Risk control'),
+            'login_required': () => tr('mv.block_type_login_required', 'Login required'),
+            'network_error': () => tr('mv.block_type_network_error', 'Network error'),
+            'crash': () => tr('mv.block_type_crash', 'App crash')
         };
 
         // 渲染异常页面列表
@@ -863,15 +875,15 @@
                 const item = document.createElement('div');
                 item.className = 'block-item';
 
-                const typeLabel = blockTypeLabels[block.type] || block.type;
+                const typeLabel = blockTypeLabels[block.type] ? blockTypeLabels[block.type]() : block.type;
                 const identifiers = block.identifiers || [];
 
                 item.innerHTML = `
                     <span class="block-type">${typeLabel}</span>
                     <div class="block-desc">${block.description || '-'}</div>
                     <div class="block-meta">
-                        触发节点: ${block.trigger_node || '-'}
-                        ${block.hit_count ? ` · 命中 ${block.hit_count} 次` : ''}
+                        ${tr('mv.trigger_node', 'Trigger node')}: ${block.trigger_node || '-'}
+                        ${block.hit_count ? ` · ${tr('mv.hits_n', 'hits {count}', { count: block.hit_count })}` : ''}
                     </div>
                     ${block.activity ? `<div class="locator-info">Activity: ${block.activity}</div>` : ''}
                     ${identifiers.length > 0 ? `<div class="locator-info">IDs: ${identifiers.slice(0, 5).join(', ')}${identifiers.length > 5 ? '...' : ''}</div>` : ''}
@@ -891,10 +903,10 @@
             }
 
             const pageIds = Object.keys(pages);
-            console.log('渲染图形:', pageIds.length, '个页面,', transitions.length, '个跳转');
+            console.log('render graph:', pageIds.length, 'pages,', transitions.length, 'transitions');
 
             if (pageIds.length === 0) {
-                container.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #666;">没有页面数据</div>';
+                container.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #666;">${tr('mv.no_page_data', 'No page data')}</div>`;
                 return;
             }
 
@@ -971,8 +983,8 @@
                     network.fit({ animation: false });
                 });
             } catch (e) {
-                console.error('渲染失败:', e);
-                container.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #f66;">渲染失败: ${e.message}</div>`;
+                console.error('render failed:', e);
+                container.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #f66;">${tr('mv.render_failed', 'Render failed: {msg}', { msg: e.message })}</div>`;
                 return;
             }
 
@@ -1011,7 +1023,7 @@
                     featuresContainer.appendChild(tag);
                 });
             } else {
-                featuresContainer.innerHTML = '<span style="color: #666;">无</span>';
+                featuresContainer.innerHTML = `<span style="color: #666;">${tr('mv.none', 'None')}</span>`;
             }
 
             // 出边入边（含 locator）
@@ -1031,7 +1043,7 @@
                     </div>`;
                 }).join('');
             } else {
-                outEl.textContent = '无';
+                outEl.textContent = tr('mv.none', 'None');
             }
 
             const inEl = document.getElementById('detail-incoming');
@@ -1046,7 +1058,7 @@
                     </div>`;
                 }).join('');
             } else {
-                inEl.textContent = '无';
+                inEl.textContent = tr('mv.none', 'None');
             }
         }
 
@@ -1080,7 +1092,7 @@
                         mapData = JSON.parse(ev.target.result);
                         renderMap();
                     } catch (err) {
-                        alert('JSON 解析失败: ' + err.message);
+                        alert(tr('mv.json_parse_failed', 'JSON parse failed: {msg}', { msg: err.message }));
                     }
                 };
                 reader.readAsText(file);
