@@ -1832,7 +1832,6 @@ MAP_REPO_DEFAULT_ROOT = os.path.join(PROJECT_ROOT, 'map_repo')
 MAP_PUBLISH_DEFAULT_REPO = os.getenv('MAP_PUBLISH_REPO', 'wuwei-crg/LXB-MapRepo').strip()
 MAP_PUBLISH_DEFAULT_BASE_BRANCH = os.getenv('MAP_PUBLISH_BASE_BRANCH', 'main').strip() or 'main'
 MAP_PUBLISH_DEFAULT_LANE = os.getenv('MAP_PUBLISH_DEFAULT_LANE', 'candidates').strip() or 'candidates'
-MAP_PUBLISH_DEFAULT_INDEX_PATH = os.getenv('MAP_PUBLISH_INDEX_PATH', f'{MAP_PUBLISH_DEFAULT_LANE}/index.json').strip() or f'{MAP_PUBLISH_DEFAULT_LANE}/index.json'
 MAP_PUBLISH_DEFAULT_MAPS_ROOT = os.getenv('MAP_PUBLISH_MAPS_ROOT', f'{MAP_PUBLISH_DEFAULT_LANE}/maps').strip() or f'{MAP_PUBLISH_DEFAULT_LANE}/maps'
 MAP_PUBLISH_GITHUB_TOKEN = os.getenv('MAP_PUBLISH_GITHUB_TOKEN', '').strip()
 MAP_PUBLISH_DEFAULT_MODE = os.getenv('MAP_PUBLISH_MODE', 'local_git').strip().lower() or 'local_git'
@@ -2058,19 +2057,6 @@ def _safe_path_under_root(root: str, candidate_path: str) -> str:
     return candidate_abs
 
 
-def _new_map_publish_index(lane: str) -> dict:
-    lane_norm = _normalize_publish_lane(lane)
-    if lane_norm == 'stable':
-        return {
-            'schema_version': 'lxb.maps.stable.index.v1',
-            'maps': [],
-        }
-    return {
-        'schema_version': 'lxb.maps.candidates.index.v1',
-        'candidates': [],
-    }
-
-
 def _normalize_repo_full_name(repo: str) -> str:
     value = str(repo or '').strip().strip('/')
     if not value:
@@ -2101,10 +2087,6 @@ def _normalize_publish_mode(value: str) -> str:
     if mode in ('github_api', 'local_git'):
         return mode
     return MAP_PUBLISH_DEFAULT_MODE if MAP_PUBLISH_DEFAULT_MODE in ('github_api', 'local_git') else 'local_git'
-
-
-def _lane_default_index_path(lane: str) -> str:
-    return f'{lane}/index.json'
 
 
 def _lane_default_maps_root(lane: str) -> str:
@@ -2270,30 +2252,6 @@ def _github_create_branch(repo: str, branch: str, from_sha: str, token: str) -> 
     })
 
 
-def _github_get_file_json_and_sha(repo: str, path: str, ref: str, token: str):
-    encoded = urllib.parse.quote(path, safe='/')
-    query = f'/repos/{repo}/contents/{encoded}?ref={urllib.parse.quote(ref, safe="")}'
-    try:
-        data = _github_api_request('GET', query, token)
-    except RuntimeError as e:
-        msg = str(e)
-        if 'github_api_http_404' in msg:
-            return None, None
-        raise
-    if not isinstance(data, dict):
-        return None, None
-    content_b64 = str(data.get('content') or '').replace('\n', '')
-    sha = str(data.get('sha') or '').strip() or None
-    if not content_b64:
-        return None, sha
-    try:
-        decoded = base64.b64decode(content_b64).decode('utf-8')
-        obj = json.loads(decoded)
-        return obj, sha
-    except Exception:
-        return None, sha
-
-
 def _github_put_file(repo: str, path: str, branch: str, token: str, content_bytes: bytes, message: str, sha: Optional[str] = None):
     encoded = urllib.parse.quote(path, safe='/')
     payload = {
@@ -2315,40 +2273,14 @@ def _github_create_pr(repo: str, title: str, head: str, base: str, body: str, to
     })
 
 
-def _upsert_map_index(index_obj: dict, row: dict, lane: str) -> dict:
-    lane_norm = _normalize_publish_lane(lane)
-    out = dict(index_obj or {})
-    out['schema_version'] = out.get('schema_version') or (
-        'lxb.maps.stable.index.v1' if lane_norm == 'stable' else 'lxb.maps.candidates.index.v1'
-    )
-    out.pop('updated_at', None)
-    rows = list(out.get('candidates') or out.get('maps') or [])
-    pkg = str(row.get('package') or '')
-    map_id = str(row.get('map_id') or '')
-    rows = [x for x in rows if not (str(x.get('package') or '') == pkg and str(x.get('map_id') or '') == map_id)]
-    rows.append(row)
-    if lane_norm == 'stable':
-        rows.sort(key=lambda x: str(x.get('stable_at') or x.get('submitted_at') or x.get('generated_at') or ''), reverse=True)
-        out.pop('candidates', None)
-        out['maps'] = rows
-    else:
-        rows.sort(key=lambda x: str(x.get('submitted_at') or x.get('generated_at') or ''), reverse=True)
-        out.pop('maps', None)
-        out['candidates'] = rows
-    return out
-
-
 def _publish_to_repo_via_local_git(
         local_repo_root: str,
         base_branch: str,
         branch_name: str,
         map_rel_path: str,
         meta_rel_path: str,
-        index_path: str,
         nav_gz_bytes: bytes,
         meta_obj: dict,
-        index_row: dict,
-        lane: str,
         commit_prefix: str
 ) -> dict:
     status = _run_git(local_repo_root, ['status', '--porcelain'])
@@ -2360,11 +2292,9 @@ def _publish_to_repo_via_local_git(
 
     map_abs = _safe_path_under_root(local_repo_root, os.path.join(local_repo_root, map_rel_path.replace('/', os.sep)))
     meta_abs = _safe_path_under_root(local_repo_root, os.path.join(local_repo_root, meta_rel_path.replace('/', os.sep)))
-    index_abs = _safe_path_under_root(local_repo_root, os.path.join(local_repo_root, index_path.replace('/', os.sep)))
 
     os.makedirs(os.path.dirname(map_abs), exist_ok=True)
     os.makedirs(os.path.dirname(meta_abs), exist_ok=True)
-    os.makedirs(os.path.dirname(index_abs), exist_ok=True)
 
     with open(map_abs, 'wb') as f:
         f.write(nav_gz_bytes)
@@ -2372,21 +2302,7 @@ def _publish_to_repo_via_local_git(
     with open(meta_abs, 'w', encoding='utf-8') as f:
         json.dump(meta_obj, f, ensure_ascii=False, indent=2)
 
-    if os.path.exists(index_abs):
-        try:
-            with open(index_abs, 'r', encoding='utf-8') as f:
-                index_obj = json.load(f)
-            if not isinstance(index_obj, dict):
-                index_obj = _new_map_publish_index(lane)
-        except Exception:
-            index_obj = _new_map_publish_index(lane)
-    else:
-        index_obj = _new_map_publish_index(lane)
-    next_index_obj = _upsert_map_index(index_obj, index_row, lane)
-    with open(index_abs, 'w', encoding='utf-8') as f:
-        json.dump(next_index_obj, f, ensure_ascii=False, indent=2)
-
-    _run_git(local_repo_root, ['add', '--', map_rel_path, meta_rel_path, index_path])
+    _run_git(local_repo_root, ['add', '--', map_rel_path, meta_rel_path])
     _run_git(local_repo_root, ['commit', '-m', f'{commit_prefix} local git publish'])
     _run_git(local_repo_root, ['push', '-u', 'origin', branch_name], timeout_sec=120)
 
@@ -3533,7 +3449,6 @@ def map_publish_config():
                 'default_base_branch': MAP_PUBLISH_DEFAULT_BASE_BRANCH,
                 'default_lane': MAP_PUBLISH_DEFAULT_LANE,
                 'default_publish_mode': _normalize_publish_mode(MAP_PUBLISH_DEFAULT_MODE),
-                'default_index_path': MAP_PUBLISH_DEFAULT_INDEX_PATH,
                 'default_maps_root': MAP_PUBLISH_DEFAULT_MAPS_ROOT,
                 'token_configured': bool(MAP_PUBLISH_GITHUB_TOKEN),
                 'local_map_repo_root': _resolve_map_repo_root(),
@@ -3570,10 +3485,7 @@ def map_publish_submit():
             return jsonify({'success': False, 'message': 'github token is required in github_api mode'}), 400
 
         lane = _normalize_publish_lane(payload.get('lane') or MAP_PUBLISH_DEFAULT_LANE)
-        index_path = str(payload.get('index_path') or _lane_default_index_path(lane)).strip().strip('/')
         maps_root = str(payload.get('maps_root') or _lane_default_maps_root(lane)).strip().strip('/')
-        if not index_path:
-            return jsonify({'success': False, 'message': 'index_path is required'}), 400
         if not maps_root:
             return jsonify({'success': False, 'message': 'maps_root is required'}), 400
 
@@ -3682,23 +3594,6 @@ def map_publish_submit():
                 'bytes_json': len(nav_json_bytes),
             },
         }
-        index_row = {
-            'package': package_name,
-            'map_id': map_id,
-            'generated_at': generated_at,
-            'submitted_at': submitted_at,
-            'stable_at': stable_at,
-            'lane': lane,
-            'status': 'stable' if lane == 'stable' else 'pending',
-            'map_path': map_rel_path,
-            'meta_path': meta_rel_path,
-            'sha256': sha256_hex,
-            'bytes': len(nav_gz_bytes),
-            'source': source,
-            'description': description,
-            'source_candidate_map_id': source_candidate_map_id,
-        }
-
         branch_seed = f"map-publish/{_safe_branch_part(package_name)}/{datetime.now().strftime('%Y%m%d-%H%M%S')}-{sha256_hex[:8]}"
         branch_name = branch_seed
         commit_prefix = f"publish(map): {package_name} {map_id}"
@@ -3718,18 +3613,11 @@ def map_publish_submit():
             f"- source: `{source}`\n"
             f"- sha256: `{sha256_hex}`\n"
             f"- map_path: `{map_rel_path}`\n"
-            f"- meta_path: `{meta_rel_path}`\n"
-            f"- index_path: `{index_path}`\n\n"
+            f"- meta_path: `{meta_rel_path}`\n\n"
             f"- source_candidate_map_id: `{source_candidate_map_id or '-'}`\n\n"
             f"description:\n{description or '(none)'}\n"
         )
         if publish_mode == 'github_api':
-            index_obj, index_sha = _github_get_file_json_and_sha(repo, index_path, base_branch, token)
-            if not isinstance(index_obj, dict):
-                index_obj = _new_map_publish_index(lane)
-                index_sha = None
-            next_index_obj = _upsert_map_index(index_obj, index_row, lane)
-            next_index_bytes = json.dumps(next_index_obj, ensure_ascii=False, indent=2).encode('utf-8')
             meta_bytes = json.dumps(meta_obj, ensure_ascii=False, indent=2).encode('utf-8')
 
             base_sha = _github_get_branch_sha(repo, base_branch, token)
@@ -3766,15 +3654,6 @@ def map_publish_submit():
                 message=f"{commit_prefix} add meta",
                 sha=None,
             )
-            _github_put_file(
-                repo=repo,
-                path=index_path,
-                branch=branch_name,
-                token=token,
-                content_bytes=next_index_bytes,
-                message=f"{commit_prefix} update index",
-                sha=index_sha,
-            )
 
             pr = _github_create_pr(
                 repo=repo,
@@ -3798,7 +3677,6 @@ def map_publish_submit():
                     'sha256': sha256_hex,
                     'map_path': map_rel_path,
                     'meta_path': meta_rel_path,
-                    'index_path': index_path,
                     'pr_number': (pr or {}).get('number'),
                     'pr_url': (pr or {}).get('html_url'),
                 }
@@ -3811,11 +3689,8 @@ def map_publish_submit():
             branch_name=branch_name,
             map_rel_path=map_rel_path,
             meta_rel_path=meta_rel_path,
-            index_path=index_path,
             nav_gz_bytes=nav_gz_bytes,
             meta_obj=meta_obj,
-            index_row=index_row,
-            lane=lane,
             commit_prefix=commit_prefix
         )
         resolved_repo = local_out.get('inferred_repo') or repo
@@ -3836,7 +3711,6 @@ def map_publish_submit():
                 'sha256': sha256_hex,
                 'map_path': map_rel_path,
                 'meta_path': meta_rel_path,
-                'index_path': index_path,
                 'local_repo_root': local_repo_root,
                 'remote_url': local_out.get('remote_url', ''),
                 'pr_url': pr_url,

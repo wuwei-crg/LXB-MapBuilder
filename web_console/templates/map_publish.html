@@ -53,7 +53,7 @@
         <div class="title">Publish Map To Registry PR</div>
         <div class="muted">
             Upload a map file (json/json.gz) or pick an existing local map, then submit a PR to the registry repository.
-            Files are normalized to <span class="mono">nav_map.json.gz + meta.json + &lt;lane&gt;/index.json</span>.
+            Files are normalized to <span class="mono">nav_map.json.gz + meta.json</span>.
         </div>
     </div>
 
@@ -84,10 +84,6 @@
                 <option value="candidates">candidates</option>
                 <option value="stable">stable</option>
             </select>
-        </div>
-        <div class="row">
-            <label>Index Path</label>
-            <input id="index_path" placeholder="candidates/index.json">
         </div>
         <div class="row">
             <label>Maps Root</label>
@@ -242,7 +238,6 @@
             el('base_branch').value = cfg.default_base_branch || 'main';
             el('lane').value = cfg.default_lane || 'candidates';
             el('publish_mode').value = cfg.default_publish_mode || 'local_git';
-            el('index_path').value = cfg.default_index_path || `${el('lane').value}/index.json`;
             el('maps_root').value = cfg.default_maps_root || `${el('lane').value}/maps`;
             el('local_repo_path').value = cfg.local_map_repo_root || '';
             const badge = el('token_badge');
@@ -282,7 +277,6 @@
             fd.append('base_branch', el('base_branch').value.trim());
             fd.append('local_repo_path', el('local_repo_path').value.trim());
             fd.append('lane', el('lane').value.trim());
-            fd.append('index_path', el('index_path').value.trim());
             fd.append('maps_root', el('maps_root').value.trim());
             fd.append('github_token', el('github_token').value.trim());
 
@@ -318,9 +312,6 @@
     el('publish_mode').addEventListener('change', updatePublishModeUI);
     el('lane').addEventListener('change', () => {
         const lane = el('lane').value || 'candidates';
-        if (!el('index_path').value.trim() || el('index_path').value.includes('/index.json')) {
-            el('index_path').value = `${lane}/index.json`;
-        }
         if (!el('maps_root').value.trim() || el('maps_root').value.includes('/maps')) {
             el('maps_root').value = `${lane}/maps`;
         }
