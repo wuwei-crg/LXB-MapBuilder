@@ -8,6 +8,11 @@ This repository is the standalone home for map construction assets:
 - `docs/`: map builder documentation
 - `web_console/`: map builder web UI (migrated from `LXB-Framework/web_console`)
 
+## Related Repositories
+
+- Runtime framework (Android FSM + scheduler): https://github.com/wuwei-crg/LXB-Framework
+- Canonical map artifacts repository: https://github.com/wuwei-crg/LXB-MapRepo
+
 ## Run Web Console
 
 ```bash
