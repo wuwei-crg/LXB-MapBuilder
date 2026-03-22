@@ -407,6 +407,12 @@
     </footer>
 </div>
 
+<script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
+<script>
+    if (window.LXBI18N) {
+        window.LXBI18N.init();
+    }
+</script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

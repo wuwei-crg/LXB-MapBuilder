@@ -495,6 +495,7 @@
             background: #172554;
         }
     </style>
+    <script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
 </head>
 <body>
     <div class="header">
@@ -691,6 +692,9 @@
     </div>
 
     <script>
+        if (window.LXBI18N) {
+            window.LXBI18N.init();
+        }
         const API_BASE = '';
         let logIndex = 0;
         let pollInterval = null;

@@ -11,6 +11,14 @@ const state = {
         failed: 0
     }
 };
+const i18n = window.LXBI18N || {
+    t: (_k, fallback, params) => {
+        if (!fallback) return _k;
+        if (!params) return fallback;
+        return String(fallback).replace(/\{([a-zA-Z0-9_]+)\}/g, (_, x) => params[x] == null ? '' : String(params[x]));
+    },
+    literal: (x) => x
+};
 
 // DOM 元素
 let connectBtn, disconnectBtn, connectionStatus;
@@ -451,7 +459,7 @@ function sleepMs(ms) {
  */
 function updateConnectionUI(connected) {
     if (connected) {
-        connectionStatus.textContent = '已连接';
+        connectionStatus.textContent = i18n.literal('已连接');
         connectionStatus.className = 'status-connected';
         connectBtn.disabled = true;
         disconnectBtn.disabled = false;
@@ -460,7 +468,7 @@ function updateConnectionUI(connected) {
             btn.disabled = false;
         });
     } else {
-        connectionStatus.textContent = '未连接';
+        connectionStatus.textContent = i18n.literal('未连接');
         connectionStatus.className = 'status-disconnected';
         connectBtn.disabled = false;
         disconnectBtn.disabled = true;
@@ -487,7 +495,7 @@ function addLog(type, message) {
 
     const messageSpan = document.createElement('span');
     messageSpan.className = 'log-message';
-    messageSpan.textContent = message;
+    messageSpan.textContent = i18n.literal(message);
 
     entry.appendChild(timeSpan);
     entry.appendChild(messageSpan);

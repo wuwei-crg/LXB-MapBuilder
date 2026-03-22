@@ -6,6 +6,7 @@
     <title>LXB Map Viewer</title>
     <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <script src="https://unpkg.com/pako@2.1.0/dist/pako.min.js"></script>
+    <script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body {
@@ -498,6 +499,9 @@
     </div>
 
     <script>
+        if (window.LXBI18N) {
+            window.LXBI18N.init();
+        }
         // 检查 vis 库是否加载
         if (typeof vis === 'undefined') {
             console.error('vis-network 库未加载');

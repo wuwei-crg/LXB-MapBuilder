@@ -34,6 +34,14 @@
         .top-nav button:hover { border-color: #475569; color: #e2e8f0; }
         .top-nav button.active { color: #93c5fd; border-color: #3b82f6; background: #172554; }
         .right { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .lang-select {
+            border: 1px solid #334155;
+            background: #0b1220;
+            color: #cbd5e1;
+            border-radius: 8px;
+            padding: 6px 8px;
+            font-size: 12px;
+        }
         .ghost-btn {
             border: 1px solid #334155;
             background: #0b1220;
@@ -141,18 +149,22 @@
 <div class="app-shell">
     <header class="shell-header">
         <div class="left">
-            <div class="brand">LXB Console Hub</div>
-            <div class="sub" id="page-title">Command Studio</div>
+            <div class="brand" data-i18n="hub.title">LXB Console Hub</div>
+            <div class="sub" id="page-title" data-i18n="hub.page.command">Command Studio</div>
         </div>
         <nav class="top-nav" id="top-nav">
-            <button data-page="command_studio" class="active">Command Studio</button>
-            <button data-page="map_builder">LXB-MapBuilder</button>
-            <button data-page="map_viewer">Map Viewer</button>
-            <button data-page="map_publish">Map Publish</button>
+            <button data-page="command_studio" class="active" data-i18n="hub.page.command">Command Studio</button>
+            <button data-page="map_builder" data-i18n="hub.page.builder">LXB-MapBuilder</button>
+            <button data-page="map_viewer" data-i18n="hub.page.viewer">Map Viewer</button>
+            <button data-page="map_publish" data-i18n="hub.page.publish">Map Publish</button>
         </nav>
         <div class="right">
-            <div class="conn-pill" id="global-conn-status">未连接</div>
-            <button class="ghost-btn" id="global-conn-manage">连接管理</button>
+            <select id="global-lang" class="lang-select">
+                <option value="en">EN</option>
+                <option value="zh">中文</option>
+            </select>
+            <div class="conn-pill" id="global-conn-status" data-i18n="hub.conn.unconnected">未连接</div>
+            <button class="ghost-btn" id="global-conn-manage" data-i18n="hub.conn.manage">连接管理</button>
         </div>
     </header>
     <main class="shell-content">
@@ -162,29 +174,32 @@
 <div id="conn-panel-mask" class="conn-panel-mask"></div>
 <aside id="conn-panel" class="conn-panel">
     <div class="conn-panel-head">
-        <div style="font-size:14px; color:#93c5fd; font-weight:600;">连接管理</div>
-        <button class="ghost-btn" id="conn-panel-close">关闭</button>
+        <div style="font-size:14px; color:#93c5fd; font-weight:600;" data-i18n="hub.conn.panel.title">连接管理</div>
+        <button class="ghost-btn" id="conn-panel-close" data-i18n="common.close">关闭</button>
     </div>
     <div class="conn-panel-body">
         <div class="global-conn" style="flex-wrap: wrap;">
             <input id="global-host" value="192.168.1.100" placeholder="Host">
             <input id="global-port" class="port" type="number" value="12345" placeholder="Port">
-            <button id="global-connect" class="primary">新建连接</button>
-            <button id="global-refresh">刷新</button>
+            <button id="global-connect" class="primary" data-i18n="common.new_connection">新建连接</button>
+            <button id="global-refresh" data-i18n="common.refresh">刷新</button>
             <select id="global-conn-list"></select>
-            <button id="global-disconnect">断开选中</button>
+            <button id="global-disconnect" data-i18n="common.disconnect_selected">断开选中</button>
         </div>
-        <div style="font-size:12px; color:#94a3b8;">提示: 选中连接后，内部页面会使用该连接执行命令和任务。</div>
+        <div style="font-size:12px; color:#94a3b8;" data-i18n="hub.conn.tip">提示: 选中连接后，内部页面会使用该连接执行命令和任务。</div>
     </div>
 </aside>
 
+<script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
 <script>
 (function () {
+    const i18n = window.LXBI18N;
+    i18n.init();
     const pageMap = {
-        command_studio: { path: '/command_studio', title: 'Command Studio' },
-        map_builder: { path: '/map_builder', title: 'LXB-MapBuilder' },
-        map_viewer: { path: '/map_viewer', title: 'Map Viewer' },
-        map_publish: { path: '/map_publish', title: 'Map Publish' }
+        command_studio: { path: '/command_studio', titleKey: 'hub.page.command', fallback: 'Command Studio' },
+        map_builder: { path: '/map_builder', titleKey: 'hub.page.builder', fallback: 'LXB-MapBuilder' },
+        map_viewer: { path: '/map_viewer', titleKey: 'hub.page.viewer', fallback: 'Map Viewer' },
+        map_publish: { path: '/map_publish', titleKey: 'hub.page.publish', fallback: 'Map Publish' }
     };
 
     const nav = document.getElementById('top-nav');
@@ -201,6 +216,9 @@
     const connPanelMask = document.getElementById('conn-panel-mask');
     const connManageBtn = document.getElementById('global-conn-manage');
     const connPanelCloseBtn = document.getElementById('conn-panel-close');
+    const langSelect = document.getElementById('global-lang');
+
+    langSelect.value = i18n.getLang();
 
     function openConnPanel() {
         connPanel.classList.add('show');
@@ -228,7 +246,7 @@
             if (!rows.length) {
                 const empty = document.createElement('option');
                 empty.value = '';
-                empty.textContent = '无连接';
+                empty.textContent = i18n.t('hub.conn.none', 'No connections');
                 connList.appendChild(empty);
                 connList.value = '';
             } else {
@@ -242,11 +260,14 @@
                 if (currentId) connList.value = currentId;
             }
             const running = Number(data.running_tasks || 0);
-            connStatus.textContent = `连接数 ${rows.length} | 运行中任务 ${running}` + (data.connected ? ` | 当前 ${data.host}:${data.port}` : '');
+            connStatus.textContent = i18n.t('hub.status.count', 'Connections {count} | Running tasks {running}', {
+                count: rows.length,
+                running
+            }) + (data.connected ? i18n.t('hub.status.current', ' | Current {host}:{port}', { host: data.host, port: data.port }) : '');
             connectBtn.disabled = false;
             disconnectBtn.disabled = !rows.length || !connList.value;
         } catch (_) {
-            connStatus.textContent = '状态获取失败';
+            connStatus.textContent = i18n.t('hub.status.fetch_failed', 'Status fetch failed');
             connectBtn.disabled = false;
             disconnectBtn.disabled = true;
         }
@@ -256,15 +277,17 @@
         nav.querySelectorAll('button').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.page === key);
         });
-        pageTitle.textContent = pageMap[key]?.title || 'Command Studio';
+        const target = pageMap[key] || pageMap.command_studio;
+        pageTitle.textContent = i18n.t(target.titleKey, target.fallback);
     }
 
     function loadPage(key, updateHash = true) {
         if (!pageMap[key]) key = 'command_studio';
         const target = pageMap[key];
         setActive(key);
-        if (frame.getAttribute('src') !== target.path) {
-            frame.setAttribute('src', target.path);
+        const pageUrl = `${target.path}?lang=${encodeURIComponent(i18n.getLang())}`;
+        if (frame.getAttribute('src') !== pageUrl) {
+            frame.setAttribute('src', pageUrl);
         }
         if (updateHash) {
             const nextHash = '#' + key;
@@ -314,6 +337,13 @@
     connManageBtn.addEventListener('click', openConnPanel);
     connPanelCloseBtn.addEventListener('click', closeConnPanel);
     connPanelMask.addEventListener('click', closeConnPanel);
+    langSelect.addEventListener('change', () => {
+        i18n.setLang(langSelect.value);
+        i18n.apply(document);
+        const key = (window.location.hash || '#command_studio').slice(1);
+        loadPage(key, false);
+        refreshConnStatus();
+    });
 
     window.addEventListener('hashchange', () => {
         const key = (window.location.hash || '#command_studio').slice(1);

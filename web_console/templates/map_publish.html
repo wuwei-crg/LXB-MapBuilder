@@ -46,11 +46,12 @@
         .result { white-space: pre-wrap; font-size: 12px; color: #cbd5e1; background: #0b1220; border: 1px solid #334155; border-radius: 8px; padding: 10px; min-height: 60px; }
         .hidden { display: none; }
     </style>
+    <script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
 </head>
 <body>
 <div class="wrap">
     <div class="card">
-        <div class="title">Publish Map To Registry PR</div>
+        <div class="title" data-i18n="publish.title">Map Publish</div>
         <div class="muted">
             Upload a map file (json/json.gz) or pick an existing local map, then submit a PR to the registry repository.
             Files are normalized to <span class="mono">nav_map.json.gz + meta.json</span>.
@@ -58,87 +59,87 @@
     </div>
 
     <div class="card">
-        <div class="title">Target Repository</div>
+        <div class="title" data-i18n="publish.card.target">Target Repository</div>
         <div class="row">
-            <label>Publish Mode</label>
+            <label data-i18n="publish.mode">Publish Mode</label>
             <select id="publish_mode">
                 <option value="local_git">local_git (no token)</option>
                 <option value="github_api">github_api (token required)</option>
             </select>
         </div>
         <div class="row">
-            <label>GitHub Repo</label>
+            <label data-i18n="publish.repo">GitHub Repo</label>
             <input id="repo" placeholder="owner/repo">
         </div>
         <div class="row">
-            <label>Base Branch</label>
+            <label data-i18n="publish.base_branch">Base Branch</label>
             <input id="base_branch" placeholder="main">
         </div>
         <div class="row">
-            <label>Local Git Repo Path</label>
+            <label data-i18n="publish.local_repo">Local Git Repo Path</label>
             <input id="local_repo_path" placeholder="map_repo">
         </div>
         <div class="row">
-            <label>Lane</label>
+            <label data-i18n="publish.lane">Lane</label>
             <select id="lane">
                 <option value="candidates">candidates</option>
                 <option value="stable">stable</option>
             </select>
         </div>
         <div class="row">
-            <label>Maps Root</label>
+            <label data-i18n="publish.maps_root">Maps Root</label>
             <input id="maps_root" placeholder="candidates/maps">
         </div>
         <div class="row" id="token_row">
-            <label>GitHub Token</label>
+            <label data-i18n="publish.token">GitHub Token</label>
             <input id="github_token" type="password" placeholder="Optional per-request token override">
         </div>
         <div class="muted" id="token_hint">
-            Token status:
+            <span data-i18n="publish.token_status">Token status:</span>
             <span id="token_badge" class="pill warn">loading...</span>
         </div>
     </div>
 
     <div class="card">
-        <div class="title">Map Source</div>
+        <div class="title" data-i18n="publish.card.source">Map Source</div>
         <div class="row">
-            <label>Source Type</label>
+            <label data-i18n="publish.source_type">Source Type</label>
             <select id="source">
-                <option value="saved">Use local saved map</option>
-                <option value="upload">Upload from browser</option>
+                <option value="saved" data-i18n="publish.saved">Use local saved map</option>
+                <option value="upload" data-i18n="publish.upload">Upload from browser</option>
             </select>
         </div>
         <div id="saved_block">
             <div class="actions" style="margin-bottom:8px;">
-                <button id="btn_refresh_maps">Refresh Local Maps</button>
+                <button id="btn_refresh_maps" data-i18n="publish.refresh_local">Refresh Local Maps</button>
             </div>
             <div style="max-height:240px; overflow:auto; border:1px solid #334155; border-radius:8px;">
                 <table>
                     <thead>
                     <tr>
-                        <th>Select</th>
-                        <th>Package</th>
-                        <th>Map ID</th>
-                        <th>Modified</th>
+                        <th data-i18n="publish.table.select">Select</th>
+                        <th data-i18n="publish.table.package">Package</th>
+                        <th data-i18n="publish.table.map_id">Map ID</th>
+                        <th data-i18n="publish.table.modified">Modified</th>
                     </tr>
                     </thead>
                     <tbody id="local_maps_tbody">
-                    <tr><td colspan="4" class="muted">No data</td></tr>
+                    <tr><td colspan="4" class="muted" data-i18n="publish.no_data">No data</td></tr>
                     </tbody>
                 </table>
             </div>
             <div class="row" style="margin-top:8px;">
-                <label>Selected File</label>
+                <label data-i18n="publish.selected_file">Selected File</label>
                 <input id="filepath" readonly>
             </div>
         </div>
         <div id="upload_block" class="hidden">
             <div class="row">
-                <label>Map File</label>
+                <label data-i18n="publish.map_file">Map File</label>
                 <input id="map_file" type="file" accept=".json,.gz,.json.gz,application/json,application/gzip">
             </div>
             <div class="row">
-                <label>Meta File (optional)</label>
+                <label data-i18n="publish.meta_file">Meta File (optional)</label>
                 <input id="meta_file" type="file" accept=".json,.gz,.json.gz,application/json,application/gzip">
             </div>
         </div>
@@ -146,23 +147,25 @@
     </div>
 
     <div class="card">
-        <div class="title">Publish</div>
+        <div class="title" data-i18n="publish.card.submit">Publish</div>
         <div class="muted">
             Publish metadata is sourced from <span class="mono">meta.json</span> (saved sidecar or uploaded meta file).
             Frontend metadata fields are disabled to avoid divergence.
         </div>
         <div class="actions" style="margin-top:8px;">
-            <button id="btn_submit" class="primary">Submit PR</button>
+            <button id="btn_submit" class="primary" data-i18n="publish.submit">Submit PR</button>
         </div>
     </div>
 
     <div class="card">
-        <div class="title">Result</div>
-        <div id="result" class="result">Idle.</div>
+        <div class="title" data-i18n="publish.card.result">Result</div>
+        <div id="result" class="result" data-i18n="publish.idle">Idle.</div>
     </div>
 </div>
 
 <script>
+    const i18n = window.LXBI18N;
+    i18n.init();
     const el = (id) => document.getElementById(id);
 
     async function jfetch(url, method = 'GET', body = null) {
@@ -209,12 +212,12 @@
     function renderLocalMaps(rows) {
         const tbody = el('local_maps_tbody');
         if (!rows || !rows.length) {
-            tbody.innerHTML = `<tr><td colspan="4" class="muted">No local maps.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4" class="muted">${i18n.t('publish.no_local_maps', 'No local maps.')}</td></tr>`;
             return;
         }
         tbody.innerHTML = rows.map((row, idx) => `
             <tr>
-                <td><button data-idx="${idx}" class="pick-map">Pick</button></td>
+                <td><button data-idx="${idx}" class="pick-map">${i18n.t('publish.pick', 'Pick')}</button></td>
                 <td>${row.package || ''}</td>
                 <td class="mono">${row.map_id || ''}</td>
                 <td class="mono">${row.modified || ''}</td>
@@ -250,7 +253,7 @@
             }
             updatePublishModeUI();
         } catch (e) {
-            setResult(`Config load failed: ${e.message}`);
+            setResult(i18n.t('publish.config_load_failed', 'Config load failed: {msg}', { msg: e.message }));
         }
     }
 
@@ -259,7 +262,7 @@
             const res = await jfetch('/api/maps/list');
             renderLocalMaps(res.data || []);
         } catch (e) {
-            setResult(`Local maps refresh failed: ${e.message}`);
+            setResult(i18n.t('publish.local_refresh_failed', 'Local maps refresh failed: {msg}', { msg: e.message }));
             renderLocalMaps([]);
         }
     }
@@ -267,7 +270,7 @@
     async function submitPublish() {
         try {
             setLoading(true);
-            setResult('Submitting PR...');
+            setResult(i18n.t('publish.loading', 'Submitting PR...'));
 
             const source = el('source').value;
             const fd = new FormData();
@@ -284,7 +287,7 @@
                 fd.append('filepath', el('filepath').value.trim());
             } else {
                 const file = el('map_file').files[0];
-                if (!file) throw new Error('Please choose a map file first.');
+                if (!file) throw new Error(i18n.t('publish.need_map_file', 'Please choose a map file first.'));
                 fd.append('map_file', file);
                 const metaFile = el('meta_file').files[0];
                 if (metaFile) {
@@ -299,10 +302,12 @@
             }
             const out = data.data || {};
             const prUrl = out.pr_url || '';
-            const prefix = prUrl ? `PR created: ${prUrl}` : 'PR created.';
+            const prefix = prUrl
+                ? i18n.t('publish.pr_created', 'PR created: {url}', { url: prUrl })
+                : i18n.t('publish.pr_created_simple', 'PR created.');
             setResult(prefix, out);
         } catch (e) {
-            setResult(`Submit failed: ${e.message}`);
+            setResult(i18n.t('publish.submit_failed', 'Submit failed: {msg}', { msg: e.message }));
         } finally {
             setLoading(false);
         }
