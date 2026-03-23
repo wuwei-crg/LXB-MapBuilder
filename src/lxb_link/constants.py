@@ -121,7 +121,8 @@ CMD_CLEAR_DATA = 0x45      # Clear app data (new)
 CMD_INSTALL_APK = 0x46     # Install application (new)
 CMD_UNINSTALL = 0x47       # Uninstall application (new)
 CMD_LIST_APPS = 0x48       # List installed applications
-# 0x49-0x4F: Reserved
+CMD_SYSTEM_CONTROL = 0x49  # Generic shell-based system controls
+# 0x4A-0x4F: Reserved
 
 # -----------------------------------------------------------------------------
 # Debug Layer (0x50-0x5F) - Debugging Tools
@@ -198,6 +199,7 @@ IMPLEMENTED_COMMANDS_V1 = {
     CMD_LAUNCH_APP,
     CMD_STOP_APP,
     CMD_LIST_APPS,
+    CMD_SYSTEM_CONTROL,
     CMD_SCREENSHOT,
     CMD_IMG_REQ,
     CMD_IMG_META,
@@ -279,6 +281,7 @@ CHANNEL_MAP = {
     CMD_SET_SCREENSHOT_QUALITY: CH_CONTROL,
     CMD_LAUNCH_APP: CH_CONTROL,
     CMD_STOP_APP: CH_CONTROL,
+    CMD_SYSTEM_CONTROL: CH_CONTROL,
     CMD_GET_SCREEN_STATE: CH_CONTROL,
     CMD_GET_SCREEN_SIZE: CH_CONTROL,
     CMD_CORTEX_ROUTE_RUN: CH_CONTROL,

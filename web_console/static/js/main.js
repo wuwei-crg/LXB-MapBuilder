@@ -205,6 +205,78 @@ function handleCommand(cmd) {
             break;
 
         // =============================================================
+        // System Shell Control (CMD 0x49)
+        // =============================================================
+        case 'sys_expand_notifications':
+            sendSystemControl('panel_expand_notifications', {}, 'PANEL_EXPAND_NOTIFICATIONS');
+            break;
+        case 'sys_expand_settings':
+            sendSystemControl('panel_expand_settings', {}, 'PANEL_EXPAND_SETTINGS');
+            break;
+        case 'sys_collapse_panels':
+            sendSystemControl('panel_collapse', {}, 'PANEL_COLLAPSE');
+            break;
+        case 'sys_screen_off':
+            sendSystemControl('screen_off', {}, 'SCREEN_OFF');
+            break;
+        case 'sys_dnd_set': {
+            const mode = (document.getElementById('sys-dnd-mode')?.value || 'off').trim();
+            sendSystemControl('dnd_set', { mode }, `DND_SET ${mode}`);
+            break;
+        }
+        case 'sys_wifi_on':
+            sendSystemControl('wifi_set', { enabled: true }, 'WIFI_ON');
+            break;
+        case 'sys_wifi_off':
+            sendSystemControl('wifi_set', { enabled: false }, 'WIFI_OFF');
+            break;
+        case 'sys_bt_on':
+            sendSystemControl('bluetooth_set', { enabled: true }, 'BT_ON');
+            break;
+        case 'sys_bt_off':
+            sendSystemControl('bluetooth_set', { enabled: false }, 'BT_OFF');
+            break;
+        case 'sys_brightness_set': {
+            const value = parseInt(document.getElementById('sys-brightness')?.value || '120', 10);
+            sendSystemControl('brightness_set', { value: Number.isFinite(value) ? value : 120 }, 'BRIGHTNESS_SET');
+            break;
+        }
+        case 'sys_brightness_mode': {
+            const mode = (document.getElementById('sys-brightness-mode')?.value || 'manual').trim();
+            sendSystemControl('brightness_mode', { mode }, `BRIGHTNESS_MODE ${mode}`);
+            break;
+        }
+        case 'sys_volume_set': {
+            const stream = (document.getElementById('sys-volume-stream')?.value || 'music').trim();
+            const level = parseInt(document.getElementById('sys-volume-level')?.value || '5', 10);
+            sendSystemControl('volume_set', { stream, level: Number.isFinite(level) ? level : 5 }, `VOLUME_SET ${stream}`);
+            break;
+        }
+        case 'sys_media_play_pause':
+            sendSystemControl('media_key', { key: 'play_pause' }, 'MEDIA_KEY play_pause');
+            break;
+        case 'sys_media_next':
+            sendSystemControl('media_key', { key: 'next' }, 'MEDIA_KEY next');
+            break;
+        case 'sys_media_prev':
+            sendSystemControl('media_key', { key: 'previous' }, 'MEDIA_KEY previous');
+            break;
+        case 'sys_rotation_set': {
+            const mode = (document.getElementById('sys-rotation-mode')?.value || 'auto').trim();
+            sendSystemControl('rotation_set', { mode }, `ROTATION_SET ${mode}`);
+            break;
+        }
+        case 'sys_record_start': {
+            const path = (document.getElementById('sys-record-path')?.value || '').trim();
+            const params = path ? { path } : {};
+            sendSystemControl('screen_record_start', params, `SCREEN_RECORD_START ${path || '(auto)'}`);
+            break;
+        }
+        case 'sys_record_stop':
+            sendSystemControl('screen_record_stop', {}, 'SCREEN_RECORD_STOP');
+            break;
+
+        // =============================================================
         // Media Layer
         // =============================================================
         case 'screenshot':
@@ -353,6 +425,12 @@ async function sendCommand(endpoint, params, displayName) {
     }
   }
 
+function sendSystemControl(action, params = {}, displayName = '') {
+    const payload = { action, ...(params || {}) };
+    const label = displayName || `SYSTEM_CONTROL ${action}`;
+    return sendCommand('/api/command/system_control', payload, label);
+}
+
 async function sendPinDigitsByKeyEvent() {
     const pinEl = document.getElementById('key-pin-digits');
     const intervalEl = document.getElementById('key-pin-interval-ms');
@@ -397,6 +475,25 @@ function sleepMs(ms) {
    * 显示响应详情
    */
   function displayResponse(response) {
+    if (response.action !== undefined) {
+        const okText = response.ok === true ? 'ok' : (response.ok === false ? 'failed' : 'unknown');
+        addLog('response', `   action: ${response.action} (${okText})`);
+    }
+    if (response.exit_code !== undefined) {
+        addLog('response', `   exit_code: ${response.exit_code}${response.timeout ? ' (timeout)' : ''}`);
+    }
+    if (response.command) {
+        addLog('response', `   command: ${response.command}`);
+    }
+    if (response.stdout) {
+        addLog('response', `   stdout: ${String(response.stdout).slice(0, 400)}`);
+    }
+    if (response.stderr) {
+        addLog('response', `   stderr: ${String(response.stderr).slice(0, 400)}`);
+    }
+    if (response.error) {
+        addLog('response', `   error: ${response.error}`);
+    }
     if (response.package !== undefined) {
         addLog('response', `   Package: ${response.package}`);
         addLog('response', `   Activity: ${response.activity}`);

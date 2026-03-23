@@ -53,6 +53,7 @@ from .constants import (
     CMD_LAUNCH_APP,
     CMD_STOP_APP,
     CMD_LIST_APPS,
+    CMD_SYSTEM_CONTROL,
     # Cortex/Map debug (bootstrap)
     CMD_MAP_SET_GZ,
     CMD_MAP_GET_INFO,
@@ -1573,6 +1574,49 @@ class LXBLinkClient:
 
         logger.warning("LIST_APPS failed or returned empty")
         return []
+
+    def system_control(self, action: str, params: Optional[dict] = None) -> dict:
+        """
+        Execute generic system shell controls on device (CMD_SYSTEM_CONTROL=0x49).
+
+        Request payload is UTF-8 JSON:
+            {"action":"wifi_set","enabled":true}
+
+        Response payload format:
+            status[1B] + json_len[2B] + json_data[UTF-8]
+        """
+        self._ensure_connected()
+
+        import json
+        import struct
+
+        req = {'action': str(action or '').strip()}
+        if not req['action']:
+            raise ValueError('action is required')
+
+        if params and isinstance(params, dict):
+            req.update(params)
+
+        payload = json.dumps(req, ensure_ascii=False).encode('utf-8')
+        response = self._cmd(CMD_SYSTEM_CONTROL, payload, timeout_factor=4.0)
+
+        if len(response) < 3:
+            raise RuntimeError('system_control malformed response')
+
+        status = response[0]
+        json_len = struct.unpack('>H', response[1:3])[0]
+        if len(response) < 3 + json_len:
+            raise RuntimeError('system_control truncated json payload')
+
+        text = response[3:3 + json_len].decode('utf-8', errors='replace')
+        try:
+            data = json.loads(text)
+        except Exception:
+            data = {'ok': status == 0x01, 'raw': text}
+
+        if isinstance(data, dict) and 'ok' not in data:
+            data['ok'] = status == 0x01
+        return data if isinstance(data, dict) else {'ok': status == 0x01, 'data': data}
 
     # =========================================================================
     # Context Manager & Utilities

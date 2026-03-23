@@ -295,6 +295,76 @@
                     </div>
                 </div>
 
+                <div class="card">
+                    <h3>System Shell</h3>
+                    <div class="grid2">
+                        <button class="btn btn-cmd" data-cmd="sys_expand_notifications">EXPAND_NOTIF</button>
+                        <button class="btn btn-cmd" data-cmd="sys_expand_settings">EXPAND_QS</button>
+                        <button class="btn btn-cmd" data-cmd="sys_collapse_panels">COLLAPSE_PANELS</button>
+                        <button class="btn btn-cmd" data-cmd="sys_screen_off">SCREEN_OFF</button>
+                    </div>
+                    <div class="row" style="margin-top:8px;">
+                        <select id="sys-dnd-mode">
+                            <option value="off">DND Off</option>
+                            <option value="priority">DND Priority</option>
+                            <option value="alarms">DND Alarms</option>
+                            <option value="none">DND None</option>
+                        </select>
+                        <button class="btn btn-cmd" data-cmd="sys_dnd_set">SET_DND</button>
+                    </div>
+                    <div class="grid2" style="margin-top:8px;">
+                        <button class="btn btn-cmd" data-cmd="sys_wifi_on">WIFI_ON</button>
+                        <button class="btn btn-cmd" data-cmd="sys_wifi_off">WIFI_OFF</button>
+                        <button class="btn btn-cmd" data-cmd="sys_bt_on">BT_ON</button>
+                        <button class="btn btn-cmd" data-cmd="sys_bt_off">BT_OFF</button>
+                    </div>
+                    <div class="row" style="margin-top:8px;">
+                        <input type="number" id="sys-brightness" value="120" min="0" max="255" placeholder="0-255">
+                        <button class="btn btn-cmd" data-cmd="sys_brightness_set">SET_BRIGHTNESS</button>
+                    </div>
+                    <div class="row" style="margin-top:8px;">
+                        <select id="sys-brightness-mode">
+                            <option value="manual">manual</option>
+                            <option value="auto">auto</option>
+                        </select>
+                        <button class="btn btn-cmd" data-cmd="sys_brightness_mode">BRIGHTNESS_MODE</button>
+                    </div>
+                    <div class="row" style="margin-top:8px;">
+                        <select id="sys-volume-stream" style="max-width: 130px;">
+                            <option value="music">music</option>
+                            <option value="ring">ring</option>
+                            <option value="alarm">alarm</option>
+                            <option value="notification">notification</option>
+                            <option value="system">system</option>
+                            <option value="voice_call">voice_call</option>
+                        </select>
+                        <input type="number" id="sys-volume-level" value="5" min="0" max="30" placeholder="level">
+                        <button class="btn btn-cmd" data-cmd="sys_volume_set">SET_VOLUME</button>
+                    </div>
+                    <div class="row" style="margin-top:8px;">
+                        <button class="btn btn-cmd btn-small" data-cmd="sys_media_play_pause">PLAY_PAUSE</button>
+                        <button class="btn btn-cmd btn-small" data-cmd="sys_media_next">NEXT</button>
+                        <button class="btn btn-cmd btn-small" data-cmd="sys_media_prev">PREV</button>
+                    </div>
+                    <div class="row" style="margin-top:8px;">
+                        <select id="sys-rotation-mode">
+                            <option value="auto">auto</option>
+                            <option value="portrait">portrait</option>
+                            <option value="landscape">landscape</option>
+                            <option value="reverse_portrait">reverse_portrait</option>
+                            <option value="reverse_landscape">reverse_landscape</option>
+                        </select>
+                        <button class="btn btn-cmd" data-cmd="sys_rotation_set">SET_ROTATION</button>
+                    </div>
+                    <div class="row" style="margin-top:8px;">
+                        <input type="text" id="sys-record-path" value="/sdcard/Movies/lxb_record.mp4" placeholder="/sdcard/Movies/xxx.mp4">
+                    </div>
+                    <div class="row" style="margin-top:8px;">
+                        <button class="btn btn-cmd" data-cmd="sys_record_start">RECORD_START</button>
+                        <button class="btn btn-cmd btn-danger" data-cmd="sys_record_stop">RECORD_STOP</button>
+                    </div>
+                </div>
+
                 <div class="card" style="margin-bottom:0;">
                     <h3>Media Layer</h3>
                     <button class="btn btn-cmd btn-highlight" data-cmd="screenshot">SCREENSHOT</button>

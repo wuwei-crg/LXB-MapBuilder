@@ -1752,6 +1752,41 @@ def cmd_list_apps():
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
 
+@app.route('/api/command/system_control', methods=['POST'])
+def cmd_system_control():
+    """Run generic system control action via CMD_SYSTEM_CONTROL."""
+    error_response = _require_client_response()
+    if error_response:
+        return error_response
+
+    data = request.json or {}
+    action = str(data.get('action') or '').strip()
+    if not action:
+        return jsonify({'success': False, 'message': 'action is required'}), 400
+
+    params = data.get('params')
+    merged = {}
+    if isinstance(params, dict):
+        merged.update(params)
+
+    # Also accept flat payload fields for convenience.
+    for k, v in data.items():
+        if k in ('action', 'params'):
+            continue
+        merged[k] = v
+
+    try:
+        result = client.system_control(action, params=merged)
+        ok = bool(result.get('ok'))
+        msg = f'SYSTEM_CONTROL {action}: {"ok" if ok else "failed"}'
+        return jsonify({
+            'success': ok,
+            'message': msg,
+            'response': result,
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
 
 # =============================================================================
 # Media Layer (0x60-0x6F)
