@@ -1804,7 +1804,8 @@ def cmd_screenshot():
         image_data = client.request_screenshot()
 
         if image_data and len(image_data) > 0:
-            # 鎴浘鎴愬姛锛岃繑鍥?base64 缂栫爜鐨勫浘鐗?            image_base64 = base64.b64encode(image_data).decode('utf-8')
+            # Screenshot OK: return base64 image to frontend preview.
+            image_base64 = base64.b64encode(image_data).decode('utf-8')
             return jsonify({
                 'success': True,
                 'message': f'鎴浘鎴愬姛: {len(image_data)} 瀛楄妭 ({len(image_data)/1024:.1f} KB)',
