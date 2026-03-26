@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LXB Map Viewer</title>
+    <title>LXB Map View and Burn</title>
     <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <script src="https://unpkg.com/pako@2.1.0/dist/pako.min.js"></script>
     <script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
@@ -381,7 +381,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>LXB Map Viewer</h1>
+        <h1 data-i18n="mv.page_title">LXB Map View and Burn</h1>
         <div style="display: flex; gap: 12px; align-items: center;">
             <span id="package-name" style="color: #94a3b8; font-size: 12px;" data-i18n="mv.not_loaded">未加载</span>
         </div>
@@ -404,6 +404,9 @@
                 </div>
                 <div style="margin-top: 8px;">
                     <button class="btn btn-secondary" style="width: 100%; font-size: 11px; padding: 6px;" onclick="loadDemoData()" data-i18n="mv.load_demo">加载示例数据</button>
+                </div>
+                <div style="margin-top: 8px;">
+                    <button id="btn-burn-map" class="btn btn-primary" style="width: 100%;" onclick="burnCurrentMap()" disabled data-i18n="mv.burn_current">Burn to Device (burn)</button>
                 </div>
             </div>
 
@@ -523,6 +526,13 @@
         let mapData = null;
         let network = null;
 
+        function updateBurnButtonState() {
+            const btn = document.getElementById('btn-burn-map');
+            if (!btn) return;
+            const pkg = mapData && typeof mapData.package === 'string' ? mapData.package.trim() : '';
+            btn.disabled = !mapData || !pkg;
+        }
+
         // 加载示例数据
         function loadDemoData() {
             mapData = {
@@ -574,6 +584,44 @@
             renderMap();
         }
 
+        async function burnCurrentMap() {
+            if (!mapData) {
+                alert(tr('mv.no_map_loaded', 'No map loaded'));
+                return;
+            }
+            const pkg = String(mapData.package || '').trim();
+            if (!pkg) {
+                alert(tr('mv.burn_missing_package', 'Current map has no package name'));
+                return;
+            }
+            const btn = document.getElementById('btn-burn-map');
+            const oldText = btn ? btn.textContent : '';
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = tr('mv.burn_in_progress', 'Burning...');
+            }
+            try {
+                const res = await fetch('/api/maps/burn', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ package: pkg, map_data: mapData })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert(tr('mv.burn_ok', 'Burn success: {pkg}', { pkg }));
+                } else {
+                    alert(tr('mv.burn_failed', 'Burn failed: {msg}', { msg: data.message || 'unknown' }));
+                }
+            } catch (e) {
+                alert(tr('mv.burn_failed', 'Burn failed: {msg}', { msg: e.message || 'unknown' }));
+            } finally {
+                if (btn) {
+                    btn.textContent = oldText || tr('mv.burn_current', 'Burn to Device (burn)');
+                }
+                updateBurnButtonState();
+            }
+        }
+
         // 加载本地文件（支持 .json / .json.gz）
         async function loadMapFile(event) {
             const input = event.target;
@@ -584,6 +632,8 @@
                 mapData = await parseMapFile(file);
                 renderMap();
             } catch (err) {
+                mapData = null;
+                updateBurnButtonState();
                 alert(tr('mv.load_file_failed', 'Failed to load file: {msg}', { msg: err.message }));
             } finally {
                 // 允许重复选择同一个文件再次触发 change
@@ -631,9 +681,13 @@
                     mapData = data.data;
                     renderMap();
                 } else {
+                    mapData = null;
+                    updateBurnButtonState();
                     alert(data.message || tr('mv.no_available_map', 'No available map'));
                 }
             } catch (e) {
+                mapData = null;
+                updateBurnButtonState();
                 alert(tr('mv.load_failed', 'Load failed: {msg}', { msg: e.message }));
             }
         }
@@ -694,9 +748,13 @@
                     renderMap();
                     document.getElementById('map-list-card').style.display = 'none';
                 } else {
+                    mapData = null;
+                    updateBurnButtonState();
                     alert(data.message || tr('mv.load_failed_simple', 'Load failed'));
                 }
             } catch (e) {
+                mapData = null;
+                updateBurnButtonState();
                 alert(tr('mv.load_failed', 'Load failed: {msg}', { msg: e.message }));
             }
         }
@@ -707,6 +765,7 @@
 
             // 更新包名
             document.getElementById('package-name').textContent = mapData.package || tr('mv.unknown_app', 'Unknown app');
+            updateBurnButtonState();
 
             // 显示卡片
             document.getElementById('stats-card').style.display = 'block';
@@ -1085,19 +1144,20 @@
             e.preventDefault();
             uploadArea.style.borderColor = '#3a3a5a';
             const file = e.dataTransfer.files[0];
-            if (file && file.name.endsWith('.json')) {
-                const reader = new FileReader();
-                reader.onload = (ev) => {
-                    try {
-                        mapData = JSON.parse(ev.target.result);
-                        renderMap();
-                    } catch (err) {
-                        alert(tr('mv.json_parse_failed', 'JSON parse failed: {msg}', { msg: err.message }));
-                    }
-                };
-                reader.readAsText(file);
-            }
+            if (!file) return;
+            parseMapFile(file)
+                .then(obj => {
+                    mapData = obj;
+                    renderMap();
+                })
+                .catch(err => {
+                    mapData = null;
+                    updateBurnButtonState();
+                    alert(tr('mv.json_parse_failed', 'JSON parse failed: {msg}', { msg: err.message }));
+                });
         });
+
+        updateBurnButtonState();
     </script>
 </body>
 </html>

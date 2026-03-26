@@ -3475,6 +3475,100 @@ def maps_load():
         return jsonify({'success': False, 'message': str(e), 'traceback': traceback.format_exc()}), 500
 
 
+def _normalize_map_for_burn(raw_obj: dict, package_name: str) -> dict:
+    if not isinstance(raw_obj, dict):
+        raise RuntimeError('map_data must be a JSON object')
+
+    out = dict(raw_obj)
+    out['package'] = package_name
+
+    # pages: standardize to {page_id: page_obj}
+    pages_raw = out.get('pages')
+    pages = {}
+    if isinstance(pages_raw, dict):
+        for k, v in pages_raw.items():
+            page_id = str(k or '').strip()
+            if not page_id:
+                continue
+            row = dict(v) if isinstance(v, dict) else {}
+            if not row.get('page_id'):
+                row['page_id'] = page_id
+            pages[page_id] = row
+    elif isinstance(pages_raw, list):
+        for row in pages_raw:
+            if not isinstance(row, dict):
+                continue
+            page_id = str(row.get('page_id') or row.get('id') or '').strip()
+            if not page_id:
+                continue
+            one = dict(row)
+            if not one.get('page_id'):
+                one['page_id'] = page_id
+            pages[page_id] = one
+    out['pages'] = pages
+
+    # transitions: standardize to list with from/to
+    transitions_raw = out.get('transitions')
+    transitions = []
+    if isinstance(transitions_raw, list):
+        for row in transitions_raw:
+            if not isinstance(row, dict):
+                continue
+            from_page = str(row.get('from') or row.get('from_page') or '').strip()
+            to_page = str(row.get('to') or row.get('to_page') or '').strip()
+            if not from_page or not to_page:
+                continue
+            one = dict(row)
+            one['from'] = from_page
+            one['to'] = to_page
+            transitions.append(one)
+    out['transitions'] = transitions
+
+    popups_raw = out.get('popups')
+    out['popups'] = list(popups_raw) if isinstance(popups_raw, list) else []
+    blocks_raw = out.get('blocks')
+    out['blocks'] = list(blocks_raw) if isinstance(blocks_raw, list) else []
+
+    return out
+
+
+@app.route('/api/maps/burn', methods=['POST'])
+def maps_burn():
+    """Burn map from viewer to device burn lane (same map_set_gz path as command studio)."""
+    error_response = _require_client_response()
+    if error_response:
+        return error_response
+
+    try:
+        data = request.json or {}
+        map_obj = data.get('map_data')
+        if not isinstance(map_obj, dict):
+            return jsonify({'success': False, 'message': 'map_data is required'}), 400
+
+        package_name = str(data.get('package') or _extract_package_from_nav_map(map_obj)).strip()
+        if not package_name:
+            return jsonify({'success': False, 'message': 'package is required'}), 400
+
+        normalized = _normalize_map_for_burn(map_obj, package_name)
+        map_json_text = json.dumps(normalized, ensure_ascii=False)
+        result = client.map_set_gz(package_name, map_json_text)
+        ok = bool(result.get('ok'))
+
+        return jsonify({
+            'success': ok,
+            'message': f'MAP_SET_GZ {"success" if ok else "failed"}: {package_name}',
+            'response': result,
+            'normalized': {
+                'package': package_name,
+                'pages': len(normalized.get('pages') or {}),
+                'transitions': len(normalized.get('transitions') or []),
+            }
+        })
+    except Exception as e:
+        import traceback
+        return jsonify({'success': False, 'message': str(e), 'traceback': traceback.format_exc()}), 500
+
+
 @app.route('/api/map_publish/config', methods=['GET'])
 def map_publish_config():
     try:

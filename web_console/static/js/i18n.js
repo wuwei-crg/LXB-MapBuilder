@@ -6,7 +6,7 @@
       'hub.title': 'LXB Console Hub',
       'hub.page.command': 'Command Studio',
       'hub.page.builder': 'LXB-MapBuilder',
-      'hub.page.viewer': 'Map Viewer',
+      'hub.page.viewer': 'Map View and Burn',
       'hub.page.publish': 'Map Publish',
       'hub.conn.unconnected': 'Not connected',
       'hub.conn.manage': 'Connection Manager',
@@ -260,13 +260,20 @@
       'mv.block_type_risk_control': 'Risk control',
       'mv.block_type_login_required': 'Login required',
       'mv.block_type_network_error': 'Network error',
-      'mv.block_type_crash': 'App crash'
+      'mv.block_type_crash': 'App crash',
+      'mv.page_title': 'LXB Map View and Burn',
+      'mv.burn_current': 'Burn to Device (burn)',
+      'mv.burn_in_progress': 'Burning...',
+      'mv.burn_ok': 'Burn success: {pkg}',
+      'mv.burn_failed': 'Burn failed: {msg}',
+      'mv.burn_missing_package': 'Current map has no package name',
+      'mv.no_map_loaded': 'No map loaded'
     },
     zh: {
       'hub.title': 'LXB 控制台',
       'hub.page.command': '命令调试',
       'hub.page.builder': '建图器',
-      'hub.page.viewer': '地图查看',
+      'hub.page.viewer': '地图查看与烧录',
       'hub.page.publish': '地图发布',
       'hub.conn.unconnected': '未连接',
       'hub.conn.manage': '连接管理',
@@ -520,7 +527,14 @@
       'mv.block_type_risk_control': '风控拦截',
       'mv.block_type_login_required': '强制登录',
       'mv.block_type_network_error': '网络错误',
-      'mv.block_type_crash': '应用崩溃'
+      'mv.block_type_crash': '应用崩溃',
+      'mv.page_title': 'LXB 地图查看与烧录',
+      'mv.burn_current': '烧录到设备 (burn)',
+      'mv.burn_in_progress': '烧录中...',
+      'mv.burn_ok': '烧录成功: {pkg}',
+      'mv.burn_failed': '烧录失败: {msg}',
+      'mv.burn_missing_package': '当前地图缺少包名',
+      'mv.no_map_loaded': '当前未加载地图'
     }
   };
 
@@ -583,7 +597,8 @@
     '没有找到可交互节点': 'No interactive nodes found',
     '配置中心': 'Config Center',
     '地图发布': 'Map Publish',
-    '地图查看': 'Map Viewer',
+    '地图查看': 'Map View and Burn',
+    '地图查看与烧录': 'Map View and Burn',
     '建图器': 'Map Builder',
     '日志': 'Logs',
     '日志已清空': 'Logs cleared',
