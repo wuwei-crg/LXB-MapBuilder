@@ -137,28 +137,6 @@ class NodeLocator:
                     (self.bounds[1] + self.bounds[3]) // 2)
         return None
 
-    def find_queries(self) -> List[Tuple[int, str]]:
-        """
-        生成 find_node 查询参数列表（按优先级排序）
-
-        Returns:
-            [(match_type, query_string), ...] 优先级从高到低
-            match_type 对应 constants.py 中的 MATCH_* 常量:
-              0=MATCH_EXACT_TEXT, 1=MATCH_CONTAINS_TEXT, 2=MATCH_REGEX,
-              3=MATCH_RESOURCE_ID, 4=MATCH_CLASS, 5=MATCH_DESCRIPTION
-        """
-        queries = []
-        # 优先语义字段，避免泛化 resource_id 误匹配
-        if self.text and len(self.text) <= 30:
-            queries.append((0, self.text))  # MATCH_EXACT_TEXT
-        if self.content_desc and len(self.content_desc) <= 30:
-            queries.append((5, self.content_desc))  # MATCH_DESCRIPTION
-        if self.resource_id:
-            rid = self.resource_id.split("/")[-1] if "/" in self.resource_id else self.resource_id
-            if self._is_informative_resource_id((rid or "").strip().lower()):
-                queries.append((3, self.resource_id))  # MATCH_RESOURCE_ID
-        return queries
-
     @staticmethod
     def _is_informative_resource_id(rid: str) -> bool:
         if not rid:
@@ -172,27 +150,6 @@ class NodeLocator:
         if all(ch in hex_chars for ch in rid) and len(rid) >= 8:
             return False
         return True
-
-    def compound_conditions(self, activity: str = None) -> List[Tuple[int, int, str]]:
-        """
-        生成复合查询条件列表 [(field, op, value), ...]
-
-        field/op 常量对应 constants.py 中的 COMPOUND_FIELD_* / COMPOUND_OP_*:
-          field: 0=TEXT, 1=RESOURCE_ID, 2=CONTENT_DESC, 3=CLASS_NAME,
-                 4=PARENT_RESOURCE_ID, 5=ACTIVITY
-          op:    0=EQUALS, 1=CONTAINS, 2=STARTS_WITH, 3=ENDS_WITH
-        """
-        conditions = []
-        # 显式空值也是特征：缺字段按空字符串参与匹配
-        conditions.append((1, 0, self.resource_id or ""))      # RESOURCE_ID, EQUALS
-        conditions.append((0, 0, self.text or ""))             # TEXT, EQUALS
-        conditions.append((2, 0, self.content_desc or ""))     # CONTENT_DESC, EQUALS
-        if self.class_name:
-            conditions.append((3, 3, self.class_name.split(".")[-1]))  # CLASS, ENDS_WITH
-        conditions.append((4, 0, self.parent_resource_id or ""))  # PARENT_RESOURCE_ID, EQUALS
-        if activity:
-            conditions.append((5, 0, activity))            # ACTIVITY, EQUALS
-        return conditions
 
     @staticmethod
     def from_dict(d: dict) -> "NodeLocator":
@@ -486,10 +443,6 @@ class NavigationMap:
 
     def get_page(self, page_id: str) -> Optional[PageInfo]:
         return self.pages.get(page_id)
-
-    def get_transitions_from(self, page_id: str) -> List[Transition]:
-        """获取从某页面出发的所有跳转"""
-        return [t for t in self.transitions if t.from_page == page_id]
 
     def get_stats(self) -> dict:
         return {
@@ -1065,51 +1018,12 @@ PAGE|feed_content|内容流页面|内容浏览页|浏览内容
         time.sleep(self.config.action_delay_ms / 1000)
 
     @staticmethod
-    def _normalize_bounds_candidates(raw_candidates) -> List[Tuple[int, int, int, int]]:
-        out: List[Tuple[int, int, int, int]] = []
-        if not raw_candidates:
-            return out
-        for b in raw_candidates:
-            try:
-                if isinstance(b, (list, tuple)) and len(b) >= 4:
-                    x1, y1, x2, y2 = int(b[0]), int(b[1]), int(b[2]), int(b[3])
-                    if x2 > x1 and y2 > y1:
-                        out.append((x1, y1, x2, y2))
-            except Exception:
-                continue
-        return out
-
-    @staticmethod
     def _bounds_center(bounds: Tuple[int, int, int, int]) -> Tuple[int, int]:
         return ((bounds[0] + bounds[2]) // 2, (bounds[1] + bounds[3]) // 2)
 
     @staticmethod
     def _bounds_area(bounds: Tuple[int, int, int, int]) -> int:
         return max(0, bounds[2] - bounds[0]) * max(0, bounds[3] - bounds[1])
-
-    def _pick_best_bounds(self, locator: NodeLocator, candidates: List[Tuple[int, int, int, int]]) -> Optional[Tuple[int, int, int, int]]:
-        if not candidates:
-            return None
-        # 共享 locator 的候选兜底：候选<=3 时按固定排序取第 n 个
-        if (
-            locator.locator_index is not None
-            and locator.locator_count is not None
-            and int(locator.locator_count) <= 3
-            and len(candidates) <= 3
-        ):
-            ordered = sorted(candidates, key=lambda b: (b[1], b[0], b[3], b[2]))
-            idx = int(locator.locator_index)
-            if 0 <= idx < len(ordered):
-                return ordered[idx]
-            self.log("debug", f"    [find_node] lidx out_of_range: idx={idx}, ordered={len(ordered)}, locator_count={locator.locator_count}")
-        hint = locator.bounds if locator.bounds and len(locator.bounds) >= 4 else None
-        if not hint:
-            return min(candidates, key=self._bounds_area)
-        hx, hy = self._bounds_center(hint)
-        return min(
-            candidates,
-            key=lambda b: (((self._bounds_center(b)[0] - hx) ** 2 + (self._bounds_center(b)[1] - hy) ** 2) ** 0.5, self._bounds_area(b))
-        )
 
     def _tap_node(self, locator: NodeLocator, label: str = "", activity: str = None) -> bool:
         """
@@ -1478,25 +1392,6 @@ PAGE|feed_content|内容流页面|内容浏览页|浏览内容
             return True
         if bh > self._screen_height * 0.16:
             return True
-        return False
-
-    def _is_input_field(self, xml_node: Dict) -> bool:
-        """判断是否是输入框"""
-        class_name = xml_node.get("class_name", "").lower()
-        res_id = xml_node.get("resource_id", "").lower()
-
-        # EditText 类
-        if "edittext" in class_name or "edit" in class_name:
-            return True
-
-        # 搜索框
-        if "search" in res_id and ("input" in res_id or "edit" in res_id or "box" in res_id):
-            return True
-
-        # focusable + editable
-        if xml_node.get("editable", False):
-            return True
-
         return False
 
     # === VLM 分析 ===
